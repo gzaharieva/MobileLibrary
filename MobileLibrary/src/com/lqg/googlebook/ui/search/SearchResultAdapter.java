@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.google.api.services.books.model.Volume;
 import com.lqg.googlebook.R;
 import com.lqg.googlebook.support.util.ImageLoaderUtil;
-import com.lqg.googlebook.ui.detail.BookDetailActivity_;
+import com.lqg.googlebook.ui.detail.BookDetailActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.List;
@@ -67,9 +67,9 @@ public class SearchResultAdapter extends BaseAdapter {
         Volume.VolumeInfo volumeInfo = result.getVolumeInfo();
         if (volumeInfo != null) {
             holder.titleTv.setText(volumeInfo.getTitle());
-            holder.authorTv.setText(BookDetailActivity_.getAutor(result));
+            holder.authorTv.setText(BookDetailActivity.getAutor(result));
             holder.descriptionTv.setText(volumeInfo.getDescription());
-            ImageLoaderUtil.getImageLoader().displayImage(BookDetailActivity_.getImageLink(volumeInfo), holder.thumIv, options);
+            ImageLoaderUtil.getImageLoader().displayImage(BookDetailActivity.getImageLink(volumeInfo), holder.thumIv, options);
         }
         return convertView;
     }
