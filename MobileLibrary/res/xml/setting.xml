@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Search Condition">
+        <ListPreference
+            android:defaultValue="intitle"
+            android:dialogTitle="Keywords Type"
+            android:entries="@array/keywordsType"
+            android:entryValues="@array/keywordsType"
+            android:key="keywordsType"
+            android:summary="%s"
+            android:title="Keywords Type" />
+
+        <CheckBoxPreference
+            android:key="download"
+            android:summaryOff="epub"
+            android:summaryOn="epub"
+            android:title="Download" />
+
+        <ListPreference
+            android:defaultValue="partial"
+            android:dialogTitle="Filter"
+            android:entries="@array/filter"
+            android:entryValues="@array/filter"
+            android:key="filter"
+            android:summary="%s"
+            android:title="Filter" />
+
+        <ListPreference
+            android:defaultValue="20"
+            android:dialogTitle="Max Results"
+            android:entries="@array/maxresults"
+            android:entryValues="@array/maxresults"
+            android:key="maxResults"
+            android:summary="%s"
+            android:title="Max Results" />
+
+        <ListPreference
+            android:defaultValue="all"
+            android:dialogTitle="Print Type"
+            android:entries="@array/printType"
+            android:entryValues="@array/printType"
+            android:key="printType"
+            android:summary="%s"
+            android:title="Print Type" />
+
+        <ListPreference
+            android:defaultValue="full"
+            android:dialogTitle="Projection"
+            android:entries="@array/projection"
+            android:entryValues="@array/projection"
+            android:key="projection"
+            android:summary="%s"
+            android:title="Projection" />
+
+        <ListPreference
+            android:defaultValue="relevance"
+            android:dialogTitle="Order By"
+            android:entries="@array/orderBy"
+            android:entryValues="@array/orderBy"
+            android:key="orderBy"
+            android:summary="%s"
+            android:title="Order By" />
+
+        <EditTextPreference
+            android:summary="beta0.1"
+            android:title="Version"
+            android:enabled="false"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

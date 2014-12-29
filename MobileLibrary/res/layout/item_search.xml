@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/book_thm"
+        android:layout_width="@dimen/searchresult_item_width"
+        android:layout_height="@dimen/searchresult_item_heigh"
+        android:background="#5e5e5e"
+        android:scaleType="centerCrop" />
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/book_title"
+        style="@android:style/TextAppearance.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/book_thm"
+        app:typeface="roboto_medium" />
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/book_authors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/book_title"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/book_thm"
+        android:singleLine="true"
+        app:typeface="roboto_light" />
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/book_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/book_authors"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_toRightOf="@id/book_thm"
+        android:maxLines="3"
+        app:typeface="roboto_light" />
+
+</RelativeLayout>
