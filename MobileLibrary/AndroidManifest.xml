@@ -1,22 +1,50 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lqg.googlebook">
+    package="com.master.univt">
 
     <application
-        android:name=".support.GlobalApplication"
+        android:name="com.master.univt.support.GlobalApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.search.MainActivity_">
+        <activity
+            android:name="com.master.univt.ui.SplashActivity_"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="com.master.univt.ui.LoginActivity"
+            android:label="Login" >
+        </activity>
+        <activity
+            android:name="com.master.univt.ui.RegisterActivity"
+            android:label="@string/action_register" />
+        
 
         <activity
-            android:name=".ui.detail.BookDetailActivity_"
+            android:name="com.master.univt.ui.LoginActivity_"
+            android:label="Login" >
+        </activity>
+        <activity
+            android:name="com.master.univt.ui.RegisterActivity_"
+            android:label="@string/action_register" />
+      
+
+        
+        <activity android:name="com.master.univt.ui.search.MainActivity_">
+
+        </activity>
+
+        <activity
+            android:name="com.master.univt.ui.detail.BookDetailActivity_"
             android:label="@string/bookDetail" />
 
     </application>

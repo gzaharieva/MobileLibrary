@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <include
+        android:id="@+id/authentication_status"
+        layout="@layout/authentication_progress"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/authentication_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center"
+        android:background="@color/white"
+        android:fillViewport="true" >
+
+        <LinearLayout
+            android:id="@+id/content_view"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/light_gray_bg"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/scrollview_space"
+            android:paddingTop="@dimen/facebook_button_top_space" >
+
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="@dimen/register_line_bottom_space"
+                android:layout_marginTop="@dimen/button_default_between_space"
+                android:background="@drawable/authentication_separator_line" />
+
+            <!--
+                   android:text="@string/message_login_view"
+                android:textSize="@dimen/text_size_login_message"
+            -->
+
+            <EditText
+                android:id="@+id/email"
+                style="@style/EmailEditTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/edittext_top_space" />
+
+            <EditText
+                android:id="@+id/password"
+                style="@style/PasswordEditView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/authentication_edittext_bottom_space"
+                android:layout_marginTop="@dimen/edittext_between_space"
+                android:imeActionId="@+id/authentication_button"
+                android:imeActionLabel="@string/action_sign_in"
+                android:imeOptions="actionGo" />
+
+            <Button
+                android:id="@+id/authentication_button"
+                style="@style/LoginButton"
+                android:onClick="attemptAuthenticate"
+                android:text="@string/action_sign_in" />
+        </LinearLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/progress"
+        layout="@layout/progress"
+        android:visibility="gone" />
+
+</RelativeLayout>

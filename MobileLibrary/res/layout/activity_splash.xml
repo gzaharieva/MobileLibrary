@@ -1,0 +1,63 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:focusableInTouchMode="false"
+        android:paddingTop="@dimen/scrollview_space"
+        tools:context=".SplashActivity"
+    android:background="@color/white">
+        <!--
+         This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows.
+        -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal|bottom">
+
+
+        <ImageView
+            android:id="@+id/image_view_devices"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/devices_bottom_space"
+            android:layout_marginTop="@dimen/devices_top_space"
+            android:src="@drawable/devices" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/action_register"
+                style="@style/RegisterButton"
+                android:layout_width="189dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="@dimen/scrollview_space"
+                android:onClick="navigateToRegister"
+                android:layout_marginLeft="5dp"
+                android:text="@string/action_register"
+                android:layout_height="match_parent">
+            </Button>
+
+            <Button
+                android:id="@+id/action_login"
+                style="@style/SplashLoginButton"
+                android:layout_width="match_parent"
+                android:layout_gravity="right"
+                android:layout_marginRight="5dp"
+                android:onClick="navigateToLogin"
+                android:text="@string/action_sign_in"
+                android:layout_height="63dp" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

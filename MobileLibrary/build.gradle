@@ -20,7 +20,7 @@ repositories {
 apt {
     arguments {
         androidManifestFile variant.outputs[0].processResources.manifestFile
-        resourcePackageName 'com.lqg.googlebook'
+        resourcePackageName 'com.master.univt'
     }
 }
 
@@ -29,7 +29,7 @@ android {
     buildToolsVersion "21.1.1"
 
     defaultConfig {
-        applicationId "com.lqg.googlebook"
+        applicationId "com.master.univt"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
@@ -68,4 +68,5 @@ dependencies {
     compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'com.github.johnkil.android-robototextview:robototextview:2.2.0'
+    compile 'com.google.code.gson:gson:2.2.4'
 }

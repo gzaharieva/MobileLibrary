@@ -17,4 +17,26 @@
     <color name="holo_green_dark">#669900</color>
     <color name="holo_purple_dark">#9933cc</color>
     <color name="holo_red_dark">#cc0000</color>
+
+
+    <color name="black">#000000</color>
+    <color name="blackoverlay_66">#66000000</color>
+    <color name="blackoverlay_30">#30000000</color>
+    <color name="white">#FFFFFF</color>
+    <!-- Background -->
+    <color name="light_gray_bg">#F7F7F7</color>
+    <color name="green">#0084D6</color>
+    <color name="green_transparency">#7059A831</color>
+    <color name="button_border">#9E9E9E</color>
+    <color name="button_sectiondevider_tabbar">#EBEBEB</color>
+    <color name="text_dark_gray">#383D41</color>
+    <color name="text_light_gray">#B6B6B6</color>
+    <color name="red">#E63712</color>
+    <color name="orange">#FFAE00</color>
+    <color name="separator_bars_grey">#E3E3E3</color>
+
+    <!-- Drawer -->
+    <color name="drawer_bg">#25282f</color> <!-- #383D41 -->
+    <color name="separator_line">#DEDEDE</color>
+    <color name="drawer_devider">#383D41</color>
 </resources>

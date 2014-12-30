@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item 	android:state_pressed="true" >
+    <layer-list >
+            <item >
+                <shape>
+		            <solid android:color="@color/button_sectiondevider_tabbar"  />
+		            <corners android:radius="1dp" />
+        		</shape>
+            </item>
+            
+           <item >
+                <shape>
+		            <solid android:color="@color/blackoverlay_30"  />
+		            <corners android:radius="1dp" />
+        		</shape>
+            </item>
+        </layer-list>
+     </item>
+     <item  >
+        <shape>
+             <stroke
+	          android:width="0.5dp"
+	          android:color="@color/green" />
+            <solid android:color="@color/white" />
+            <corners android:radius="1dp" />
+        </shape>
+    </item>
+    
+
+</selector>
