@@ -3,6 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
+   
+
     <include
         android:id="@+id/authentication_status"
         layout="@layout/authentication_progress"
@@ -17,43 +19,49 @@
         android:layout_gravity="center"
         android:background="@color/white"
         android:fillViewport="true" >
-
+        
+       
+        
         <LinearLayout
             android:id="@+id/content_view"
-            android:layout_width="@dimen/button_width"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@color/light_gray_bg"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingBottom="@dimen/scrollview_space"
-            android:paddingTop="@dimen/facebook_button_top_space" >
-
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="@dimen/register_line_bottom_space"
-                android:layout_marginTop="@dimen/button_default_between_space"
-                android:background="@drawable/authentication_separator_line" />
+            android:paddingTop="@dimen/facebook_button_top_space"
+            android:weightSum="1">
 
             <!--
                    android:text="@string/message_login_view"
                 android:textSize="@dimen/text_size_login_message"
             -->
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="@dimen/button_width"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dip"
+                android:enabled="false" />
+            <TextView
+                android:id="@+id/sign_in_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dip"
+                android:text="@string/status_signed_out" />
 
             <EditText
                 android:id="@+id/email"
                 style="@style/EmailEditTextView"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/button_width"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/edittext_top_space" />
 
             <EditText
                 android:id="@+id/password"
                 style="@style/PasswordEditView"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/button_width"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/authentication_edittext_bottom_space"
                 android:layout_marginTop="@dimen/edittext_between_space"
@@ -65,7 +73,9 @@
                 android:id="@+id/authentication_button"
                 style="@style/LoginButton"
                 android:onClick="attemptAuthenticate"
-                android:text="@string/action_sign_in" />
+                android:text="@string/action_sign_in"
+                android:layout_width="wrap_content"
+                android:width="@dimen/button_width" />
         </LinearLayout>
     </ScrollView>
 
@@ -73,5 +83,7 @@
         android:id="@+id/progress"
         layout="@layout/progress"
         android:visibility="gone" />
+
+    <include layout="@layout/custom_toolbar"/>
 
 </RelativeLayout>

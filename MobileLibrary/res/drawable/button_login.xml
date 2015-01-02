@@ -3,7 +3,7 @@
 
     <item android:state_enabled="false" >
             <shape>
-	            <solid android:color="@color/green_transparency"  />
+	            <solid android:color="@color/authentication_transparency"  />
 	            <corners android:radius="1dp" />
        		</shape>
     </item>
@@ -12,7 +12,7 @@
            <layer-list >
             <item >
                 <shape>
-		            <solid android:color="@color/green"  />
+		            <solid android:color="@color/blue"  />
 		            <corners android:radius="1dp" />
         		</shape>
             </item>
@@ -29,7 +29,7 @@
     <item 
         android:state_enabled="true" >
     <shape>
-            <solid android:color="@color/green" />
+            <solid android:color="@color/blue" />
             <corners android:radius="1dp" />
         </shape>
     </item>

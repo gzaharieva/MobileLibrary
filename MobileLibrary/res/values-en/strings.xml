@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">GoogleBook Demo</string>
+    <string name="app_name">Books</string>
     <string name="bookDetail">Book Detail</string>
     <string name="fragment_search">Search</string>
     <string name="action_settings">Settings</string>
@@ -25,31 +25,9 @@
 
     <!-- My cources -->
     <string name="title_my_courses">Меню</string>
-    <string name="title_test_menu_item">Test menu item</string>
-    <string name="title_activity_my_courses_fragment">MyCoursesFragment</string>
-    <string name="title_user_bought_courses">Meine Kurse</string>
-    <string name="title_section_bougnt_lectures">Meine Vorträge</string>
-    <string name="title_section_institution_courses">Kurse meiner Institution</string>
-    <string name="title_no_couses">Sie haben noch keine Kurse?</string>
-    <string name="no_courses_content_message">Dann entdecken Sie unser vielfältiges Kursangebot!</string>
-    <string name="action_discover_courses">Jetzt entdecken</string>
-    <string name="course_content">Kursinhalt</string>
-    <string name="title_lecture_section">Kapitelübersicht:</string>
-    <string name="title_activity_lecture">LectureActivity</string>
-    <string name="description">Description</string>
-    <string name="player_time_null">00:00</string>
-    <string name="message_no_internet_connection">Keine Internetverbindung vorhanden</string>
-    <string name="message_server_down">Der Server ist nicht erreichbar. Bitte versuchen Sie es später erneut. Sollte diese Fehlermeldung erneut auftreten, kontaktieren Sie Ihren Netzwerk-Administrator.</string>
-    <!-- Version 2 -->
 
     <string name="action_register">Регистрация</string>
-    <string name="term_of_use"><![CDATA[<html>Durch Tippen auf \"Registrieren\" akzeptieren Sie die  <a href=\"%1$s\">Nutzungsbedingung</a>  und die <a href=\"%1$s\">Datenschutzrichtlinien</a></html>]]></string>
-    <string name="registration_term_of_use_part_first">Durch Tippen auf \"Registrieren\" akzeptieren Sie die</string>
-    <string name="registration_term_of_use_link_first">Nutzungsbedingung</string>
-    <string name="registration_term_of_use_part_second"> und die </string>
-    <string name="registration_term_of_use_link_second">Datenschutzrichtlinien</string>
-    <string name="authentication_with_mail_text">Oder mit Ihrer E-Mail-Adresse: </string>
-    <string name="action_register_facebook">Регистрация</string>
+   <string name="action_register_facebook">Регистрация</string>
     <string name="action_register_facebook_short">Registrieren</string>
     <string name="action_register_xing">Registrieren mit XING</string>
     <string name="error_message_email_already_in_use">Die E-Mail-Adresse wird bereits verwendet.</string>
@@ -57,7 +35,6 @@
     <string name="message_service_not_available">Der Dienst ist vorübergehend nicht erreichbar. Bitte versuchen Sie es später erneut.</string>
     <string name="login_serer_error">Die Login konnte nicht ausgeführt werden. Bitte versuchen Sie es später erneut.</string>
     <string name="action_login_facebook">Вписване</string>
-    <string name="action_login_xing">Login mit XING</string>
     <string name="no_internet_connection">Keine Internetverbindung</string>
     <string name="message_internet_connection_attempt">Zum Wiederholen berühren</string>
     <string name="msg_free_lecture">Gratis-Vortrag</string>
@@ -69,4 +46,17 @@
     <string name="title_warning_dialog">Warning</string>
     <string name="ok">OK</string>
 
+    <string name="status_sign_in_required">Sign-in required</string>
+    <string name="status_sign_in_error">Error signing in: %s</string>
+    <string name="status_loading">Loading…</string>
+    <string name="status_signing_in">Signing in with Google+…</string>
+    <string name="status_signed_out">Signed out</string>
+    <string name="status_revoke_access">Revoked access</string>
+    <string name="status_revoke_access_error">Error revoking access: %s</string>
+    <string name="signed_in_as">Signed in as %s</string>
+    <string name="splash_title">Your Google Library</string>
+    
+    <string name="user">User</string>
+    <string name="bookshelf">Bookshelfs</string>
+    <string name="search">Search</string>
 </resources>

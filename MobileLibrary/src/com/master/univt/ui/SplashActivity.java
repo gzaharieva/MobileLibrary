@@ -9,10 +9,15 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 
 import com.master.univt.R;
+import com.master.univt.support.http.Search;
+import com.master.univt.ui.detail.BookDetailActivity;
+import com.master.univt.ui.search.MainActivity;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import java.io.IOException;
 
 
 /**
@@ -48,12 +53,12 @@ public class SplashActivity extends ActionBarActivity implements AnimationListen
     }
 
     public void navigateToLogin(final View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivityForResult(intent, REQUEST_EXIT);
+        Intent intent = new Intent(this, LoginActivity_.class);
+            startActivity(intent);
     }
 
     public void navigateToRegister(final View view) {
-        Intent intent = new Intent(this, RegisterActivity.class);
+        Intent intent = new Intent(this, RegisterActivity_.class);
         startActivityForResult(intent, REQUEST_EXIT);
     }
 

@@ -30,12 +30,6 @@
 
     <!-- <style name="TabsBar" parent="@style/AppTheme" /> -->
 
-    <style name="AutoCompleteTextViewAppTheme" parent="android:Widget.Holo.Light.AutoCompleteTextView">
-
-        <!-- <item name="android:dropDownSelector">@drawable/list_selector_holo_light</item> -->
-        <item name="android:background">@drawable/edit_text_holo_light</item>
-    </style>
-
     <style name="ApplicationButton">
         <item name="android:layout_width">@dimen/button_width</item>
         <item name="android:layout_height">@dimen/button_height</item>
@@ -225,11 +219,6 @@
         <item name="android:paddingTop">@dimen/space_medium</item>
     </style>
 
-    <style name="PlaceholderImageStyle">
-        <item name="android:contentDescription">@string/description</item>
-        <item name="android:src">@drawable/ic_placeholder_test</item>
-    </style>
-
     <style name="ThemeDialogCustom">
         <item name="android:windowFrame">@null</item>
         <item name="android:windowIsFloating">true</item>
@@ -244,7 +233,6 @@
         <item name="android:gravity">center_horizontal</item>
         <!--    <item name="android:paddingLeft">16dip</item>
            <item name="android:paddingRight">16dip</item>   -->
-        <item name="android:background">@drawable/tab_indicator_holo</item>
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_weight">1</item>
         <item name="android:minWidth">80dip</item>

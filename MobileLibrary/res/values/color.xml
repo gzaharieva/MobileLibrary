@@ -25,8 +25,8 @@
     <color name="white">#FFFFFF</color>
     <!-- Background -->
     <color name="light_gray_bg">#F7F7F7</color>
-    <color name="green">#0084D6</color>
-    <color name="green_transparency">#7059A831</color>
+    <color name="blue">#0084D6</color>
+    <color name="authentication_transparency">#700084D6</color>
     <color name="button_border">#9E9E9E</color>
     <color name="button_sectiondevider_tabbar">#EBEBEB</color>
     <color name="text_dark_gray">#383D41</color>

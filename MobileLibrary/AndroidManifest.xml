@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.master.univt">
 
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
+    
     <application
         android:name="com.master.univt.support.GlobalApplication"
         android:allowBackup="true"
@@ -21,18 +25,10 @@
         </activity>
         
         <activity
-            android:name="com.master.univt.ui.LoginActivity"
-            android:label="Login" >
-        </activity>
-        <activity
-            android:name="com.master.univt.ui.RegisterActivity"
-            android:label="@string/action_register" />
-        
-
-        <activity
             android:name="com.master.univt.ui.LoginActivity_"
             android:label="Login" >
         </activity>
+
         <activity
             android:name="com.master.univt.ui.RegisterActivity_"
             android:label="@string/action_register" />
@@ -44,7 +40,7 @@
         </activity>
 
         <activity
-            android:name="com.master.univt.ui.detail.BookDetailActivity_"
+            android:name=".ui.detail.BookDetailActivity_"
             android:label="@string/bookDetail" />
 
     </application>

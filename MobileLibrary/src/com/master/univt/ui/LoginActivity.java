@@ -1,11 +1,14 @@
 package com.master.univt.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.master.univt.HomeActivity;
 import com.master.univt.R;
 import com.master.univt.entities.ResponseStatusCode;
 import com.master.univt.ui.search.MainActivity;
@@ -34,7 +37,7 @@ public class LoginActivity extends AuthenticationActivity {
 
     @AfterViews
     void afterViews() {
-
+        super.afterViews();
         toolbar.setTitleTextColor(0xffffffff);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -58,7 +61,11 @@ public class LoginActivity extends AuthenticationActivity {
         if (requestStatusCode != null) {
             switch (requestStatusCode) {
                 case SUCCESFULL_AUTHENTICATION:
-                    Intent intent = new Intent(this, MainActivity.class);
+                    Intent intent = new Intent(this, HomeActivity.class);
+                    SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString(PREFS_USER_ID, "117463411595501910870");
+                    
                     startActivity(intent);
                     Log.d("LOG", "GA: Login: " + actionTrackingGA + "-" + labelTrackingGA);
                     setResult(RESULT_OK, null);
@@ -85,6 +92,7 @@ public class LoginActivity extends AuthenticationActivity {
     protected String getAuthenticationSource() {
         return "login.json";
     }
+
 
 
 }
