@@ -1,19 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.master.univt">
+    package="com.master.univt" >
 
     <meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
-    
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
-        android:name="com.master.univt.support.GlobalApplication"
+        android:name=".support.GlobalApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme" >
         <activity
-            android:name="com.master.univt.ui.SplashActivity_"
+            android:name=".ui.SplashActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name" >
             <intent-filter>
@@ -23,30 +27,42 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
-            android:name="com.master.univt.ui.LoginActivity_"
+            android:name=".ui.LoginActivity"
             android:label="Login" >
         </activity>
-
         <activity
-            android:name="com.master.univt.ui.RegisterActivity_"
+            android:name=".ui.RegisterActivity"
             android:label="@string/action_register" />
-      
-
-        
-        <activity android:name="com.master.univt.ui.search.MainActivity_">
-
-        </activity>
-
         <activity
-            android:name=".ui.detail.BookDetailActivity_"
+            android:name=".ui.HomeActivity_"
+            android:label="@string/fragment_bookshelf" />
+        <activity android:name=".ui.search.MainActivity" >
+        </activity>
+        <activity
+            android:name=".ui.detail.BookDetailActivity"
             android:label="@string/bookDetail" />
 
-    </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        <activity android:name=".HomeActivity"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name=".BaseHomeActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".ImageListActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".BooksDetailsActivity"
+            android:label="Детайли за книгата" />
+        <activity
+            android:name=".ImageGridActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".ImagePagerActivity"
+            android:label="@string/app_name" />
+    </application>
 
 </manifest>

@@ -261,4 +261,9 @@
         <item name="android:paddingTop">@dimen/space_small</item>
 
     </style>
+
+    <style name="PlaceholderImageStyle">
+        <item name="android:contentDescription">@string/description</item>
+        <item name="android:src">@drawable/ic_empty</item>
+    </style>
 </resources>

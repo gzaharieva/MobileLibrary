@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="10dip"
+        android:paddingTop="20dip"
+        android:text="@string/label_activity_examples"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:src="@drawable/bookopen" />
+
+    <Button
+        style="@style/LoginButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:background="@color/red"
+        android:drawableTop="@android:drawable/ic_menu_compass"
+        android:onClick="onImageListClick"
+        android:paddingBottom="10dp"
+        android:text="@string/button_image_list"
+      />
+
+    <Button
+        style="@style/LoginButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:drawableTop="@android:drawable/ic_dialog_map"
+        android:onClick="onImageGridClick"
+        android:paddingBottom="10dp"
+        android:text="@string/button_image_grid" />
+
+    <Button
+        style="@style/LoginButton"
+        android:background="@color/blue"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:drawableTop="@android:drawable/ic_menu_mapmode"
+        android:onClick="onImagePagerClick"
+        android:paddingBottom="10dp"
+        android:text="@string/button_image_pager" />
+
+</LinearLayout>

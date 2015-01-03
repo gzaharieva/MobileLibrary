@@ -3,7 +3,7 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".HomeActivity">
 
     <fragment
         android:id="@+id/maincontainer"
@@ -13,12 +13,12 @@
 
 
     <fragment
-        android:id="@+id/drawcontainer"
+        android:id="@+id/draw_navigation_container"
         android:layout_width="@dimen/drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="#f5f5f5"
-        android:name="com.master.univt.ui.fragments.NavigationDrawerFragment_" />
+        android:name="com.master.univt.ui.fragments.NavigationDrawerFragment" />
 
 
 </android.support.v4.widget.DrawerLayout>

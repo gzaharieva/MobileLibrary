@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/ratingbar_height"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:paddingBottom="@dimen/grid_sides_space"
+    android:paddingLeft="@dimen/grid_sides_space"
+    android:paddingRight="@dimen/grid_sides_space"
+    android:paddingTop="@dimen/grid_sides_space" >
+
+
+    <TextView
+        android:id="@+id/rating_bar_count"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/gridview_image_space_right"
+        android:layout_weight="0.42"
+        android:paddingBottom="@dimen/grid_sides_space"
+        android:paddingTop="@dimen/space_top_course_rating_count"
+        android:textColor="@color/text_light_gray"
+        android:textSize="@dimen/text_size_default_normal_regular" />
+
+</LinearLayout>

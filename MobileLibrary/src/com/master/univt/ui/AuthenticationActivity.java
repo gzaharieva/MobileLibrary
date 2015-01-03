@@ -40,9 +40,6 @@ import com.master.univt.entities.ResponseStatusCode;
 import com.master.univt.services.AuthenticationService;
 import com.master.univt.services.CommunicationService;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,13 +47,13 @@ import java.util.regex.Pattern;
 
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.master.univt.ui.search.MainActivity_;
+
 
 
 /**
  * Activity which displays a authentication screen to the user - login and registration as weel.
  */
-@EActivity(R.layout.activity_login)
+//@EActivity(R.layout.activity_login)
 public abstract class AuthenticationActivity extends ActionBarActivity implements CommunicationService<ResponseStatusCode>,
         ConnectionCallbacks, OnConnectionFailedListener, View.OnClickListener {
 
@@ -72,20 +69,20 @@ public abstract class AuthenticationActivity extends ActionBarActivity implement
     protected String labelTrackingGA;
     protected String actionTrackingGA;
 
-    @ViewById(R.id.email)
+   // @ViewById(R.id.email)
     public EditText emailEditTextView;
-    @ViewById(R.id.password)
+    //@ViewById(R.id.password)
     public EditText passwordEditTextView;
-    @ViewById(R.id.authentication_status)
+//    @ViewById(R.id.authentication_status)
     public View authenticationStatusView;
-    @ViewById(R.id.progress)
+//    @ViewById(R.id.progress)
     public View loadingProgressBar;
-    @ViewById(R.id.authentication_form)
+//    @ViewById(R.id.authentication_form)
     public View authenticationFormView;
-    @ViewById(R.id.authentication_button)
+//    @ViewById(R.id.authentication_button)
     public Button authenticationButton;
 
-    @ViewById(R.id.sign_in_status)
+//    @ViewById(R.id.sign_in_status)
     public TextView mStatus;
     private static final int STATE_DEFAULT = 0;
     private static final int STATE_SIGN_IN = 1;
@@ -123,7 +120,7 @@ public abstract class AuthenticationActivity extends ActionBarActivity implement
     // until the user clicks 'sign in'.
     private int mSignInError;
 
-    @ViewById(R.id.sign_in_button)
+//    @ViewById(R.id.sign_in_button)
     public SignInButton mSignInButton;
     
     @Override
@@ -133,9 +130,13 @@ public abstract class AuthenticationActivity extends ActionBarActivity implement
         if (savedInstanceState != null) {
             mSignInProgress = savedInstanceState
                     .getInt(SAVED_PROGRESS, STATE_DEFAULT);
+        }  mGoogleApiClient = buildGoogleApiClient();
+        if (savedInstanceState != null) {
+            mSignInProgress = savedInstanceState
+                    .getInt(SAVED_PROGRESS, STATE_DEFAULT);
         }
     }
-    @AfterViews
+//    @AfterViews
     void afterViews() {
         Log.d(LOG_TAG, "afterViews");
         mSignInButton.setOnClickListener(this);

@@ -19,13 +19,12 @@ import android.view.View;
 import com.master.univt.R;
 import com.master.univt.support.util.SearchSetting;
 
-import org.androidannotations.annotations.EFragment;
 
 
 /**
  * Created by LQG on BookDetailActivity2014/12/8.
  */
-@EFragment
+//@EFragment
 public class SearchSetingFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private ActionBarDrawerToggle mDrawerToggle;

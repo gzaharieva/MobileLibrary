@@ -1,6 +1,8 @@
 package com.master.univt.ui.search;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
@@ -12,21 +14,31 @@ import android.view.inputmethod.InputMethodManager;
 import com.master.univt.R;
 import com.master.univt.support.util.LogUtil;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
 
-@EActivity(R.layout.activity_main)
+//@EActivity(R.layout.activity_main)
 public class MainActivity extends ActionBarActivity implements SearchView.OnQueryTextListener {
-    @ViewById
+   // @ViewById
     DrawerLayout drawerLayout;
 
-    @ViewById(R.id.tl_custom)
+    //@ViewById(R.id.tl_custom)
     Toolbar toolbar;
 
     SearchSetingFragment searchSetingFragment;
 
-    @AfterViews
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+        toolbar = (Toolbar) findViewById(R.id.tl_custom);
+        afterViews();
+    }
+
+    //@AfterViews
     void afterViews() {
         toolbar.setTitleTextColor(0xffffffff);
         toolbar.setTitle(getString(R.string.action_search));

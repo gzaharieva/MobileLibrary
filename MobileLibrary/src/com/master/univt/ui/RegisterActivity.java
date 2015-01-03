@@ -10,18 +10,14 @@ import com.master.univt.R;
 import com.master.univt.entities.ResponseStatusCode;
 import com.master.univt.ui.search.MainActivity;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
-
 
 /**
  * Activity which displays a register screen to the user in order to authenticate himself.
  */
-@EActivity(R.layout.activity_register)
+//@EActivity(R.layout.activity_register)
 public class RegisterActivity extends AuthenticationActivity {
 
-    @ViewById(R.id.tl_custom)
+    //@ViewById(R.id.tl_custom)
     Toolbar toolbar;
     
 
@@ -34,7 +30,7 @@ public class RegisterActivity extends AuthenticationActivity {
 
 
     }
-    @AfterViews
+    //@AfterViews
     void afterViews() {
         toolbar.setTitleTextColor(0xffffffff);
         setSupportActionBar(toolbar);

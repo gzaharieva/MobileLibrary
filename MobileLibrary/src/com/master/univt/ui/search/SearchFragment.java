@@ -2,9 +2,13 @@ package com.master.univt.ui.search;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -14,10 +18,6 @@ import com.master.univt.R;
 import com.master.univt.support.http.Search;
 import com.master.univt.ui.detail.BookDetailActivity;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ItemClick;
-import org.androidannotations.annotations.ViewById;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,23 +27,36 @@ import java.util.List;
 /**
  * Created by LQG on 2014/12/4.
  */
-@EFragment(R.layout.fragment_main)
+//@EFragment(R.layout.fragment_main)
 public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener {
 
-    @ViewById(R.id.search_pb)
+    //@ViewById(R.id.search_pb)
     ProgressBar pb;
 
     private List<Volume> searchResultList = new ArrayList<>();
     private SearchResultAdapter adapter;
     private QueryTask task;
 
-    @ViewById(R.id.listview)
+   // @ViewById(R.id.listview)
     ListView listView;
 
-    @AfterViews
+   // @AfterViews
     void init() {
         adapter = new SearchResultAdapter(this, searchResultList);
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(
+                R.layout.fragment_main, container, false);
+
+        pb = (ProgressBar) rootView.findViewById(R.id.search_pb);
+        listView = (ListView) rootView.findViewById(R.id.listview);
+        init();
+
+        return  rootView;
     }
 
     @Override
@@ -63,7 +76,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         return false;
     }
 
-    @ItemClick(R.id.listview)
+    //@ItemClick(R.id.listview)
     void onItemClick(Volume item) {
         Intent intent = new Intent(getActivity(), BookDetailActivity.class);
         try {

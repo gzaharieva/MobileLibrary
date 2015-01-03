@@ -14,9 +14,6 @@ import com.master.univt.R;
 import com.master.univt.support.http.Search;
 import com.master.univt.support.util.ImageLoaderUtil;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,39 +21,39 @@ import java.util.List;
 /**
  * Created by LQG on 2014/12/5.
  */
-@EActivity(R.layout.book_detail)
+//@EActivity(R.layout.book_detail)
 public class BookDetailActivity extends ActionBarActivity {
-    @ViewById(R.id.tl_custom)
+   // @ViewById(R.id.tl_custom)
     Toolbar toolbar;
 
-    @ViewById
+    //@ViewById
     ImageView thumbnail;
 
-    @ViewById(R.id.book_title)
+    //@ViewById(R.id.book_title)
     TextView titleTv;
 
-    @ViewById(R.id.book_authors)
+   // @ViewById(R.id.book_authors)
     TextView authorTv;
 
-    @ViewById
+    //@ViewById
     TextView language;
 
-    @ViewById
+   // @ViewById
     TextView publishedDate;
 
-    @ViewById
+   // @ViewById
     TextView categories;
 
-    @ViewById
+    //@ViewById
     RatingBar averageRating;
 
-    @ViewById
+    //@ViewById
     TextView ratingsCount;
 
-    @ViewById
+    //@ViewById
     TextView description;
 
-    @AfterViews
+    //@AfterViews
     void afterView() {
         restoreActionBar();
         loadData();

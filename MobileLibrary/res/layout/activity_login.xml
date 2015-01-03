@@ -3,8 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-   
-
     <include
         android:id="@+id/authentication_status"
         layout="@layout/authentication_progress"

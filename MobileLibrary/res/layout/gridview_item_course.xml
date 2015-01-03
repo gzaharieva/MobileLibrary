@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/grid_view_shadow_box"
+    android:minHeight="104dp" >
+
+    <ImageView
+        android:id="@+id/image"
+        style="@style/PlaceholderImageStyle"
+        android:layout_width="140dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="@dimen/grid_sides_space"
+        android:layout_marginLeft="@dimen/grid_sides_space"
+        android:layout_marginRight="@dimen/gridview_image_space_right"
+        android:layout_marginTop="@dimen/grid_sides_space"
+        android:contentDescription="@string/description" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/TitleCourseHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/grid_sides_space"
+            android:maxLines="2" />
+
+        <TextView
+            android:id="@+id/label_free"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/msg_free_course"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/text_size_default_regular" />
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
+
+</LinearLayout>

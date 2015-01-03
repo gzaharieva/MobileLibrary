@@ -7,26 +7,20 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.master.univt.HomeActivity;
 import com.master.univt.R;
 import com.master.univt.entities.ResponseStatusCode;
-import com.master.univt.ui.search.MainActivity;
-
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ViewById;
+import com.master.univt.HomeActivity;
 
 
 /**
- * Activity which displays a login screen to the user, offering registration as well.
- */
-@EActivity(R.layout.activity_login)
+* Activity which displays a login screen to the user, offering registration as well.
+*/
+//@EActivity(R.layout.activity_login)
 public class LoginActivity extends AuthenticationActivity {
 
-    @ViewById(R.id.tl_custom)
+   // @ViewById(R.id.tl_custom)
     Toolbar toolbar;
-    
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +29,7 @@ public class LoginActivity extends AuthenticationActivity {
 
     }
 
-    @AfterViews
+   // @AfterViews
     void afterViews() {
         super.afterViews();
         toolbar.setTitleTextColor(0xffffffff);
@@ -56,7 +50,7 @@ public class LoginActivity extends AuthenticationActivity {
     public void onRequestCompleted(final ResponseStatusCode requestStatusCode) {
         authenticationTask = null;
 
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         if (requestStatusCode != null) {
             switch (requestStatusCode) {
@@ -65,7 +59,7 @@ public class LoginActivity extends AuthenticationActivity {
                     SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString(PREFS_USER_ID, "117463411595501910870");
-                    
+
                     startActivity(intent);
                     Log.d("LOG", "GA: Login: " + actionTrackingGA + "-" + labelTrackingGA);
                     setResult(RESULT_OK, null);

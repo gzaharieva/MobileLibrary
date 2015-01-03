@@ -9,7 +9,7 @@
         android:id="@+id/maincontainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.master.univt.ui.search.SearchFragment_" />
+        android:name="com.master.univt.ui.search.SearchFragment" />
 
 
     <fragment
@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="#f5f5f5"
-        android:name="com.master.univt.ui.search.SearchSetingFragment_" />
+        android:name="com.master.univt.ui.search.SearchSetingFragment" />
 
 
 </android.support.v4.widget.DrawerLayout>

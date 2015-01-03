@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="wellcome">Welcome</string>
+    <string name="sign_in_google">Sign in with Gogle</string>
     <string name="app_name">Books</string>
     <string name="bookDetail">Book Detail</string>
     <string name="fragment_search">Search</string>
+    <string name="fragment_bookshelf">Bookshelfs</string>
+    
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -59,4 +63,19 @@
     <string name="user">User</string>
     <string name="bookshelf">Bookshelfs</string>
     <string name="search">Search</string>
+
+    <string name="menu_item_clear_memory_cache">Clear memory cache</string>
+    <string name="menu_item_clear_disc_cache">Clear disc cache</string>
+    <string name="menu_item_pause_on_scroll">Pause on scroll</string>
+    <string name="menu_item_pause_on_fling">Pause on fling</string>
+    <string name="description">Description</string>
+    <string name="label_activity_examples">My library</string>
+    <string name="button_image_list">All books</string>
+    <string name="button_image_grid">My books</string>
+    <string name="button_image_pager"> Pager books</string>
+    <string name="title_favorites">Fovorites</string>
+    <string name="title_toread">To read</string>
+    <string name="title_reading_now">Reading now</string>
+    <string name="title_bookshelfs">Bookshelfs</string>
+    <string name="message_no_internet_connection">No internet connection</string>
 </resources>
