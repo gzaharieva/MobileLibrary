@@ -1,6 +1,7 @@
 package com.master.univt.services;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,6 +10,7 @@ import com.google.api.services.books.model.Bookshelves;
 import com.google.api.services.books.model.Volumes;
 import com.master.univt.support.http.Search;
 import com.master.univt.support.http.UserLibrary;
+import com.master.univt.ui.SplashActivity;
 
 
 /**
@@ -31,8 +33,11 @@ public class VolumesService extends AsyncTask<String, Integer, Volumes>
   @Override
   protected Volumes doInBackground(final String... normalizedTitles)
   {
-
-      Bookshelves bookshelves = UserLibrary.searchVolumes(normalizedTitles[0]);
+      SharedPreferences sharedPreferences = activity.getSharedPreferences(SplashActivity.PREFS_NAME, 0);
+      String username = sharedPreferences.getString(SplashActivity.PREFS_USERNAME, "");
+      String token =  sharedPreferences.getString(SplashActivity.PREFS_OAUTH_TOKEN, "");
+      Log.d(LOG_TAG, username + "-"+ token);
+      Bookshelves bookshelves = UserLibrary.searchVolumes(normalizedTitles[0], token);
       if(bookshelves != null) {
           for (Bookshelf shelf : bookshelves.getItems()) {
               Log.d(LOG_TAG, "Swhelf:" + shelf.getTitle() + "-" + shelf.getId());

@@ -6,17 +6,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
@@ -39,6 +44,8 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
     public static final String PREFS_NAME = "mobile_library";
     public static final String PREFS_USER_ID = "user_id";
     public static final String PREFS_USERNAME = "username";
+    public static final String PREFS_OAUTH_TOKEN = "oauth_token";
+    public static final int REQUEST_CODE_TOKEN_AUTH = 6;
 
     //@ViewById(R.id.tl_custom)
     Toolbar toolbar;
@@ -85,6 +92,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
 
     //    @ViewById(R.id.sign_in_button)
     public SignInButton mSignInButton;
+    private TextView mStatus;
 
 
     @Override
@@ -106,6 +114,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         toolbar = (Toolbar) findViewById(R.id.tl_custom);
         contentView = findViewById(R.id.content_view);
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        mStatus = (TextView) findViewById(R.id.mStatus);
 
         mSignInButton.setOnClickListener(this);
 
@@ -208,6 +217,14 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
     @Override
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
+
+        if (requestCode == REQUEST_CODE_TOKEN_AUTH && resultCode == RESULT_OK) {
+            Bundle extra = data.getExtras();
+            String oneTimeToken = extra.getString("authtoken");
+            Log.d(LOG_TAG, oneTimeToken);
+            authenticateUser("8798", "Gabriela", oneTimeToken);
+        }
+        
         switch (requestCode) {
             case RC_SIGN_IN:
                 if (resultCode == RESULT_OK) {
@@ -277,7 +294,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
                 + result.getErrorCode()+ "-" + mSignInProgress);
 
         if (mSignInProgress == STATE_FAILED) {
-            authenticateUser("117463411595501910870", "Gabriela Zaharieva");
+            authenticateUser("117463411595501910870", "Gabriela Zaharieva", "oAuth");
         }
         //  mStatus.setText(result.getErrorCode());
 
@@ -320,51 +337,66 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         mSignInProgress = STATE_DEFAULT;
         mSignInButton.setEnabled(false);
         // Retrieve some profile information to personalize our app for the user.
-        Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+        final Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
-        Bundle appActivities = new Bundle();
-        appActivities.putString(GoogleAuthUtil.KEY_REQUEST_VISIBLE_ACTIVITIES,
-                "<APP-ACTIVITY1> <APP-ACTIVITY2>");
-        String scopes = "oauth2:server:client_id:<SERVER-CLIENT-ID>:api_scope:<SCOPE1> <SCOPE2>";
-        String code = null;
-        try {
-            code = GoogleAuthUtil.getToken(
-                    this,                                              // Context context
-                    Plus.AccountApi.getAccountName(mGoogleApiClient),  // String accountName
-                    scopes,                                            // String scope
-                    appActivities                                      // Bundle bundle
-            );
-            Log.d(LOG_TAG, "TOKEN:" + code);
-        } catch (IOException transientEx) {
-            // network or server error, the call is expected to succeed if you try again later.
-            // Don't attempt to call again immediately - the request is likely to
-            // fail, you'll hit quotas or back-off.
 
-            return;
-        } catch (UserRecoverableAuthException e) {
-            // Requesting an authorization code will always throw
-            // UserRecoverableAuthException on the first call to GoogleAuthUtil.getToken
-            // because the user must consent to offline access to their data.  After
-            // consent is granted control is returned to your activity in onActivityResult
-            // and the second call to GoogleAuthUtil.getToken will succeed.
-            //  startActivityForResult(e.getIntent(), AUTH_CODE_REQUEST_CODE);
-            return;
-        } catch (GoogleAuthException authEx) {
-            // Failure. The call is not expected to ever succeed so it should not be
-            // retried.
-            return;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        
-        authenticateUser(currentUser.getId(), currentUser.getDisplayName());
+        AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String token = null;
+                Bundle appActivities = new Bundle();
+                appActivities.putString(GoogleAuthUtil.KEY_REQUEST_VISIBLE_ACTIVITIES,
+                        "com.master.univt.ui.SplashActivity");
+               // String scopes = "oauth2:server:client_id:933905793255-pa7ifm7m6elch8nuu9ucpijr3br8cjqv.apps.googleusercontent.com:api_scope:"+Scopes.PLUS_ME;//:api_scope:<SCOPE1> <SCOPE2>
+                final String scopes = "oauth2:https://www.googleapis.com/auth/books";// + Scopes.PLUS_ME;
+                String code = null;
+                try {
+                    Log.d(LOG_TAG, Plus.AccountApi.getAccountName(mGoogleApiClient));
+                    token = GoogleAuthUtil.getToken(
+                            SplashActivity.this,
+                            Plus.AccountApi.getAccountName(mGoogleApiClient),
+                            scopes);                                            // String scope
+//                            appActivities);                                 // Bundle bundle);
+                } catch (IOException transientEx) {
+                    // Network or server error, try later
+                    Log.e(LOG_TAG, transientEx.toString());
+                } catch (UserRecoverableAuthException e) {
+                    // Recover (with e.getIntent())
+                    Log.e(LOG_TAG, e.toString());
+                    Intent recover = e.getIntent();
+                    startActivityForResult(recover, REQUEST_CODE_TOKEN_AUTH);
+                } catch (GoogleAuthException authEx) {
+                    // The call is not ever expected to succeed
+                    // assuming you have already verified that
+                    // Google Play services is installed.
+                    Log.e(LOG_TAG,"", authEx);
+                }
+
+                return token;
+            }
+
+            @Override
+            protected void onPostExecute(String token) {
+                Log.i(LOG_TAG, "Access token retrieved:" + token);
+                mStatus.setText(token);
+                if(token != null) {
+                    authenticateUser(currentUser.getId(), currentUser.getDisplayName(), token);
+                }
+            }
+
+        };
+        task.execute();
+       
+       
     }
 
-    private void authenticateUser(String currentUserId, String username) {
+    private void authenticateUser(String currentUserId, String username,  String oauthCode) {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(PREFS_USER_ID, currentUserId);
         editor.putString(PREFS_USERNAME, username);
+        editor.putString(PREFS_OAUTH_TOKEN, oauthCode);
+        editor.commit();
         Intent intent;
         intent = new Intent(this, com.master.univt.HomeActivity.class);
         startActivity(intent);
