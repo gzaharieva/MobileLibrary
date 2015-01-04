@@ -1,4 +1,4 @@
-package com.master.univt.utils;
+package com.master.univt.entities;
 
 import java.io.Serializable;
 import java.util.List;

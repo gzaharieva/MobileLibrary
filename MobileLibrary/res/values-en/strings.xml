@@ -78,4 +78,6 @@
     <string name="title_reading_now">Reading now</string>
     <string name="title_bookshelfs">Bookshelfs</string>
     <string name="message_no_internet_connection">No internet connection</string>
+    <string name="username">Username</string>
+    <string name="title_browsing_history">Browsing history</string>
 </resources>

@@ -33,11 +33,12 @@ import java.io.IOException;
  */
 //@EActivity(R.layout.activity_splash)
 public class SplashActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
-    
+
     private final String LOG_TAG = SplashActivity.class.getSimpleName();
     private static int REQUEST_EXIT = 0;
     public static final String PREFS_NAME = "mobile_library";
     public static final String PREFS_USER_ID = "user_id";
+    public static final String PREFS_USERNAME = "username";
 
     //@ViewById(R.id.tl_custom)
     Toolbar toolbar;
@@ -48,6 +49,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
     private static final int STATE_DEFAULT = 0;
     private static final int STATE_SIGN_IN = 1;
     private static final int STATE_IN_PROGRESS = 2;
+    private static final int STATE_FAILED = 3;
 
     private static final int RC_SIGN_IN = 0;
 
@@ -104,7 +106,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         toolbar = (Toolbar) findViewById(R.id.tl_custom);
         contentView = findViewById(R.id.content_view);
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        
+
         mSignInButton.setOnClickListener(this);
 
         mGoogleApiClient.connect();
@@ -191,7 +193,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
             // error types, so we show the default Google Play services error
             // dialog which may still start an intent on our behalf if the
             // user can resolve the issue.
-            showDialog(DIALOG_PLAY_SERVICES_ERROR);
+         //   showDialog(DIALOG_PLAY_SERVICES_ERROR);
         }
     }
 
@@ -213,9 +215,11 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
                     // processing errors.
                     mSignInProgress = STATE_SIGN_IN;
                 } else {
+                    Log.d(LOG_TAG, "RC_SIGN_IN > STATE_DEFAULT");
                     // If the error resolution was not successful or the user canceled,
                     // we should stop processing errors.
-                    mSignInProgress = STATE_DEFAULT;
+//                    mSignInProgress = STATE_DEFAULT;
+                    mSignInProgress = STATE_FAILED;
                 }
 
                 if (!mGoogleApiClient.isConnecting()) {
@@ -231,6 +235,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case DIALOG_PLAY_SERVICES_ERROR:
+                Log.d(LOG_TAG, "DIALOG_PLAY_SERVICES_ERROR" );
                 if (GooglePlayServicesUtil.isUserRecoverableError(mSignInError)) {
                     return GooglePlayServicesUtil.getErrorDialog(
                             mSignInError,
@@ -241,7 +246,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
                                 public void onCancel(DialogInterface dialog) {
                                     Log.e(LOG_TAG, "Google Play services resolution cancelled");
                                     mSignInProgress = STATE_DEFAULT;
-                                   // mStatus.setText(R.string.status_signed_out);
+                                    // mStatus.setText(R.string.status_signed_out);
                                 }
                             });
                 } else {
@@ -269,8 +274,11 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         // Refer to the javadoc for ConnectionResult to see what error codes might
         // be returned in onConnectionFailed.
         Log.i(LOG_TAG, "onConnectionFailed: ConnectionResult.getErrorCode() = "
-                + result.getErrorCode());
-        authenticateUser("117463411595501910870");
+                + result.getErrorCode()+ "-" + mSignInProgress);
+
+        if (mSignInProgress == STATE_FAILED) {
+            authenticateUser("117463411595501910870", "Gabriela Zaharieva");
+        }
         //  mStatus.setText(result.getErrorCode());
 
         if (result.getErrorCode() == ConnectionResult.API_UNAVAILABLE) {
@@ -288,8 +296,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
                 // STATE_SIGN_IN indicates the user already clicked the sign in button
                 // so we should continue processing errors until the user is signed in
                 // or they click cancel.
-                resolveSignInError();
-                
+               resolveSignInError();
             }
         }
 
@@ -327,7 +334,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
                     scopes,                                            // String scope
                     appActivities                                      // Bundle bundle
             );
-    Log.d(LOG_TAG, "TOKEN:"+ code);
+            Log.d(LOG_TAG, "TOKEN:" + code);
         } catch (IOException transientEx) {
             // network or server error, the call is expected to succeed if you try again later.
             // Don't attempt to call again immediately - the request is likely to
@@ -340,27 +347,24 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
             // because the user must consent to offline access to their data.  After
             // consent is granted control is returned to your activity in onActivityResult
             // and the second call to GoogleAuthUtil.getToken will succeed.
-          //  startActivityForResult(e.getIntent(), AUTH_CODE_REQUEST_CODE);
+            //  startActivityForResult(e.getIntent(), AUTH_CODE_REQUEST_CODE);
             return;
         } catch (GoogleAuthException authEx) {
             // Failure. The call is not expected to ever succeed so it should not be
             // retried.
-
             return;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-//        mStatus.setText(String.format(
-//                getResources().getString(R.string.signed_in_as),
-//                currentUser.getDisplayName() + currentUser.getId()));
-        authenticateUser(currentUser.getId());
+        
+        authenticateUser(currentUser.getId(), currentUser.getDisplayName());
     }
 
-    private void authenticateUser(String currentUser) {
+    private void authenticateUser(String currentUserId, String username) {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString(PREFS_USER_ID, currentUser);
-        //authenticateUser(null, currentUser.getId());
+        editor.putString(PREFS_USER_ID, currentUserId);
+        editor.putString(PREFS_USERNAME, username);
         Intent intent;
         intent = new Intent(this, com.master.univt.HomeActivity.class);
         startActivity(intent);

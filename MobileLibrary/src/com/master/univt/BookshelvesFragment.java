@@ -31,7 +31,7 @@ import android.widget.ListView;
  * 
  * @author Gabriela Zaharieva
  */
-public class MainContentFragment extends Fragment 
+public class BookshelvesFragment extends Fragment
 {
 	private static final String TEST_FILE_NAME = "Universal Image Loader @#&=+-_.,!()~'%20.png";
   public Context context;

@@ -5,6 +5,8 @@ import java.util.List;
 import android.content.Context;
 import android.widget.BaseAdapter;
 
+import com.master.univt.entities.Books;
+
 /**
  * The application abstract list view adapter.
  * 

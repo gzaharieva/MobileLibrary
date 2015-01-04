@@ -62,10 +62,6 @@
             android:summary="%s"
             android:title="Order By" />
 
-        <EditTextPreference
-            android:summary="beta0.1"
-            android:title="Version"
-            android:enabled="false"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
