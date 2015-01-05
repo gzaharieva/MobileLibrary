@@ -8,9 +8,10 @@ package com.master.univt.navigation;
  */
 public class NavigationDrawerItem {
 
+    private int id;
 	private String title;
 	private int icon;
-	private String count = "0";
+	private int count;
 	/** boolean to set visiblity of the counter */
 	private boolean isCounterVisible = false;
 
@@ -30,13 +31,19 @@ public class NavigationDrawerItem {
 		this.icon = icon;
 	}
 
-	public NavigationDrawerItem(final String title, final int icon,
-			final boolean isCounterVisible, final String count) {
+	public NavigationDrawerItem(int id, final String title, final int icon,
+			final boolean isCounterVisible, final int count) {
+        this.id = id;
 		this.title = title;
 		this.icon = icon;
 		this.isCounterVisible = isCounterVisible;
 		this.count = count;
 	}
+    
+    public int getId(){
+        return id;
+        
+    }
 
 	/**
 	 * @return the title
@@ -71,7 +78,7 @@ public class NavigationDrawerItem {
 	/**
 	 * @return the count
 	 */
-	public String getCount() {
+	public int getCount() {
 		return count;
 	}
 
@@ -79,7 +86,7 @@ public class NavigationDrawerItem {
 	 * @param count
 	 *            the count to set
 	 */
-	public void setCount(final String count) {
+	public void setCount(final int count) {
 		this.count = count;
 	}
 

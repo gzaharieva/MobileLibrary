@@ -62,10 +62,6 @@ public class ImageListActivity extends AbsListViewBaseActivity {
 		Bundle bundle = getIntent().getExtras();
 		imageUrls = bundle.getStringArray(Constants.Extra.IMAGES);
 
-
-	    getActionBar().setHomeButtonEnabled(true);
-	    getActionBar().setDisplayHomeAsUpEnabled(true);
-
 		options = new DisplayImageOptions.Builder()
 			.showImageOnLoading(R.drawable.ic_stub)
 			.showImageForEmptyUri(R.drawable.ic_empty)

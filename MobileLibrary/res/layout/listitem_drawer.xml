@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:orientation="horizontal"
@@ -18,15 +22,37 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
   		android:src="@drawable/ic_pencil"
-        android:contentDescription="@string/desc_list_item_icon" />
+        android:contentDescription="@string/desc_list_item_icon"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/drawer_active_section"
+        android:layout_toEndOf="@+id/drawer_active_section" />
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white" 
-        android:layout_marginLeft="@dimen/layout_default_left_space"
+        android:textColor="@color/white"
         android:text="asdasdasd"
-        android:textSize="@dimen/text_size_default_regular"/>
+        android:textSize="@dimen/text_size_default_regular"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_alignTop="@+id/count_items"
+        android:layout_toRightOf="@+id/icon"
+        android:layout_toEndOf="@+id/icon" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/count_items"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blue"
+        android:layout_marginRight="60dp"
+        android:text="2"
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:textSize="@dimen/text_size_default_regular"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
+    </LinearLayout>

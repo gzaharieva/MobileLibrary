@@ -26,7 +26,9 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.master.univt.Constants;
 import com.master.univt.R;
+import com.master.univt.services.SharedPreferencedSingleton;
 
 import java.io.IOException;
 
@@ -41,10 +43,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
 
     private final String LOG_TAG = SplashActivity.class.getSimpleName();
     private static int REQUEST_EXIT = 0;
-    public static final String PREFS_NAME = "mobile_library";
-    public static final String PREFS_USER_ID = "user_id";
-    public static final String PREFS_USERNAME = "username";
-    public static final String PREFS_OAUTH_TOKEN = "oauth_token";
+
     public static final int REQUEST_CODE_TOKEN_AUTH = 6;
 
     //@ViewById(R.id.tl_custom)
@@ -105,6 +104,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
             finish();
             return;
         }
+        SharedPreferencedSingleton.getInstance().Initialize(this);
         mGoogleApiClient = buildGoogleApiClient();
         if (savedInstanceState != null) {
             mSignInProgress = savedInstanceState
@@ -391,12 +391,10 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
     }
 
     private void authenticateUser(String currentUserId, String username,  String oauthCode) {
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(PREFS_USER_ID, currentUserId);
-        editor.putString(PREFS_USERNAME, username);
-        editor.putString(PREFS_OAUTH_TOKEN, oauthCode);
-        editor.commit();
+        SharedPreferencedSingleton sharedPreferencedSingleton = SharedPreferencedSingleton.getInstance();
+        sharedPreferencedSingleton.writePreference(Constants.PREFS_USER_ID, currentUserId);
+        sharedPreferencedSingleton.writePreference(Constants.PREFS_USERNAME, username);
+        sharedPreferencedSingleton.writePreference(Constants.PREFS_OAUTH_TOKEN, oauthCode);
         Intent intent;
         intent = new Intent(this, com.master.univt.HomeActivity.class);
         startActivity(intent);

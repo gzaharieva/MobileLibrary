@@ -1,28 +1,22 @@
 package com.master.univt;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-
-import com.google.api.services.books.model.Volume;
 import com.google.api.services.books.model.Volumes;
 import com.master.univt.dummy.DummyContent;
 import com.master.univt.services.CommunicationService;
 import com.master.univt.services.VolumesService;
-import com.master.univt.utils.BooksGridViewAdapter;
 import com.master.univt.utils.VolumeAdapter;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -35,15 +29,7 @@ import java.util.List;
  */
 
 public class BooksFragment extends Fragment implements AbsListView.OnItemClickListener, CommunicationService<Volumes> {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String bookshelf;
 
     private OnFragmentInteractionListener mListener;
 
@@ -58,16 +44,6 @@ public class BooksFragment extends Fragment implements AbsListView.OnItemClickLi
      */
     private ListAdapter mAdapter;
 
-    // TODO: Rename and change types of parameters
-    public static BooksFragment newInstance(String param1, String param2) {
-        BooksFragment fragment = new BooksFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -80,27 +56,18 @@ public class BooksFragment extends Fragment implements AbsListView.OnItemClickLi
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            bookshelf = getArguments().getString(Constants.BOOKSHELF);
+            Log.d("LOG", "Retrieved:" + bookshelf);
         }
-
-        // TODO: Change Adapter to display your content
-      
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_books, container, false);
-
-        // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
-
-
-        // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
-        
         return view;
     }
 
@@ -111,9 +78,7 @@ public class BooksFragment extends Fragment implements AbsListView.OnItemClickLi
     }
 
     private void init() {
-        new VolumesService(this, getActivity()).execute("java");
-        
-        
+        new VolumesService(this, getActivity()).execute(bookshelf);
     }
 
     @Override
@@ -147,13 +112,10 @@ public class BooksFragment extends Fragment implements AbsListView.OnItemClickLi
 
     @Override
     public void onRequestCompleted(Volumes resultData) {
-        
-        
-//        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-//                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
-
-        mAdapter = new VolumeAdapter(getActivity(), resultData.getItems());
-        (mListView).setAdapter(mAdapter);
+        if (resultData != null) {
+            mAdapter = new VolumeAdapter(getActivity(), resultData.getItems());
+            (mListView).setAdapter(mAdapter);
+        }
     }
 
     /**

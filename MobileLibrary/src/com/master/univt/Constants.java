@@ -166,6 +166,13 @@ public final class Constants {
 	private Constants() {
 	}
 
+    public static final String PREFS_USER_ID = "user_id";
+    public static final String PREFS_USERNAME = "username";
+    public static final String PREFS_OAUTH_TOKEN = "oauth_token";
+    public static final String BOOKSHELF = "bookshelf";
+    
+
+    
 	public static class Config {
 		public static final boolean DEVELOPER_MODE = false;
 	}

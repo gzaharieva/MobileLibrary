@@ -65,7 +65,7 @@ public class VolumeAdapter  extends BaseAdapter
         @Override
         public int getCount()
         {
-            return volumes.size();
+            return volumes != null ? volumes.size() : 0;
         }
 
         @Override

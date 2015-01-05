@@ -20,30 +20,17 @@ import com.master.univt.ui.SplashActivity;
  */
 public class VolumesService extends AsyncTask<String, Integer, Volumes>
 {
-  private static final String LOG_TAG = VolumesService.class.getSimpleName();
   private final CommunicationService<Volumes> communicationService;
-  private final Activity activity;
     
   public VolumesService(final CommunicationService<Volumes> communicationService, final Activity activity)
   {
-    this.activity = activity;
     this.communicationService = communicationService;
   }
 
   @Override
-  protected Volumes doInBackground(final String... normalizedTitles)
+  protected Volumes doInBackground(final String... shelf)
   {
-      SharedPreferences sharedPreferences = activity.getSharedPreferences(SplashActivity.PREFS_NAME, 0);
-      String username = sharedPreferences.getString(SplashActivity.PREFS_USERNAME, "");
-      String token =  sharedPreferences.getString(SplashActivity.PREFS_OAUTH_TOKEN, "");
-      Log.d(LOG_TAG, username + "-"+ token);
-      Bookshelves bookshelves = UserLibrary.searchVolumes(normalizedTitles[0], token);
-      if(bookshelves != null) {
-          for (Bookshelf shelf : bookshelves.getItems()) {
-              Log.d(LOG_TAG, "Swhelf:" + shelf.getTitle() + "-" + shelf.getId());
-          }
-      }
-      return Search.searchVolumes(normalizedTitles[0]);
+      return UserLibrary.getBookshelfVolumes(shelf[0]);
   }
 
   @Override

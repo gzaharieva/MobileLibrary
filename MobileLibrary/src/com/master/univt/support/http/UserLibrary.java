@@ -2,6 +2,7 @@ package com.master.univt.support.http;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -12,6 +13,10 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.services.books.Books;
+import com.google.api.services.books.model.Bookshelves;
+import com.google.api.services.books.model.Volumes;
+import com.master.univt.Constants;
+import com.master.univt.services.SharedPreferencedSingleton;
 import com.master.univt.support.util.LogUtil;
 import com.master.univt.support.util.SearchSetting;
 
@@ -37,19 +42,17 @@ public class UserLibrary {
             }
         }).setApplicationName("APP").build();
         
-
-
-        
     }
 
-    public static com.google.api.services.books.model.Bookshelves searchVolumes(String queryTerm, String token) {
+    public static Bookshelves getBookshelves() {
+        Bookshelves result = null;
         try {
-            SearchSetting searchSetting = SearchSetting.getInstance();
-            Books.Mylibrary search;
-            search = books.mylibrary();
-            Books.Mylibrary.Bookshelves.List shelfs = search.bookshelves().list()//.setOauthToken("117463411595501910870")
+            SharedPreferencedSingleton s = SharedPreferencedSingleton.getInstance();
+            String token = s.getString(Constants.PREFS_OAUTH_TOKEN, "");
+            Log.d("LOG", token);
+            Books.Mylibrary.Bookshelves.List shelves =  books.mylibrary().bookshelves().list()//.setOauthToken("117463411595501910870")
                     .setKey(apiKey).setOauthToken(token);
-            return shelfs.execute();
+            result =  shelves.execute();
         } catch (GoogleJsonResponseException e) {
             LogUtil.d("There was a service error: " + e.getDetails().getCode() + " : " + e.getMessage());
         } catch (IOException e) {
@@ -58,7 +61,28 @@ public class UserLibrary {
             LogUtil.d(t);
         }
 
-        return null;
+        return result;
     }
 
+    public static Volumes getBookshelfVolumes(String shelf) {
+        Volumes result = null;
+        try {
+
+            SharedPreferencedSingleton s = SharedPreferencedSingleton.getInstance();
+            String token = s.getString(Constants.PREFS_OAUTH_TOKEN, "");
+            Log.d("LOG",shelf);
+            Books.Mylibrary.Bookshelves.Volumes.List shelves =  books.mylibrary().bookshelves().volumes().list(shelf)
+                    .setKey(apiKey).setOauthToken(token);
+            result =  shelves.execute();
+        } catch (GoogleJsonResponseException e) {
+            LogUtil.d("There was a service error: " + e.getDetails().getCode() + " : " + e.getMessage());
+        } catch (IOException e) {
+            LogUtil.d("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+        } catch (Exception t) {
+            LogUtil.d("Ex:", t);
+        }
+       // Log.d("LOG", ""+result.getItems());
+        return result;
+    }
+    
 }
