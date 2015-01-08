@@ -14,6 +14,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -24,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 
 /**
@@ -38,6 +40,10 @@ public class BookshelvesFragment extends Fragment
   // interface via which we communicate to hosting Activity
   
   private View rootView;
+    private GridView coursesGridView;
+    /** The grid view adapter. */
+    private GridCourseListAdapter gridViewAdapter;
+
 
   @Override
   public void onAttach(final Activity activity)
@@ -62,41 +68,20 @@ public class BookshelvesFragment extends Fragment
   public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState)
   {
     rootView = inflater.inflate(R.layout.ac_home, container, false);
+      coursesGridView = (GridView) rootView.findViewById(R.id.grid_view);
 
-
-	File testImageOnSdCard = new File("/mnt/sdcard", TEST_FILE_NAME);
-	if (!testImageOnSdCard.exists()) {
-		copyTestImageToSdCard(testImageOnSdCard);
-	}
-   
-    setHasOptionsMenu(true);
+      setHasOptionsMenu(true);
     return rootView;
   }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        init();
+    }
 
-	private void copyTestImageToSdCard(final File testImageOnSdCard) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					InputStream is = getActivity().getAssets().open(TEST_FILE_NAME);
-					FileOutputStream fos = new FileOutputStream(testImageOnSdCard);
-					byte[] buffer = new byte[8192];
-					int read;
-					try {
-						while ((read = is.read(buffer)) != -1) {
-							fos.write(buffer, 0, read);
-						}
-					} finally {
-						fos.flush();
-						fos.close();
-						is.close();
-					}
-				} catch (IOException e) {
-					L.w("Can't copy test image onto SD card");
-				}
-			}
-		}).start();
-	}
+    private void init() {
 
+
+    }
 }

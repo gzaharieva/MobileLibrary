@@ -23,6 +23,7 @@
     <color name="blackoverlay_66">#66000000</color>
     <color name="blackoverlay_30">#30000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_50">#90FFFFFF</color>
     <!-- Background -->
     <color name="light_gray_bg">#F7F7F7</color>
     <color name="blue">#0084D6</color>
@@ -39,4 +40,7 @@
     <color name="drawer_bg">#25282f</color> <!-- #383D41 -->
     <color name="separator_line">#DEDEDE</color>
     <color name="drawer_devider">#383D41</color>
+
+    <color name="gray">#D6D6D6</color>
+    <color name="light_grey">#E7E7E7</color>
 </resources>

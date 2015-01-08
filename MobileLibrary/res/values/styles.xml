@@ -264,6 +264,11 @@
 
     <style name="PlaceholderImageStyle">
         <item name="android:contentDescription">@string/description</item>
-        <item name="android:src">@drawable/ic_empty</item>
+        <item name="android:src">@drawable/ic_placeholder</item>
+    </style>
+
+
+    <style name="GridViewTileBox">
+        <item name="android:background">@drawable/selector_tile_box</item>
     </style>
 </resources>
