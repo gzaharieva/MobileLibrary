@@ -212,11 +212,9 @@
         <item name="android:indeterminateDrawable">@drawable/ratingbar_small</item>
     </style>
 
-    <style name="TitleCourseHeader">
+    <style name="TitleHeader">
         <item name="android:ellipsize">end</item>
         <item name="android:textSize">@dimen/text_size_big_regular_message_no_courses</item>
-        <item name="android:textColor">@color/text_dark_gray</item>
-        <item name="android:paddingTop">@dimen/space_medium</item>
     </style>
 
     <style name="ThemeDialogCustom">
@@ -263,8 +261,7 @@
     </style>
 
     <style name="PlaceholderImageStyle">
-        <item name="android:contentDescription">@string/description</item>
-        <item name="android:src">@drawable/ic_placeholder</item>
+        <item name="android:src">@drawable/ic_place1</item>
     </style>
 
 

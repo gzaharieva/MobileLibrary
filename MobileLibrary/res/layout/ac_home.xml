@@ -1,16 +1,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:src="@drawable/background_books" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:src="@drawable/bookopen" />
+        android:layout_height="match_parent">
 
+        <GridView
+            android:id="@+id/grid_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="2"
+            android:drawSelectorOnTop="true"
+            android:verticalSpacing="2dp"
+            android:horizontalSpacing="2dp"/>
 
-    <GridView android:id="@+id/grid_view" android:layout_width="match_parent"
-              android:layout_height="match_parent" android:numColumns="2" />
+        <include
+            layout="@layout/progress"
+            android:visibility="gone" />
+    </RelativeLayout>
 </LinearLayout>

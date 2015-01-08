@@ -91,7 +91,7 @@ public class BooksGridViewAdapter extends BaseAdapter
     {
       layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-      view = layoutInflater.inflate(R.layout.gridview_item_course, parent, false);
+      view = layoutInflater.inflate(R.layout.gridview_item_bookshelf, parent, false);
       holder = new ViewHolder();
       assert view != null;
       holder.imageView = (ImageView) view.findViewById(R.id.image);

@@ -32,6 +32,11 @@ public class NavigationDrawerListAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private int selectedPosition = -1;
 
+    final int[] backgroundImages = {android.R.drawable.ic_media_play, android.R.drawable.ic_dialog_map,android.R.drawable.ic_popup_sync,
+            android.R.drawable.ic_popup_reminder, android.R.drawable.ic_menu_agenda, android.R.drawable.ic_dialog_dialer, android.R.drawable.ic_menu_mylocation,
+            android.R.drawable.ic_menu_share};
+
+
     /**
      * Initialization of the navigation sliding layout on the left with the given context and list
      * items.
@@ -107,13 +112,16 @@ public class NavigationDrawerListAdapter extends BaseAdapter {
                 drawerActiveSection.setVisibility(View.INVISIBLE);
             }
         }
+        NavigationDrawerItem navigationDrawerItem = navigationDrawerItems.get(position);
+        if(position != 0) {
+            ImageView imgIcon = (ImageView) itemView.findViewById(R.id.icon);
 
-        ImageView imgIcon = (ImageView) itemView.findViewById(R.id.icon);
+//        imgIcon.setImageResource(navigationDrawerItem.getIcon());
+            int rando = (int) (Math.random() * 7);
+            imgIcon.setImageResource(backgroundImages[rando]);
+        }
         TextView titleTextView = (TextView) itemView.findViewById(R.id.title);
         TextView count = (TextView) itemView.findViewById(R.id.count_items);
-
-        NavigationDrawerItem navigationDrawerItem = navigationDrawerItems.get(position);
-        imgIcon.setImageResource(navigationDrawerItem.getIcon());
         titleTextView.setText(navigationDrawerItem.getTitle());
         if (count != null && navigationDrawerItem.isCounterVisible()) {
             count.setText(navigationDrawerItem.getCount() + "");

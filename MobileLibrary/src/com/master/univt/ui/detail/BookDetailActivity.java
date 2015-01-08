@@ -1,5 +1,7 @@
 package com.master.univt.ui.detail;
 
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -43,17 +45,36 @@ public class BookDetailActivity extends ActionBarActivity {
 
    // @ViewById
     TextView categories;
-
     //@ViewById
     RatingBar averageRating;
-
     //@ViewById
     TextView ratingsCount;
-
     //@ViewById
     TextView description;
 
     //@AfterViews
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.book_detail);
+
+        toolbar = (Toolbar) findViewById(R.id.tl_custom);
+        thumbnail = (ImageView) findViewById(R.id.thumbnail);
+        titleTv = (TextView) findViewById(R.id.book_title);
+        authorTv = (TextView) findViewById(R.id.book_authors);
+        language = (TextView) findViewById(R.id.language);
+        publishedDate = (TextView) findViewById(R.id.publishedDate);
+        categories = (TextView) findViewById(R.id.categories);
+        averageRating = (RatingBar) findViewById(R.id.averageRating);
+        ratingsCount= (TextView) findViewById(R.id.ratingsCount);
+        description = (TextView) findViewById(R.id.description);
+        toolbar.setTitleTextColor(0xffffffff);
+        setSupportActionBar(toolbar);
+        
+        afterView();
+    }
+
     void afterView() {
         restoreActionBar();
         loadData();

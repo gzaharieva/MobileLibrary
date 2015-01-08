@@ -34,6 +34,7 @@ import com.master.univt.support.http.UserLibrary;
 import com.master.univt.ui.SplashActivity;
 import com.master.univt.ui.search.MainActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -173,7 +174,6 @@ public class HomeActivity extends ActionBarActivity
 
         @Override
         protected void onPostExecute(Bookshelves bookshelves) {
-    
             if(bookshelves != null && bookshelves.getItems() != null) {
                 for (Bookshelf bookshelf : bookshelves.getItems()) {
                     boolean isVisible = bookshelf.getAccess().equalsIgnoreCase("public");
@@ -251,14 +251,16 @@ public class HomeActivity extends ActionBarActivity
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         switch (position) {
             case 1:
+                Bundle bundle = new Bundle();
+                bookshelvesFragment.setArguments(bundle);
                 fragmentTransaction.replace(R.id.container, bookshelvesFragment, ParameterTag.FRAGMENT_COURSE)
                         .addToBackStack(null);
                 break;
             default:
                 BooksFragment booksFragment = new BooksFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString(Constants.BOOKSHELF, String.valueOf(items.get(position).getId()));
-                booksFragment.setArguments(bundle);
+                Bundle booksBundle = new Bundle();
+                booksBundle.putString(Constants.BOOKSHELF, String.valueOf(items.get(position).getId()));
+                booksFragment.setArguments(booksBundle);
                 fragmentTransaction.replace(R.id.container, booksFragment, ParameterTag.FRAGMENT_COURSE)
                         .addToBackStack(null);
                 break;
