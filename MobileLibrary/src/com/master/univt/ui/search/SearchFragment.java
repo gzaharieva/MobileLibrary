@@ -24,24 +24,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * Created by LQG on 2014/12/4.
- */
-//@EFragment(R.layout.fragment_main)
+//@EFragment(R.layout.fragment_search)
 public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener {
 
-    //@ViewById(R.id.search_pb)
-    ProgressBar progressBar;
-    private View searchview;
+    private ProgressBar progressBar;
+    private View searchView;
 
     private List<Volume> searchResultList = new ArrayList<>();
     private SearchResultAdapter searchResultAdapter;
     private QueryTask queryTask;
+    private ListView listView;
 
-    // @ViewById(R.id.listview)
-    ListView listView;
-
-    // @AfterViews
     private void init() {
         searchResultAdapter = new SearchResultAdapter(this, searchResultList);
         listView.setAdapter(searchResultAdapter);
@@ -58,11 +51,11 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(
-                R.layout.fragment_main, container, false);
+                R.layout.fragment_search, container, false);
 
         progressBar = (ProgressBar) rootView.findViewById(R.id.search_pb);
         listView = (ListView) rootView.findViewById(R.id.listview);
-        searchview = rootView.findViewById(R.id.view_search);
+        searchView = rootView.findViewById(R.id.view_search);
         init();
 
         return rootView;
@@ -93,8 +86,8 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         try {
             intent.putExtra("bookInfo", Search.JSON_FACTORY.toString(item));
             startActivity(intent);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Log.e("LOG", "", ex);
         }
     }
 
@@ -109,7 +102,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         protected void onPostExecute(Volumes searchListResponse) {
             progressBar.setVisibility(View.INVISIBLE);
             if (searchListResponse == null) {
-                searchview.setVisibility(View.VISIBLE);
+                searchView.setVisibility(View.VISIBLE);
                 listView.setVisibility(View.GONE);
 
                 return;
@@ -123,7 +116,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     private boolean onQuery(Volumes result) {
         if (result == null || result.getItems() == null) {
 //            searchResultList.clear();
-            searchview.setVisibility(View.VISIBLE);
+            searchView.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
             return false;
         }
@@ -132,7 +125,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         searchResultList.clear();
         searchResultList.addAll(result.getItems());
         searchResultAdapter.notifyDataSetChanged();
-        searchview.setVisibility(View.GONE);
+        searchView.setVisibility(View.GONE);
         listView.setVisibility(View.VISIBLE);
         return true;
     }

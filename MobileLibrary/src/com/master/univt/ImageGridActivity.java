@@ -36,6 +36,7 @@ import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.master.univt.entities.Books;
+import com.master.univt.ui.BooksDetailsActivity;
 import com.master.univt.utils.BooksGridViewAdapter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.FailReason;

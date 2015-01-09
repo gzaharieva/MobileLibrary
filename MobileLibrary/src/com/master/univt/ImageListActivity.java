@@ -37,6 +37,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.master.univt.entities.Books;
+import com.master.univt.ui.BooksDetailsActivity;
 import com.master.univt.utils.BooksListViewAdapter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;

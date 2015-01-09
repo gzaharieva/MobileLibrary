@@ -1,4 +1,4 @@
-package com.master.univt;
+package com.master.univt.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.master.univt.Constants;
+import com.master.univt.R;
 import com.master.univt.entities.Books;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;

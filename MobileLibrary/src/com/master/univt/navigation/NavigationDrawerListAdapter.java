@@ -112,20 +112,25 @@ public class NavigationDrawerListAdapter extends BaseAdapter {
                 drawerActiveSection.setVisibility(View.INVISIBLE);
             }
         }
-        NavigationDrawerItem navigationDrawerItem = navigationDrawerItems.get(position);
-        if(position != 0) {
-            ImageView imgIcon = (ImageView) itemView.findViewById(R.id.icon);
 
-//        imgIcon.setImageResource(navigationDrawerItem.getIcon());
+        ImageView imgIcon = (ImageView) itemView.findViewById(R.id.icon);
+
+        NavigationDrawerItem navigationDrawerItem = navigationDrawerItems.get(position);
+        if(position > 1) {
             int rando = (int) (Math.random() * 7);
             imgIcon.setImageResource(backgroundImages[rando]);
+        } else {
+            imgIcon.setImageResource(navigationDrawerItem.getIcon());
         }
+
         TextView titleTextView = (TextView) itemView.findViewById(R.id.title);
         TextView count = (TextView) itemView.findViewById(R.id.count_items);
         titleTextView.setText(navigationDrawerItem.getTitle());
-        if (count != null && navigationDrawerItem.isCounterVisible()) {
+        if (count != null) {
             count.setText(navigationDrawerItem.getCount() + "");
+            count.setVisibility(navigationDrawerItem.isCounterVisible()?View.VISIBLE : View.GONE);
         }
+
 
 
         return itemView;

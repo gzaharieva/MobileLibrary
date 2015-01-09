@@ -1,7 +1,6 @@
-package com.master.univt;
+package com.master.univt.ui;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,20 +19,25 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.internal.po;
 import com.google.android.gms.plus.Plus;
+import com.google.api.services.books.Books;
 import com.google.api.services.books.model.Bookshelf;
 import com.google.api.services.books.model.Bookshelves;
-import com.google.api.services.books.model.Volumes;
+import com.master.univt.Constants;
+import com.master.univt.ImageGridActivity;
+import com.master.univt.ImageListActivity;
+import com.master.univt.ImagePagerActivity;
+import com.master.univt.R;
 import com.master.univt.entities.ParameterTag;
 import com.master.univt.navigation.NavigationDrawerItem;
 import com.master.univt.navigation.NavigationDrawerListAdapter;
 import com.master.univt.services.SharedPreferencedSingleton;
 import com.master.univt.support.http.Search;
 import com.master.univt.support.http.UserLibrary;
-import com.master.univt.ui.SplashActivity;
 import com.master.univt.ui.search.MainActivity;
 
-import java.io.Serializable;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,16 +75,10 @@ public class HomeActivity extends ActionBarActivity
     private NavigationDrawerListAdapter navigationMenuAdapter;
     private BookshelvesFragment bookshelvesFragment = new BookshelvesFragment();
     private SearchView searchView;
-
-
-    /**
-     * Used to store the last screen title. For use in
-     */
     private CharSequence titleActionBar;
-    // GoogleApiClient wraps our service connection to Google Play services and
-    // provides access to the users sign in state and Google's APIs.
     private GoogleApiClient mGoogleApiClient;
     private List<NavigationDrawerItem> items;
+    private Bookshelves bookshelvesApi;
 
     public HomeActivity() {
     }
@@ -118,6 +115,7 @@ public class HomeActivity extends ActionBarActivity
         
         items = new ArrayList<NavigationDrawerItem>();
         items.add(new NavigationDrawerItem(username, R.drawable.ic_user));
+        items.add(new NavigationDrawerItem(getString(R.string.bookshelf), R.drawable.ic_xing));
         navigationMenuAdapter = new NavigationDrawerListAdapter(HomeActivity.this, items);
 
         navigationDrawerList.setAdapter(navigationMenuAdapter);
@@ -175,9 +173,12 @@ public class HomeActivity extends ActionBarActivity
         @Override
         protected void onPostExecute(Bookshelves bookshelves) {
             if(bookshelves != null && bookshelves.getItems() != null) {
+                bookshelvesApi = bookshelves;
                 for (Bookshelf bookshelf : bookshelves.getItems()) {
                     boolean isVisible = bookshelf.getAccess().equalsIgnoreCase("public");
-                    items.add(new NavigationDrawerItem(bookshelf.getId(), bookshelf.getTitle(), R.mipmap.ic_star, isVisible, isVisible ? bookshelf.getVolumeCount() : 0));
+                    if(isVisible && bookshelf.getVolumeCount() > 0) {
+                        items.add(new NavigationDrawerItem(bookshelf.getId(), bookshelf.getTitle(), R.mipmap.ic_star, isVisible, isVisible ? bookshelf.getVolumeCount() : 0));
+                    }
                 }
             }
 
@@ -252,6 +253,7 @@ public class HomeActivity extends ActionBarActivity
         switch (position) {
             case 1:
                 Bundle bundle = new Bundle();
+                bookshelvesFragment = new BookshelvesFragment();
                 bookshelvesFragment.setArguments(bundle);
                 fragmentTransaction.replace(R.id.container, bookshelvesFragment, ParameterTag.FRAGMENT_COURSE)
                         .addToBackStack(null);
@@ -259,7 +261,12 @@ public class HomeActivity extends ActionBarActivity
             default:
                 BooksFragment booksFragment = new BooksFragment();
                 Bundle booksBundle = new Bundle();
-                booksBundle.putString(Constants.BOOKSHELF, String.valueOf(items.get(position).getId()));
+                booksBundle.putString(Constants.BOOKSHELF_ID, String.valueOf(items.get(position).getId()));
+                try {
+                    booksBundle.putString(Constants.BOOKSHELF, Search.JSON_FACTORY.toString(bookshelvesApi.getItems().get(position)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 booksFragment.setArguments(booksBundle);
                 fragmentTransaction.replace(R.id.container, booksFragment, ParameterTag.FRAGMENT_COURSE)
                         .addToBackStack(null);

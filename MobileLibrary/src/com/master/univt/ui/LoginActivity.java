@@ -7,9 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.master.univt.R;
 import com.master.univt.entities.ResponseStatusCode;
-import com.master.univt.HomeActivity;
 
 
 /**

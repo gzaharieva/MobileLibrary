@@ -1,4 +1,4 @@
-package com.master.univt;
+package com.master.univt.ui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,16 @@ import android.widget.GridView;
 
 import com.google.api.services.books.model.Bookshelf;
 import com.google.api.services.books.model.Bookshelves;
+import com.master.univt.Constants;
+import com.master.univt.R;
 import com.master.univt.entities.ParameterTag;
+import com.master.univt.support.http.Search;
 import com.master.univt.support.http.UserLibrary;
 import com.master.univt.utils.GridBookshelfListAdapter;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The user courses fragment.
@@ -86,7 +94,11 @@ public class BookshelvesFragment extends Fragment {
                 Bookshelf bookshelf = gridViewAdapter.getItem(position);
                 BooksFragment booksFragment = new BooksFragment();
                 Bundle booksBundle = new Bundle();
-                booksBundle.putString(Constants.BOOKSHELF, String.valueOf(bookshelf.getId()));
+                try {
+                    booksBundle.putString(Constants.BOOKSHELF,  Search.JSON_FACTORY.toString(bookshelf));
+                } catch (IOException ex) {
+                  Log.e(LOG_TAG, "", ex);
+                }
                 booksFragment.setArguments(booksBundle);
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container, booksFragment, ParameterTag.FRAGMENT_COURSE)
@@ -107,7 +119,15 @@ public class BookshelvesFragment extends Fragment {
         protected void onPostExecute(Bookshelves bookshelves) {
             bookshelvesApi = bookshelves;
             if (bookshelves != null && bookshelves.getItems() != null) {
-                gridViewAdapter = new GridBookshelfListAdapter(getActivity(), 0, 0, bookshelves.getItems());
+
+                List<Bookshelf> publicBookshelves = new ArrayList<>();
+                for(Bookshelf shelf : bookshelves.getItems()){
+                    if(shelf.getAccess().equalsIgnoreCase("public") && shelf.getVolumeCount()>0){
+                        publicBookshelves.add(shelf);
+                    }
+                }
+
+                gridViewAdapter = new GridBookshelfListAdapter(getActivity(), 0, 0, publicBookshelves);
                 bookshelvesGridView.setAdapter(gridViewAdapter);
             }
             progressView.setVisibility(View.GONE);

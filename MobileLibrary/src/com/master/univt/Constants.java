@@ -170,6 +170,7 @@ public final class Constants {
     public static final String PREFS_USERNAME = "username";
     public static final String PREFS_OAUTH_TOKEN = "oauth_token";
     public static final String BOOKSHELF = "bookshelf";
+    public static final String BOOKSHELF_ID = "bookshelf_id";
     public static final String BOOKSHELVES = "bookshelves";
     
 
