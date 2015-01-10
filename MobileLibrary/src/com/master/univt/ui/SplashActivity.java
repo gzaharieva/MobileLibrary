@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -45,8 +46,6 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
     //@ViewById(R.id.tl_custom)
     Toolbar toolbar;
 
-    //@ViewById(R.id.content_view)
-    public View contentView;
 
     private static final int STATE_DEFAULT = 0;
     private static final int STATE_SIGN_IN = 1;
@@ -108,13 +107,14 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         }
 
         toolbar = (Toolbar) findViewById(R.id.tl_custom);
-        contentView = findViewById(R.id.content_view);
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
         mStatus = (TextView) findViewById(R.id.mStatus);
 
         mSignInButton.setOnClickListener(this);
 
         mGoogleApiClient.connect();
+
+        Crashlytics.start(this);
     }
 
     private GoogleApiClient buildGoogleApiClient() {
@@ -395,16 +395,6 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
-    }
-
-    public void navigateToLogin(final View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
-
-    public void navigateToRegister(final View view) {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivityForResult(intent, REQUEST_EXIT);
     }
 
 

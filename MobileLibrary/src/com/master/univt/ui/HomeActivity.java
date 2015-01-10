@@ -19,9 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.internal.po;
 import com.google.android.gms.plus.Plus;
-import com.google.api.services.books.Books;
 import com.google.api.services.books.model.Bookshelf;
 import com.google.api.services.books.model.Bookshelves;
 import com.master.univt.Constants;
@@ -78,7 +76,7 @@ public class HomeActivity extends ActionBarActivity
     private CharSequence titleActionBar;
     private GoogleApiClient mGoogleApiClient;
     private List<NavigationDrawerItem> items;
-    private Bookshelves bookshelvesApi;
+    private List<Bookshelf> bookshelvesApi;
 
     public HomeActivity() {
     }
@@ -115,7 +113,7 @@ public class HomeActivity extends ActionBarActivity
         
         items = new ArrayList<NavigationDrawerItem>();
         items.add(new NavigationDrawerItem(username, R.drawable.ic_user));
-        items.add(new NavigationDrawerItem(getString(R.string.bookshelf), R.drawable.ic_xing));
+        items.add(new NavigationDrawerItem(getString(R.string.bookshelf), R.drawable.ic_books));
         navigationMenuAdapter = new NavigationDrawerListAdapter(HomeActivity.this, items);
 
         navigationDrawerList.setAdapter(navigationMenuAdapter);
@@ -157,7 +155,7 @@ public class HomeActivity extends ActionBarActivity
 
         }
 
-        titleActionBar = getString(R.string.title_my_courses);
+        titleActionBar = getString(R.string.title_user_bookshelves);
         mGoogleApiClient = buildGoogleApiClient();
         mGoogleApiClient.connect();
         new QueryTask().execute();
@@ -173,11 +171,12 @@ public class HomeActivity extends ActionBarActivity
         @Override
         protected void onPostExecute(Bookshelves bookshelves) {
             if(bookshelves != null && bookshelves.getItems() != null) {
-                bookshelvesApi = bookshelves;
+                bookshelvesApi = new ArrayList<>();
                 for (Bookshelf bookshelf : bookshelves.getItems()) {
                     boolean isVisible = bookshelf.getAccess().equalsIgnoreCase("public");
                     if(isVisible && bookshelf.getVolumeCount() > 0) {
                         items.add(new NavigationDrawerItem(bookshelf.getId(), bookshelf.getTitle(), R.mipmap.ic_star, isVisible, isVisible ? bookshelf.getVolumeCount() : 0));
+                        bookshelvesApi.add(bookshelf);
                     }
                 }
             }
@@ -259,17 +258,18 @@ public class HomeActivity extends ActionBarActivity
                         .addToBackStack(null);
                 break;
             default:
+                Bookshelf bookshelf = bookshelvesApi.get(position -1);
                 BooksFragment booksFragment = new BooksFragment();
                 Bundle booksBundle = new Bundle();
-                booksBundle.putString(Constants.BOOKSHELF_ID, String.valueOf(items.get(position).getId()));
-                try {
-                    booksBundle.putString(Constants.BOOKSHELF, Search.JSON_FACTORY.toString(bookshelvesApi.getItems().get(position)));
+               try {
+                    booksBundle.putString(Constants.BOOKSHELF, Search.JSON_FACTORY.toString(bookshelf));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 booksFragment.setArguments(booksBundle);
                 fragmentTransaction.replace(R.id.container, booksFragment, ParameterTag.FRAGMENT_COURSE)
                         .addToBackStack(null);
+                titleActionBar = bookshelf.getTitle();
                 break;
         }
 

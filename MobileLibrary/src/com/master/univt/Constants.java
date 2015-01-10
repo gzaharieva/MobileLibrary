@@ -172,6 +172,8 @@ public final class Constants {
     public static final String BOOKSHELF = "bookshelf";
     public static final String BOOKSHELF_ID = "bookshelf_id";
     public static final String BOOKSHELVES = "bookshelves";
+    public static final String BOOK_INFO = "bookInfo";
+
     
 
     

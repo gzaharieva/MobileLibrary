@@ -1,20 +1,24 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply plugin: 'crashlytics'
 def AAVersion = '3.2'
 
 buildscript {
     repositories {
         mavenCentral()
+        maven { url 'http://download.crashlytics.com/maven' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
     }
 }
 
 repositories {
     mavenCentral()
     mavenLocal()
+    maven { url 'http://download.crashlytics.com/maven' }
 }
 
 apt {
@@ -27,10 +31,9 @@ apt {
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.1"
-
     defaultConfig {
         applicationId "com.master.univt"
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion 21
         versionCode 1
         versionName "1.0.12151349"
@@ -45,7 +48,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     sourceSets {
 
         main {
@@ -58,20 +60,25 @@ android {
             manifest.srcFile 'AndroidManifest.xml'
         }
     }
+    productFlavors {
+
+
+
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-   compile 'com.android.support:appcompat-v7:21.0.2'
-//    compile 'com.android.support:appcompat-v7:21.0.3'
-   // apt "org.androidannotations:androidannotations:$AAVersion"
-   // compile "org.androidannotations:androidannotations-api:$AAVersion"
+    compile 'com.android.support:appcompat-v7:21.0.2'
+    //    compile 'com.android.support:appcompat-v7:21.0.3'
+    // apt "org.androidannotations:androidannotations:$AAVersion"
+    // compile "org.androidannotations:androidannotations-api:$AAVersion"
     compile 'com.github.castorflex.smoothprogressbar:library:1.0.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'com.github.johnkil.android-robototextview:robototextview:2.2.0'
     compile 'com.google.code.gson:gson:2.2.4'
-//    compile 'com.google.android.gms:play-services:6.5.87'
-   compile 'com.google.android.gms:play-services:6.+'
-   // compile 'com.google.apis:google-api-services-analytics:v3-rev109-1.19.1'
-
+    //    compile 'com.google.android.gms:play-services:6.5.87'
+    compile 'com.google.android.gms:play-services:6.+'
+    compile 'com.crashlytics.android:crashlytics:1.+'
+    // compile 'com.google.apis:google-api-services-analytics:v3-rev109-1.19.1'
 }

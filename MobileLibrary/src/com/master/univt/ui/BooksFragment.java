@@ -19,11 +19,9 @@ import com.google.api.services.books.model.Volume;
 import com.google.api.services.books.model.Volumes;
 import com.master.univt.Constants;
 import com.master.univt.R;
-import com.master.univt.dummy.DummyContent;
 import com.master.univt.services.CommunicationService;
 import com.master.univt.services.VolumesService;
 import com.master.univt.support.http.Search;
-import com.master.univt.ui.detail.BookDetailActivity;
 import com.master.univt.utils.VolumeAdapter;
 
 import java.io.IOException;
@@ -47,10 +45,7 @@ public class BooksFragment extends Fragment implements CommunicationService<Volu
     private OnFragmentInteractionListener mListener;
     private ProgressBar progressBar;
     private TextView volumeLastUpdate;
-
-    /**
-     * The fragment's ListView/GridView.
-     */
+    private TextView volumeCreated;
     private AbsListView booksListView;
 
     /**
@@ -78,6 +73,7 @@ public class BooksFragment extends Fragment implements CommunicationService<Volu
         booksListView = (AbsListView) view.findViewById(android.R.id.list);
         progressBar = (ProgressBar) view.findViewById(R.id.search_pb);
         volumeLastUpdate = (TextView) view.findViewById(R.id.volume_last_update);
+        volumeCreated = (TextView) view.findViewById(R.id.volume_created);
 
         booksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -112,8 +108,10 @@ public class BooksFragment extends Fragment implements CommunicationService<Volu
             Log.d(LOG_TAG, "bookshelf"+bookshelf);
 
             DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-            String reportDate = df.format(bookshelf.getVolumesLastUpdated().getValue());
-            volumeLastUpdate.setText(reportDate);
+            String lastUpdated = df.format(bookshelf.getVolumesLastUpdated().getValue());
+            String created = df.format(bookshelf.getCreated().getValue());
+            volumeLastUpdate.setText(lastUpdated);
+            volumeCreated.setText(created);
 
 
        //     if(booksListAdapter == null) {

@@ -1,7 +1,9 @@
 package com.master.univt.utils;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,7 @@ public class GridBookshelfListAdapter extends ArrayAdapter<Bookshelf> {
     private final List<Bookshelf> bookshelfs;
     private LayoutInflater layoutInflater;
     private int selectedPosition = -1;
-    final int[] backgroundImages = {R.drawable.ic_place1, R.drawable.ic_place2, R.drawable.ic_place3};
+    final int[] backgroundImages = {R.drawable.ic_place1, R.drawable.ic_place2, R.drawable.ic_place3, R.drawable.ic_place4, R.drawable.ic_place5};
 
 
     private final DisplayImageOptions options;
@@ -48,8 +50,8 @@ public class GridBookshelfListAdapter extends ArrayAdapter<Bookshelf> {
         this.context = context;
         this.bookshelfs = objects;
         options =
-                new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_placeholder)
-                        .showImageForEmptyUri(R.drawable.ic_placeholder).showImageOnFail(R.drawable.ic_placeholder).cacheInMemory(true)
+                new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_placeholder_book)
+                        .showImageForEmptyUri(R.drawable.ic_placeholder_book).showImageOnFail(R.drawable.ic_placeholder_book).cacheInMemory(true)
                         .cacheOnDisk(true).considerExifParams(true).build();
 
     }
@@ -79,6 +81,7 @@ public class GridBookshelfListAdapter extends ArrayAdapter<Bookshelf> {
         return position;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(final int position, final View convertView, final ViewGroup parent) {
         final AdapterViewHolder holder;
@@ -105,8 +108,11 @@ public class GridBookshelfListAdapter extends ArrayAdapter<Bookshelf> {
 //    {
 //      imageLoader.init(ImageLoaderConfiguration.createDefault(context));
 //    }
-        int rando = (int) (Math.random() * 3);
-        holder.getImageView().setImageResource(backgroundImages[rando]);
+
+        int rando = (int) (Math.random() * 5);
+        view.setBackgroundResource(backgroundImages[rando]);
+
+//        holder.getImageView().setImageResource(backgroundImages[rando]);
         // imageLoader.displayImage(bookshelfs.get(position).getSelfLink(), holder.getImageView(), options, null);
 
         return view;

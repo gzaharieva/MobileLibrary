@@ -66,7 +66,7 @@ public class BookshelvesFragment extends Fragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.ac_home, container, false);
+        rootView = inflater.inflate(R.layout.fragment_bookshelves, container, false);
         bookshelvesGridView = (GridView) rootView.findViewById(R.id.grid_view);
         progressView = rootView.findViewById(R.id.progress);
         

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.api.services.books.model.Volume;
@@ -91,7 +90,12 @@ public class VolumeAdapter extends BaseAdapter
       view = layoutInflater.inflate(R.layout.gridview_item_bookshelf, parent, false);
       holder = new ViewHolder();
       assert view != null;
-      holder.imageView = (ImageView) view.findViewById(R.id.image);
+      holder.setImageView((ImageView) view.findViewById(R.id.image));
+      holder.setVolumeCountryTextView((TextView) view.findViewById(R.id.volume_country));
+      holder.setTitle((TextView) view.findViewById(R.id.title));
+      holder.setVolumeIsbnTextView((TextView) view.findViewById(R.id.volume_isbn));
+      holder.setVolumePublisherTextView((TextView) view.findViewById(R.id.volume_publisher));
+    holder.setVolumePublishedDate((TextView) view.findViewById(R.id.volume_published_date));
       view.setTag(holder);
     }
     else
@@ -100,18 +104,17 @@ public class VolumeAdapter extends BaseAdapter
     }
 
     Volume volume = volumes.get(position);
-    TextView titleTextView = (TextView) view.findViewById(R.id.title);
-    titleTextView.setText(volume.getVolumeInfo().getTitle());
 
-    TextView freeLabelView = (TextView) view.findViewById(R.id.label_free);
-
-    RatingBar ratingBar = (RatingBar) view.findViewById(R.id.rating_bar);
-    // ratingBar.setRating((float) course.getAccessInfo().getCountry());
-
+    holder.getTitle().setText(volume.getVolumeInfo().getTitle());
+    holder.getVolumeCountryTextView().setText(volume.getAccessInfo().getCountry());
+      holder.getVolumeIsbnTextView().setText(volume.getVolumeInfo().getIndustryIdentifiers().get(0).getIdentifier());
+      holder.getVolumePublisherTextView().setText(volume.getVolumeInfo().getPublisher());
+    holder.getVolumePublishedDate().setText(volume.getVolumeInfo().getPublishedDate());
     if (!imageLoader.isInited())
     {
       imageLoader.init(ImageLoaderConfiguration.createDefault(context));
     }
+
     Volume.VolumeInfo.ImageLinks imageLinks = volume.getVolumeInfo().getImageLinks();
     if (imageLinks != null)
     {
@@ -123,6 +126,69 @@ public class VolumeAdapter extends BaseAdapter
 
   class ViewHolder
   {
-    ImageView imageView;
+    private ImageView imageView;
+    private TextView volumeIsbnTextView;
+    private TextView volumePublisherTextView;
+    private TextView volumeCountryTextView;
+    private TextView title;
+      private TextView volumePublishedDate;
+
+      public TextView getVolumePublishedDate() {
+          return volumePublishedDate;
+      }
+
+      public void setVolumePublishedDate(TextView volumePublishedDate) {
+          this.volumePublishedDate = volumePublishedDate;
+      }
+
+      public TextView getTitle()
+    {
+      return title;
+    }
+
+    public void setTitle(TextView title)
+    {
+      this.title = title;
+    }
+
+    public ImageView getImageView()
+    {
+      return imageView;
+    }
+
+    public void setImageView(ImageView imageView)
+    {
+      this.imageView = imageView;
+    }
+
+    public TextView getVolumeCountryTextView()
+    {
+      return volumeCountryTextView;
+    }
+
+    public void setVolumeCountryTextView(TextView volumeCountryTextView)
+    {
+      this.volumeCountryTextView = volumeCountryTextView;
+    }
+
+    public TextView getVolumeIsbnTextView()
+    {
+      return volumeIsbnTextView;
+    }
+
+    public void setVolumeIsbnTextView(TextView volumeIsbnTextView)
+    {
+      this.volumeIsbnTextView = volumeIsbnTextView;
+    }
+
+    public TextView getVolumePublisherTextView()
+    {
+      return volumePublisherTextView;
+    }
+
+    public void setVolumePublisherTextView(TextView volumePublisherTextView)
+    {
+      this.volumePublisherTextView = volumePublisherTextView;
+    }
   }
 }

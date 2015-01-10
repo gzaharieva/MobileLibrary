@@ -22,8 +22,6 @@
         android:id="@+id/icon"
         android:layout_width="35dp"
         android:layout_height="35dp"
-  		android:src="@drawable/ic_pencil"
-        android:contentDescription="@string/desc_list_item_icon"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/drawer_active_section"
         android:layout_toEndOf="@+id/drawer_active_section" />
@@ -34,7 +32,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:text="asdasdasd"
-      
+
         android:textSize="@dimen/text_size_default_regular"
         android:layout_marginLeft="28dp"
         android:layout_marginStart="28dp"

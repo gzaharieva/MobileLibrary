@@ -37,7 +37,7 @@ public class BaseHomeActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ac_home);
+		setContentView(R.layout.fragment_bookshelves);
 
 		File testImageOnSdCard = new File("/mnt/sdcard", TEST_FILE_NAME);
 		if (!testImageOnSdCard.exists()) {

@@ -1,49 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/grid_view_shadow_box"
-    android:minHeight="104dp" >
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:id="@+id/image"
-        style="@style/PlaceholderImageStyle"
-        android:layout_width="140dp"
-        android:layout_height="200dp"
+        android:layout_width="@dimen/detail_width"
+        android:layout_height="@dimen/detail_heigh"
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="@dimen/grid_sides_space"
         android:layout_marginLeft="@dimen/grid_sides_space"
         android:layout_marginRight="@dimen/gridview_image_space_right"
         android:layout_marginTop="@dimen/grid_sides_space"
-        android:contentDescription="@string/description" />
+        android:contentDescription="@string/description"
+        android:src="@drawable/ic_place"/>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:id="@+id/linearLayout"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/image"
+        android:layout_toEndOf="@+id/image">
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/TitleHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/grid_sides_space"
-            android:maxLines="2" />
 
-        <TextView
-            android:id="@+id/label_free"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/msg_free_course"
-            android:textColor="@color/blue"
-            android:textSize="@dimen/text_size_default_regular" />
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
 
-        <RatingBar
-            android:id="@+id/rating_bar"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp" />
+            <TextView
+                android:id="@+id/title"
+                style="@style/TitleHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/grid_sides_space"
+                android:text="Title"
+                android:maxLines="3"/>
+
+            <!--  <RatingBar
+                  android:id="@+id/rating_bar"
+                  style="?android:attr/ratingBarStyleSmall"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="10dp" /> -->
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_isbn"
+                android:textColor="@color/text_dark_gray"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_regular"/>
+
+            <TextView
+                android:id="@+id/volume_isbn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/msg_free_volume"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/text_size_default_regular"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_publisher"
+                android:textColor="@color/text_dark_gray"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_regular"/>
+
+            <TextView
+                android:id="@+id/volume_publisher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/msg_free_volume"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/text_size_default_regular"/>
+
+            <TextView
+                android:id="@+id/volume_published_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/msg_free_volume"
+                android:textColor="@color/text_dark_gray"
+                android:textSize="@dimen/text_size_default_regular"/>
+
+
+        </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/volume_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_isbn"
+        android:textColor="@color/text_dark_gray"
+        android:textStyle="bold"
+        android:layout_marginRight="6dp"
+        android:gravity="bottom|right"
+        android:textSize="@dimen/text_size_regular"
+        android:layout_alignBottom="@+id/image"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

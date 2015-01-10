@@ -37,7 +37,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.master.univt.entities.Books;
-import com.master.univt.ui.BooksDetailsActivity;
+import com.master.univt.ui.BookDetailActivity;
 import com.master.univt.utils.BooksListViewAdapter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
@@ -113,7 +113,7 @@ public class ImageListActivity extends AbsListViewBaseActivity {
 
 	private void startImagePagerActivity(int position) {
 		Books book = (Books) listView.getItemAtPosition(position);
-		Intent intent = new Intent(this, BooksDetailsActivity.class);
+		Intent intent = new Intent(this, BookDetailActivity.class);
 		intent.putExtra(Constants.Extra.BOOK, book);
 		startActivity(intent);
 	}

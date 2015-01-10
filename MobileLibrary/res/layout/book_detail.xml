@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+         android:id="@android:id/tabhost"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+<LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,18 +14,16 @@
 
     <include layout="@layout/custom_toolbar" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:isScrollContainer="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/detail_layout_heigh"
+                android:orientation="horizontal"
                 android:background="@drawable/default_cover"
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -104,13 +107,55 @@
 
             </LinearLayout>
 
-            <com.devspark.robototextview.widget.RobotoTextView
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:padding="4dp"
+                android:gravity="right"
+                android:background="@color/white">
+
+                <Button
+                    android:id="@+id/action_add_volume"
+                    android:layout_width="100dp"
+                    android:layout_height="48dp"
+                    android:gravity="right"
+                    android:layout_gravity="right"
+                    android:background="@color/blue"
+                    android:text="@string/action_add_volume"/>
+
+
+                </LinearLayout>
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"/>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0"/>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+
+            <!-- <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="@dimen/activity_horizontal_margin"
                 android:textSize="18sp"
-                app:typeface="roboto_slab_light" />
+                app:typeface="roboto_slab_light" /> -->
         </LinearLayout>
-    </ScrollView>
+
 </LinearLayout>
+
+</TabHost>

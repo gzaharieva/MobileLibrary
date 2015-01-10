@@ -7,10 +7,12 @@
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:src="@drawable/background_books" />
+        android:layout_height="192dp"
+        android:background="@drawable/background_books"
+        />
 
     <RelativeLayout
+        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

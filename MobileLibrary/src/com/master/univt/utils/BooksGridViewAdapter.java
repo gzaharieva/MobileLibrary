@@ -108,8 +108,6 @@ public class BooksGridViewAdapter extends BaseAdapter
     TextView titleTextView = (TextView) view.findViewById(R.id.title);
     titleTextView.setText(course.getTitle());
 
-    TextView freeLabelView = (TextView) view.findViewById(R.id.label_free);
-
     RatingBar ratingBar = (RatingBar) view.findViewById(R.id.rating_bar);
 	ratingBar.setRating((float) course.getRating());
 

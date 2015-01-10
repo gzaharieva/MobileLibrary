@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.google.api.services.books.model.Volume;
 import com.master.univt.R;
 import com.master.univt.support.util.ImageLoaderUtil;
-import com.master.univt.ui.detail.BookDetailActivity;
+import com.master.univt.ui.BookDetailActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 
 import java.util.List;

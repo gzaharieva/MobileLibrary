@@ -84,5 +84,23 @@ public class UserLibrary {
        // Log.d("LOG", ""+result.getItems());
         return result;
     }
+
+    public static void addVolumes(String shelf, String volume) {
+          try {
+
+            SharedPreferencedSingleton s = SharedPreferencedSingleton.getInstance();
+            String token = s.getString(Constants.PREFS_OAUTH_TOKEN, "");
+            Log.d("LOG",shelf);
+            Books.Mylibrary.Bookshelves.AddVolume shelves =  books.mylibrary().bookshelves().addVolume(shelf, volume).setShelf(shelf).setVolumeId(volume)
+                    .setKey(apiKey).setOauthToken(token);
+             shelves.execute();
+        } catch (GoogleJsonResponseException e) {
+            LogUtil.d("There was a service error: " + e.getDetails().getCode() + " : " + e.getMessage());
+        } catch (IOException e) {
+            LogUtil.d("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+        } catch (Exception t) {
+            LogUtil.d("Ex:", t);
+        }
+    }
     
 }

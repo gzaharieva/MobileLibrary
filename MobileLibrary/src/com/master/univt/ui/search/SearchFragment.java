@@ -15,9 +15,10 @@ import android.widget.ProgressBar;
 
 import com.google.api.services.books.model.Volume;
 import com.google.api.services.books.model.Volumes;
+import com.master.univt.Constants;
 import com.master.univt.R;
 import com.master.univt.support.http.Search;
-import com.master.univt.ui.detail.BookDetailActivity;
+import com.master.univt.ui.BookDetailActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,7 +85,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     private void onResultBookClick(Volume item) {
         Intent intent = new Intent(getActivity(), BookDetailActivity.class);
         try {
-            intent.putExtra("bookInfo", Search.JSON_FACTORY.toString(item));
+            intent.putExtra(Constants.BOOK_INFO, Search.JSON_FACTORY.toString(item));
             startActivity(intent);
         } catch (IOException ex) {
             Log.e("LOG", "", ex);
@@ -115,12 +116,10 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     private boolean onQuery(Volumes result) {
         if (result == null || result.getItems() == null) {
-//            searchResultList.clear();
-            searchView.setVisibility(View.VISIBLE);
+          searchView.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
             return false;
         }
-//            return false;
 
         searchResultList.clear();
         searchResultList.addAll(result.getItems());
