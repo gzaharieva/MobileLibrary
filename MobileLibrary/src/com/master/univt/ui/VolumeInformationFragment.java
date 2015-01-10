@@ -31,6 +31,7 @@ public class VolumeInformationFragment extends Fragment
   /** The root view of the fragment. */
   private View rootView;
     private TextView description;
+    private View labelDescription;
 
   @Override
   public void onAttach(final Activity activity)
@@ -60,6 +61,7 @@ public class VolumeInformationFragment extends Fragment
   {
     rootView = inflater.inflate(R.layout.fragment_volume_details, container, false);
     description = (TextView) rootView.findViewById(R.id.description);
+      labelDescription = rootView.findViewById(R.id.label_description);
 
     return rootView;
   }
@@ -83,7 +85,12 @@ public class VolumeInformationFragment extends Fragment
   {
       Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
       if(volumeInfo != null) {
+          description.setVisibility(View.VISIBLE);
+          labelDescription.setVisibility(View.GONE);
           description.setText(volumeInfo.getDescription());
+      } else{
+          description.setVisibility(View.GONE);
+          labelDescription.setVisibility(View.VISIBLE);
       }
   }
 

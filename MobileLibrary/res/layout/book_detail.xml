@@ -114,13 +114,12 @@
                 android:orientation="horizontal"
                 android:padding="4dp"
                 android:gravity="right"
-                android:background="@color/white">
+                android:background="@color/light_gray_bg">
 
                 <Button
                     android:id="@+id/action_add_volume"
                     android:layout_width="100dp"
-                    android:layout_height="48dp"
-                    android:gravity="right"
+                    style="@style/LoginButton"
                     android:layout_gravity="right"
                     android:background="@color/blue"
                     android:text="@string/action_add_volume"/>

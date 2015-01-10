@@ -105,17 +105,20 @@ public class VolumeAdapter extends BaseAdapter
 
     Volume volume = volumes.get(position);
 
-    holder.getTitle().setText(volume.getVolumeInfo().getTitle());
+      Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
+      holder.getTitle().setText(volumeInfo.getTitle());
     holder.getVolumeCountryTextView().setText(volume.getAccessInfo().getCountry());
-      holder.getVolumeIsbnTextView().setText(volume.getVolumeInfo().getIndustryIdentifiers().get(0).getIdentifier());
-      holder.getVolumePublisherTextView().setText(volume.getVolumeInfo().getPublisher());
-    holder.getVolumePublishedDate().setText(volume.getVolumeInfo().getPublishedDate());
+      if(volumeInfo.getIndustryIdentifiers() != null) {
+          holder.getVolumeIsbnTextView().setText(volumeInfo.getIndustryIdentifiers().get(0).getIdentifier());
+      }
+      holder.getVolumePublisherTextView().setText(volumeInfo.getPublisher());
+    holder.getVolumePublishedDate().setText(volumeInfo.getPublishedDate());
     if (!imageLoader.isInited())
     {
       imageLoader.init(ImageLoaderConfiguration.createDefault(context));
     }
 
-    Volume.VolumeInfo.ImageLinks imageLinks = volume.getVolumeInfo().getImageLinks();
+    Volume.VolumeInfo.ImageLinks imageLinks = volumeInfo.getImageLinks();
     if (imageLinks != null)
     {
       imageLoader.displayImage(imageLinks.getThumbnail(), holder.imageView, options, null);

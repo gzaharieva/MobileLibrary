@@ -84,6 +84,8 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     //@ItemClick(R.id.listview)
     private void onResultBookClick(Volume item) {
         Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+        intent.putExtra(Constants.IS_SEARCH_RESULT, true);
+        Log.d("SEARCH", item + "");
         try {
             intent.putExtra(Constants.BOOK_INFO, Search.JSON_FACTORY.toString(item));
             startActivity(intent);

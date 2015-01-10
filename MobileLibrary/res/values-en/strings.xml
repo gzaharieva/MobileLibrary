@@ -69,4 +69,7 @@
     <string name="tab_volume_info">Info</string>
     <string name="action_add_volume">Add volume</string>
     <string name="action_remove_volume">Remove volume</string>
+    <string name="no_description">No description</string>
+    <string name="volume_added_success">Successful operation.</string>
+    <string name="volume_added_failure">The operation failed.</string>
 </resources>

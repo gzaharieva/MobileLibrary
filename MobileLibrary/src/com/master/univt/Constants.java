@@ -173,6 +173,8 @@ public final class Constants {
     public static final String BOOKSHELF_ID = "bookshelf_id";
     public static final String BOOKSHELVES = "bookshelves";
     public static final String BOOK_INFO = "bookInfo";
+    public static final String IS_SEARCH_RESULT = "is_search_result";
+
 
     
 

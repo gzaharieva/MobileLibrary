@@ -77,6 +77,7 @@ public class HomeActivity extends ActionBarActivity
     private GoogleApiClient mGoogleApiClient;
     private List<NavigationDrawerItem> items;
     private List<Bookshelf> bookshelvesApi;
+    private String username;
 
     public HomeActivity() {
     }
@@ -109,7 +110,7 @@ public class HomeActivity extends ActionBarActivity
         navigationDrawerList = (ListView) findViewById(R.id.navigation_drawer);
         
         SharedPreferencedSingleton settings = SharedPreferencedSingleton.getInstance();
-        String username = settings.getString(Constants.PREFS_USERNAME, getString(R.string.username));
+        username = settings.getString(Constants.PREFS_USERNAME, getString(R.string.username));
         
         items = new ArrayList<NavigationDrawerItem>();
         items.add(new NavigationDrawerItem(username, R.drawable.ic_user));
@@ -158,8 +159,10 @@ public class HomeActivity extends ActionBarActivity
         titleActionBar = getString(R.string.title_user_bookshelves);
         mGoogleApiClient = buildGoogleApiClient();
         mGoogleApiClient.connect();
-        new QueryTask().execute();
+      //  new QueryTask().execute();
     }
+    
+    
 
     private class QueryTask extends AsyncTask<String, Void, Bookshelves> {
 
@@ -172,6 +175,11 @@ public class HomeActivity extends ActionBarActivity
         protected void onPostExecute(Bookshelves bookshelves) {
             if(bookshelves != null && bookshelves.getItems() != null) {
                 bookshelvesApi = new ArrayList<>();
+                
+                items = new ArrayList<NavigationDrawerItem>();
+                items.add(new NavigationDrawerItem(username, R.drawable.ic_user));
+                items.add(new NavigationDrawerItem(getString(R.string.bookshelf), R.drawable.ic_books));
+                
                 for (Bookshelf bookshelf : bookshelves.getItems()) {
                     boolean isVisible = bookshelf.getAccess().equalsIgnoreCase("public");
                     if(isVisible && bookshelf.getVolumeCount() > 0) {
@@ -207,6 +215,7 @@ public class HomeActivity extends ActionBarActivity
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+        new QueryTask().execute();
     }
 
     @Override
@@ -258,7 +267,7 @@ public class HomeActivity extends ActionBarActivity
                         .addToBackStack(null);
                 break;
             default:
-                Bookshelf bookshelf = bookshelvesApi.get(position -1);
+                Bookshelf bookshelf = bookshelvesApi.get(position-2);
                 BooksFragment booksFragment = new BooksFragment();
                 Bundle booksBundle = new Bundle();
                try {

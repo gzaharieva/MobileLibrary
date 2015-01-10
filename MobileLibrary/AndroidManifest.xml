@@ -36,7 +36,7 @@
         <activity android:name=".ui.search.MainActivity" >
         </activity>
         <activity
-            android:name=".ui.detail.BookDetailActivity"
+            android:name=".ui.BookDetailActivity"
             android:label="@string/bookDetail" />
 
 
@@ -50,9 +50,6 @@
         <activity
             android:name=".ImageListActivity"
             android:label="@string/app_name" />
-        <activity
-            android:name=".ui.BooksDetailsActivity"
-            android:label="Детайли за книгата" />
         <activity
             android:name=".ImageGridActivity"
             android:label="@string/app_name" />

@@ -85,22 +85,50 @@ public class UserLibrary {
         return result;
     }
 
-    public static void addVolumes(String shelf, String volume) {
+    public static Boolean addVolumes(String shelf, String volume) {
+        Boolean result = Boolean.TRUE;
           try {
 
             SharedPreferencedSingleton s = SharedPreferencedSingleton.getInstance();
             String token = s.getString(Constants.PREFS_OAUTH_TOKEN, "");
-            Log.d("LOG",shelf);
+            Log.d("LOG",shelf+ "-" + volume);
             Books.Mylibrary.Bookshelves.AddVolume shelves =  books.mylibrary().bookshelves().addVolume(shelf, volume).setShelf(shelf).setVolumeId(volume)
                     .setKey(apiKey).setOauthToken(token);
              shelves.execute();
         } catch (GoogleJsonResponseException e) {
             LogUtil.d("There was a service error: " + e.getDetails().getCode() + " : " + e.getMessage());
+              result = Boolean.FALSE;
         } catch (IOException e) {
             LogUtil.d("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+              result = Boolean.FALSE;
         } catch (Exception t) {
             LogUtil.d("Ex:", t);
+              result = Boolean.FALSE;
         }
+        return result;
     }
-    
+
+
+    public static Boolean removeVolumes(String shelf, String volume) {
+        Boolean result = Boolean.TRUE;
+        try {
+
+            SharedPreferencedSingleton s = SharedPreferencedSingleton.getInstance();
+            String token = s.getString(Constants.PREFS_OAUTH_TOKEN, "");
+            Log.d("LOG",shelf+ "-" + volume);
+            Books.Mylibrary.Bookshelves.RemoveVolume shelves =  books.mylibrary().bookshelves().removeVolume(shelf, volume).setShelf(shelf).setVolumeId(volume)
+                    .setKey(apiKey).setOauthToken(token);
+            shelves.execute();
+        } catch (GoogleJsonResponseException e) {
+            LogUtil.d("There was a service error: " + e.getDetails().getCode() + " : " + e.getMessage());
+            result = Boolean.FALSE;
+        } catch (IOException e) {
+            LogUtil.d("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+            result = Boolean.FALSE;
+        } catch (Exception t) {
+            LogUtil.d("Ex:", t);
+            result = Boolean.FALSE;
+        }
+        return result;
+    }
 }

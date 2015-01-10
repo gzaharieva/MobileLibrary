@@ -47,6 +47,7 @@ public class BooksFragment extends Fragment implements CommunicationService<Volu
     private TextView volumeLastUpdate;
     private TextView volumeCreated;
     private AbsListView booksListView;
+    private Bookshelf bookshelf;
 
     /**
      * The Adapter which will be used to populate the ListView/GridView with
@@ -82,6 +83,7 @@ public class BooksFragment extends Fragment implements CommunicationService<Volu
                         // fragment is attached to one) that an item has been selected.
                         Volume volume = (Volume) booksListAdapter.getItem(position);
                         Intent intent = new Intent(getActivity(), BookDetailActivity.class);
+                        intent.putExtra(Constants.BOOKSHELF_ID, bookshelf.getId());
                         try {
                             intent.putExtra("bookInfo", Search.JSON_FACTORY.toString(volume));
                             startActivity(intent);
@@ -102,7 +104,7 @@ public class BooksFragment extends Fragment implements CommunicationService<Volu
 
     private void init() {
         String bookInfo = getArguments().getString(Constants.BOOKSHELF);
-        Bookshelf bookshelf;
+       
         try {
             bookshelf = Search.JSON_FACTORY.fromString(bookInfo, Bookshelf.class);
             Log.d(LOG_TAG, "bookshelf"+bookshelf);

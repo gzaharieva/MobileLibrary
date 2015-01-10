@@ -1,5 +1,7 @@
 package com.master.univt.support.http;
 
+import android.util.Log;
+
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -32,20 +34,20 @@ public class Search {
     }
 
     public static Volumes searchVolumes(String queryTerm) {
+        Volumes result = null;
         try {
             SearchSetting searchSetting = SearchSetting.getInstance();
             Books.Volumes.List search = books.volumes().list(searchSetting.getKeywordsType() + ":" + queryTerm)
                     //Books.Volumes.List search = books.volumes().list(queryTerm)
-                    .setFields("items(volumeInfo,userInfo)")
+                   // .setFields("items(volumeInfo,userInfo)")
                     //.setKey(apiKey)
-                    .setUserIp("117463411595501910870")
                     .setDownload(searchSetting.getDownload())
                     .setFilter(searchSetting.getFilter())
                     .setMaxResults(Long.valueOf(searchSetting.getMaxResults()))
                     .setPrintType(searchSetting.getPrintType())
                     .setProjection(searchSetting.getProjection())
                     .setOrderBy(searchSetting.getOrderBy());
-            return search.execute();
+            result =  search.execute();
         } catch (GoogleJsonResponseException e) {
             LogUtil.d("There was a service error: " + e.getDetails().getCode() + " : " + e.getDetails().getMessage());
         } catch (IOException e) {
@@ -53,8 +55,9 @@ public class Search {
         } catch (Throwable t) {
             LogUtil.d(t);
         }
+       // Log.d("LOG", result.getItems().get(0).toPrettyString());
 
-        return null;
+        return result;
     }
 
 }
