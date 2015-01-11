@@ -45,6 +45,21 @@
 
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/view_no_search_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/no_search_results"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textColor="@color/text_light_gray"
+        android:textStyle="bold"
+        android:background="@color/light_grey"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_below="@+id/search_pb"/>
     
     
 

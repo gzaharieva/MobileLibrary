@@ -1,11 +1,13 @@
 package com.master.univt.ui;
 
 import java.io.IOException;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +19,6 @@ import com.master.univt.Constants;
 import com.master.univt.R;
 import com.master.univt.support.http.Search;
 
-
 /**
  * The course information tab fragment. Represents the information about details and reviews of the
  * selected course.
@@ -26,11 +27,16 @@ import com.master.univt.support.http.Search;
  */
 public class VolumeDetailsFragment extends Fragment
 {
-    private final String LOG_TAG = VolumeDetailsFragment.class.getSimpleName();
+  private final String LOG_TAG = VolumeDetailsFragment.class.getSimpleName();
   public Context context;
   /** The root view of the fragment. */
   private View rootView;
-    private TextView description;
+  private TextView webReaderLinkView;
+  private TextView epubAvailableView;
+  private TextView pdfAvailableView;
+  private TextView pageCountView;
+  private TextView isbn10;
+  private TextView isbn13;
 
   @Override
   public void onAttach(final Activity activity)
@@ -59,7 +65,14 @@ public class VolumeDetailsFragment extends Fragment
   public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState)
   {
     rootView = inflater.inflate(R.layout.fragment_volume_details, container, false);
-    description = (TextView) rootView.findViewById(R.id.description);
+    webReaderLinkView = (TextView) rootView.findViewById(R.id.web_reader_link);
+      webReaderLinkView.setMovementMethod(LinkMovementMethod.getInstance());
+
+    pdfAvailableView = (TextView) rootView.findViewById(R.id.pdf_available);
+    epubAvailableView = (TextView) rootView.findViewById(R.id.epub_available);
+    pageCountView = (TextView) rootView.findViewById(R.id.page_counts_view);
+    isbn10 = (TextView) rootView.findViewById(R.id.isbn_10);
+    isbn13 = (TextView) rootView.findViewById(R.id.isbn_13);
 
     return rootView;
   }
@@ -68,23 +81,50 @@ public class VolumeDetailsFragment extends Fragment
   public void onActivityCreated(final Bundle savedInstanceState)
   {
     super.onActivityCreated(savedInstanceState);
-      String bookInfo = getArguments().getString(Constants.BOOK_INFO);
-      Volume volume = null;
-      try {
-          volume = Search.JSON_FACTORY.fromString(bookInfo, Volume.class);
-      } catch (IOException e) {
-          Log.e(LOG_TAG, "", e);
+    String bookInfo = getArguments().getString(Constants.BOOK_INFO);
+    Volume volume = null;
+    try
+    {
+      volume = Search.JSON_FACTORY.fromString(bookInfo, Volume.class);
+
+      Volume.AccessInfo accessInfo = volume.getAccessInfo();
+      if (accessInfo != null)
+      {
+        webReaderLinkView.setText(accessInfo.getWebReaderLink());
+        pdfAvailableView.setText((accessInfo.getPdf().getIsAvailable()) ? getString(R.string.yes) : getString(R.string.no));
+        epubAvailableView
+          .setText((accessInfo.getEpub().getIsAvailable()) ? getString(R.string.yes) : getString(R.string.no));
       }
-
-    init(volume);
-  }
-
-  private void init(Volume volume)
-  {
       Volume.VolumeInfo volumeInfo = volume.getVolumeInfo();
-      if(volumeInfo != null) {
-          description.setText(volumeInfo.getDescription());
+      if (volumeInfo != null)
+      {
+        pageCountView.setText(volumeInfo.getPageCount() != null ? String.valueOf(volumeInfo.getPageCount()) : getString(R.string.not_presented));
+        List<Volume.VolumeInfo.IndustryIdentifiers> industryIdentifiers = volumeInfo.getIndustryIdentifiers();
+        if (industryIdentifiers != null)
+        {
+          isbn10.setText(industryIdentifiers.get(0).getIdentifier());
+          if (industryIdentifiers.get(1) != null)
+          {
+            isbn13.setText(industryIdentifiers.get(1).getIdentifier());
+          }
+          else
+          {
+            isbn13.setText(getString(R.string.not_presented));
+          }
+        }
+        else
+        {
+          isbn10.setText(getString(R.string.not_presented));
+          isbn13.setText(getString(R.string.not_presented));
+        }
       }
+
+    }
+    catch (IOException e)
+    {
+      Log.e(LOG_TAG, "", e);
+    }
+
   }
 
 }

@@ -120,8 +120,8 @@ public class SearchSetingFragment extends PreferenceFragment implements SharedPr
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
-    private MainActivity getParentActivity() {
-        return (MainActivity) getActivity();
+    private SearchActivity getParentActivity() {
+        return (SearchActivity) getActivity();
     }
 
     public boolean isDrawerOpen() {

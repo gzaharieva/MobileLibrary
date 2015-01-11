@@ -69,6 +69,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
     // @ViewById
     TextView description;
     private Button addVolumeButton;
+    private View progressView;
     private boolean isSearchResult;
     private Volume volume;
 
@@ -97,6 +98,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         description = (TextView) findViewById(R.id.description);
         tabHostView = (TabHost) findViewById(android.R.id.tabhost);
         addVolumeButton = (Button) findViewById(R.id.action_add_volume);
+        progressView = findViewById(R.id.progress);
 
         isSearchResult = getIntent().getBooleanExtra(Constants.IS_SEARCH_RESULT, false);
         if (isSearchResult) {
@@ -137,8 +139,10 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
 
             @Override
             public void onClick(View v) {
+
                 if(isSearchResult) {
                     new BookshelvesTask().execute();
+                    progressView.setVisibility(View.VISIBLE);
                 }else{
                     new AlertDialog.Builder(BookDetailActivity.this)
                             .setTitle(getString(R.string.app_name))
@@ -153,6 +157,9 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     new RemoveVolumeTask().execute(String.valueOf(bookshelf), currentVolume.getId());
+
+                                    progressView.setVisibility(View.VISIBLE);
+
                                 }
                             })
                             .create().show();
@@ -405,6 +412,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
     }
 
     private void addedVolumeResult(Boolean isSuccesful) {
+        progressView.setVisibility(View.GONE);
         String message;
         if (isSuccesful) {
             message = getString(R.string.volume_added_success);

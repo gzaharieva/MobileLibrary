@@ -116,7 +116,8 @@ public class NavigationDrawerListAdapter extends BaseAdapter {
         ImageView imgIcon = (ImageView) itemView.findViewById(R.id.icon);
 
         NavigationDrawerItem navigationDrawerItem = navigationDrawerItems.get(position);
-        if(position > 1) {
+
+        if(position > 1 && position != navigationDrawerItems.size() - 1) {
             int rando = (int) (Math.random() * 7);
             imgIcon.setImageResource(backgroundImages[rando]);
         } else {

@@ -4,6 +4,10 @@
          android:id="@android:id/tabhost"
          android:layout_width="match_parent"
          android:layout_height="match_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -69,6 +73,7 @@
                             android:id="@+id/ratingsCount"
                             android:layout_marginLeft="@dimen/normal_padding"
                             android:singleLine="true"
+                            android:textSize="@dimen/text_size_regular"
                             style="@style/bookdetail_info"
                             app:typeface="roboto_light" />
 
@@ -79,21 +84,24 @@
                         android:singleLine="true"
                         android:layout_above="@id/rating_layout"
                         style="@style/bookdetail_info"
-                        app:typeface="roboto_light" />
+                        app:typeface="roboto_light"
+                        android:textSize="@dimen/text_size_regular"/>
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/language"
                         android:singleLine="true"
                         android:layout_above="@id/publishedDate"
                         style="@style/bookdetail_info"
-                        app:typeface="roboto_light" />
+                        app:typeface="roboto_light"
+                        android:textSize="@dimen/text_size_regular"/>
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/categories"
                         style="@style/bookdetail_info"
                         android:singleLine="true"
                         android:layout_above="@id/language"
-                        app:typeface="roboto_light" />
+                        app:typeface="roboto_light"
+                        android:textSize="@dimen/text_size_regular"/>
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/book_authors"
@@ -101,7 +109,8 @@
                         android:layout_marginTop="@dimen/activity_vertical_margin"
                         android:maxLines="2"
                         style="@style/bookdetail_info"
-                        app:typeface="roboto_light" />
+                        app:typeface="roboto_light"
+                        android:textSize="@dimen/text_size_regular"/>
 
                 </RelativeLayout>
 
@@ -155,6 +164,11 @@
                 app:typeface="roboto_slab_light" /> -->
         </LinearLayout>
 
+
+
 </LinearLayout>
 
+    <include layout="@layout/progress"
+        android:visibility="gone"/>
+</RelativeLayout>
 </TabHost>

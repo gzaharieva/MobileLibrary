@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.search.MainActivity" >
+        <activity android:name=".ui.search.SearchActivity" >
         </activity>
         <activity
             android:name=".ui.BookDetailActivity"

@@ -16,7 +16,7 @@ import com.master.univt.support.util.LogUtil;
 
 
 //@EActivity(R.layout.activity_main)
-public class MainActivity extends ActionBarActivity implements SearchView.OnQueryTextListener {
+public class SearchActivity extends ActionBarActivity implements SearchView.OnQueryTextListener {
    // @ViewById
     DrawerLayout drawerLayout;
 

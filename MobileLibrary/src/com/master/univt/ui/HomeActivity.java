@@ -33,7 +33,7 @@ import com.master.univt.navigation.NavigationDrawerListAdapter;
 import com.master.univt.services.SharedPreferencedSingleton;
 import com.master.univt.support.http.Search;
 import com.master.univt.support.http.UserLibrary;
-import com.master.univt.ui.search.MainActivity;
+import com.master.univt.ui.search.SearchActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -91,7 +91,7 @@ public class HomeActivity extends ActionBarActivity
                 @Override
                 public void onClick(View v) {
                     searchView.onActionViewCollapsed();
-                    Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                    Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
                     startActivity(intent);
                 }
             });
@@ -115,6 +115,7 @@ public class HomeActivity extends ActionBarActivity
         items = new ArrayList<NavigationDrawerItem>();
         items.add(new NavigationDrawerItem(username, R.drawable.ic_user));
         items.add(new NavigationDrawerItem(getString(R.string.bookshelf), R.drawable.ic_books));
+        items.add(new NavigationDrawerItem(getString(R.string.search), R.drawable.ic_action_search));
         navigationMenuAdapter = new NavigationDrawerListAdapter(HomeActivity.this, items);
 
         navigationDrawerList.setAdapter(navigationMenuAdapter);
@@ -187,6 +188,7 @@ public class HomeActivity extends ActionBarActivity
                         bookshelvesApi.add(bookshelf);
                     }
                 }
+                items.add(new NavigationDrawerItem(getString(R.string.search), R.drawable.ic_action_search));
             }
 
 
@@ -258,30 +260,36 @@ public class HomeActivity extends ActionBarActivity
     private void selectItem(final int position) {
         navigationMenuAdapter.setSelectedPosition(position);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        switch (position) {
-            case 1:
-                Bundle bundle = new Bundle();
-                bookshelvesFragment = new BookshelvesFragment();
-                bookshelvesFragment.setArguments(bundle);
-                fragmentTransaction.replace(R.id.container, bookshelvesFragment, ParameterTag.FRAGMENT_COURSE)
-                        .addToBackStack(null);
-                break;
-            default:
-                Bookshelf bookshelf = bookshelvesApi.get(position-2);
-                BooksFragment booksFragment = new BooksFragment();
-                Bundle booksBundle = new Bundle();
-               try {
-                    booksBundle.putString(Constants.BOOKSHELF, Search.JSON_FACTORY.toString(bookshelf));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                booksFragment.setArguments(booksBundle);
-                fragmentTransaction.replace(R.id.container, booksFragment, ParameterTag.FRAGMENT_COURSE)
-                        .addToBackStack(null);
-                titleActionBar = bookshelf.getTitle();
-                break;
-        }
+        int lastPosition = items.size() - 1;
+        if(position == lastPosition){
+            Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+            startActivity(intent);
+        }else {
+            switch (position) {
+                case 1:
+                    Bundle bundle = new Bundle();
+                    bookshelvesFragment = new BookshelvesFragment();
+                    bookshelvesFragment.setArguments(bundle);
+                    fragmentTransaction.replace(R.id.container, bookshelvesFragment, ParameterTag.FRAGMENT_COURSE);
+                    // .addToBackStack(null);
+                    break;
 
+                default:
+                    Bookshelf bookshelf = bookshelvesApi.get(position - 2);
+                    BooksFragment booksFragment = new BooksFragment();
+                    Bundle booksBundle = new Bundle();
+                    try {
+                        booksBundle.putString(Constants.BOOKSHELF, Search.JSON_FACTORY.toString(bookshelf));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    booksFragment.setArguments(booksBundle);
+                    fragmentTransaction.replace(R.id.container, booksFragment, ParameterTag.FRAGMENT_COURSE);
+                    //.addToBackStack(null);
+                    titleActionBar = bookshelf.getTitle();
+                    break;
+            }
+        }
         fragmentTransaction.commit();
         navigationDrawerList.setItemChecked(position, true);
 

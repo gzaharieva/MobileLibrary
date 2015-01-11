@@ -72,4 +72,15 @@
     <string name="no_description">No description</string>
     <string name="volume_added_success">Successful operation.</string>
     <string name="volume_added_failure">The operation failed.</string>
+    <string name="no_search_results">No results</string>
+    
+    <string name="label_web_reader_link">Web link:</string>
+    <string name="label_pdf_available">PDF available:</string>
+    <string name="label_epub_available">EPub available:</string>
+    <string name="label_page_count">Page count:</string>
+    <string name="label_isbn_10">ISBN 10:</string>
+    <string name="label_isbn_13">ISBN 13:</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="not_presented">Not presented</string>
 </resources>

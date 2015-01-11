@@ -35,6 +35,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     private SearchResultAdapter searchResultAdapter;
     private QueryTask queryTask;
     private ListView listView;
+    private View noResultsView;
 
     private void init() {
         searchResultAdapter = new SearchResultAdapter(this, searchResultList);
@@ -57,6 +58,8 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         progressBar = (ProgressBar) rootView.findViewById(R.id.search_pb);
         listView = (ListView) rootView.findViewById(R.id.listview);
         searchView = rootView.findViewById(R.id.view_search);
+        noResultsView = rootView.findViewById(R.id.view_no_search_results);
+
         init();
 
         return rootView;
@@ -118,7 +121,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     private boolean onQuery(Volumes result) {
         if (result == null || result.getItems() == null) {
-          searchView.setVisibility(View.VISIBLE);
+            noResultsView.setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
             return false;
         }
@@ -127,6 +130,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         searchResultList.addAll(result.getItems());
         searchResultAdapter.notifyDataSetChanged();
         searchView.setVisibility(View.GONE);
+        noResultsView.setVisibility(View.GONE);
         listView.setVisibility(View.VISIBLE);
         return true;
     }

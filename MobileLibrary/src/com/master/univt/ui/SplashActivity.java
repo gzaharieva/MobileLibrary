@@ -25,7 +25,9 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.master.univt.Constants;
 import com.master.univt.R;
+import com.master.univt.services.CommunicationService;
 import com.master.univt.services.SharedPreferencedSingleton;
+import com.master.univt.support.GlobalApplication;
 
 import java.io.IOException;
 
@@ -115,6 +117,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         mGoogleApiClient.connect();
 
         Crashlytics.start(this);
+        GlobalApplication.getInstance().trackView(getString(R.string.app_name));
     }
 
     private GoogleApiClient buildGoogleApiClient() {
@@ -133,6 +136,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
+        GlobalApplication.getInstance().trackView(getString(R.string.app_name));
     }
 
     @Override
@@ -336,55 +340,71 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         final Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
 
-        AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                String token = null;
-                Bundle appActivities = new Bundle();
-                appActivities.putString(GoogleAuthUtil.KEY_REQUEST_VISIBLE_ACTIVITIES,
-                        "com.master.univt.ui.SplashActivity");
-               // String scopes = "oauth2:server:client_id:933905793255-pa7ifm7m6elch8nuu9ucpijr3br8cjqv.apps.googleusercontent.com:api_scope:"+Scopes.PLUS_ME;//:api_scope:<SCOPE1> <SCOPE2>
-                final String scopes = "oauth2:https://www.googleapis.com/auth/books";// + Scopes.PLUS_ME;
-                String code = null;
-                try {
-                    Log.d(LOG_TAG, Plus.AccountApi.getAccountName(mGoogleApiClient));
-                    token = GoogleAuthUtil.getToken(
-                            SplashActivity.this,
-                            Plus.AccountApi.getAccountName(mGoogleApiClient),
-                            scopes);                                            // String scope
-//                            appActivities);                                 // Bundle bundle);
-                } catch (IOException transientEx) {
-                    // Network or server error, try later
-                    Log.e(LOG_TAG, transientEx.toString());
-                } catch (UserRecoverableAuthException e) {
-                    // Recover (with e.getIntent())
-                    Log.e(LOG_TAG, e.toString());
-                    Intent recover = e.getIntent();
-                    startActivityForResult(recover, REQUEST_CODE_TOKEN_AUTH);
-                } catch (GoogleAuthException authEx) {
-                    // The call is not ever expected to succeed
-                    // assuming you have already verified that
-                    // Google Play services is installed.
-                    Log.e(LOG_TAG,"", authEx);
-                }
-
-                return token;
-            }
-
-            @Override
-            protected void onPostExecute(String token) {
-                Log.i(LOG_TAG, "Access token retrieved:" + token);
-                mStatus.setText(token);
-                if(token != null) {
-                    authenticateUser(currentUser.getId(), currentUser.getDisplayName(), token);
-                }
-            }
-
-        };
-        task.execute();
+       new RequestTokenTask(new CommunicationService<String>() {
+           @Override
+           public void onRequestCompleted(String token) {
+               if(token != null) {
+                   authenticateUser(currentUser.getId(), currentUser.getDisplayName(), token);
+               }
+           }
+       }).execute();
        
        
     }
+
+  public class  RequestTokenTask extends AsyncTask<Void, Void, String> {
+
+
+      private CommunicationService<String> communicationService;
+      public RequestTokenTask(CommunicationService<String> communicationService) {
+          this.communicationService = communicationService;
+      }
+
+      @Override
+        protected String doInBackground(Void... params) {
+            String token = null;
+            Bundle appActivities = new Bundle();
+            appActivities.putString(GoogleAuthUtil.KEY_REQUEST_VISIBLE_ACTIVITIES,
+                    "com.master.univt.ui.SplashActivity");
+            // String scopes = "oauth2:server:client_id:933905793255-pa7ifm7m6elch8nuu9ucpijr3br8cjqv.apps.googleusercontent.com:api_scope:"+Scopes.PLUS_ME;//:api_scope:<SCOPE1> <SCOPE2>
+            final String scopes = "oauth2:https://www.googleapis.com/auth/books";// + Scopes.PLUS_ME;
+            String code = null;
+            try {
+                Log.d(LOG_TAG, Plus.AccountApi.getAccountName(mGoogleApiClient));
+                token = GoogleAuthUtil.getToken(
+                        SplashActivity.this,
+                        Plus.AccountApi.getAccountName(mGoogleApiClient),
+                        scopes);                                            // String scope
+//                            appActivities);                                 // Bundle bundle);
+            } catch (IOException transientEx) {
+                // Network or server error, try later
+                Log.e(LOG_TAG, transientEx.toString());
+            } catch (UserRecoverableAuthException e) {
+                // Recover (with e.getIntent())
+                Log.e(LOG_TAG, e.toString());
+                Intent recover = e.getIntent();
+                startActivityForResult(recover, REQUEST_CODE_TOKEN_AUTH);
+            } catch (GoogleAuthException authEx) {
+                // The call is not ever expected to succeed
+                // assuming you have already verified that
+                // Google Play services is installed.
+                Log.e(LOG_TAG,"", authEx);
+            }
+
+            return token;
+        }
+
+        @Override
+        protected void onPostExecute(String token) {
+            Log.i(LOG_TAG, "Access token retrieved:" + token);
+            //  mStatus.setText(token);
+            communicationService.onRequestCompleted(token);
+
+        }
+
+    };
+    
+    
 
     private void authenticateUser(String currentUserId, String username,  String oauthCode) {
         SharedPreferencedSingleton sharedPreferencedSingleton = SharedPreferencedSingleton.getInstance();
