@@ -23,9 +23,6 @@ import com.google.android.gms.plus.Plus;
 import com.google.api.services.books.model.Bookshelf;
 import com.google.api.services.books.model.Bookshelves;
 import com.master.univt.Constants;
-import com.master.univt.ImageGridActivity;
-import com.master.univt.ImageListActivity;
-import com.master.univt.ImagePagerActivity;
 import com.master.univt.R;
 import com.master.univt.entities.ParameterTag;
 import com.master.univt.navigation.NavigationDrawerItem;
@@ -110,7 +107,7 @@ public class HomeActivity extends ActionBarActivity
         navigationDrawerList = (ListView) findViewById(R.id.navigation_drawer);
         
         SharedPreferencedSingleton settings = SharedPreferencedSingleton.getInstance();
-        username = settings.getString(Constants.PREFS_USERNAME, getString(R.string.username));
+        username = settings.getString(Constants.PREFS_USERNAME, getString(R.string.user));
         
         items = new ArrayList<NavigationDrawerItem>();
         items.add(new NavigationDrawerItem(username, R.drawable.ic_user));
@@ -337,22 +334,5 @@ public class HomeActivity extends ActionBarActivity
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void onImageListClick(View view) {
-        Intent intent = new Intent(this, ImageListActivity.class);
-        intent.putExtra(Constants.Extra.IMAGES, IMAGES);
-        startActivity(intent);
-    }
-
-    public void onImageGridClick(View view) {
-        Intent intent = new Intent(this, ImageGridActivity.class);
-        intent.putExtra(Constants.Extra.IMAGES, IMAGES);
-        startActivity(intent);
-    }
-
-    public void onImagePagerClick(View view) {
-        Intent intent = new Intent(this, ImagePagerActivity.class);
-        intent.putExtra(Constants.Extra.IMAGES, IMAGES);
-        startActivity(intent);
-    }
 
 }

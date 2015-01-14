@@ -11,57 +11,37 @@
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="action_logout">Logout</string>
-    <string name="action_synhronization_with_server">Synchronisieren</string>
     <string name="authentication_progress_signing_in">Sign in ...</string>
 
     <!-- Splash activity -->
     <string name="image_view">Image view</string>
 
     <!-- My cources -->
-    <string name="title_user_bookshelves">Меню</string>
+    <string name="title_user_bookshelves">Menu</string>
 
     <string name="action_register">Регистрация</string>
    <string name="action_login_facebook">Вписване</string>
     <string name="no_internet_connection">Keine Internetverbindung</string>
-    <string name="message_internet_connection_attempt">Zum Wiederholen berühren</string>
     <string name="msg_free_lecture">Gratis-Vortrag</string>
     <string name="msg_free_volume">Наличен</string>
 
 
     <string name="status_loading">Loading…</string>
     <string name="status_signing_in">Signing in with Google+…</string>
-    <string name="status_signed_out">Signed out</string>
-    <string name="status_revoke_access">Revoked access</string>
-    <string name="status_revoke_access_error">Error revoking access: %s</string>
-    <string name="signed_in_as">Signed in as %s</string>
     <string name="splash_title">Your Google Library</string>
     
     <string name="user">User</string>
     <string name="bookshelf">Bookshelves</string>
     <string name="search">Search</string>
-
-    <string name="menu_item_clear_memory_cache">Clear memory cache</string>
-    <string name="menu_item_clear_disc_cache">Clear disc cache</string>
-    <string name="menu_item_pause_on_scroll">Pause on scroll</string>
-    <string name="menu_item_pause_on_fling">Pause on fling</string>
     <string name="description">Description</string>
-    <string name="label_activity_examples">My library</string>
-    <string name="button_image_list">All books</string>
-    <string name="button_image_grid">My books</string>
-    <string name="button_image_pager"> Pager books</string>
-    <string name="title_favorites">Fovorites</string>
-    <string name="title_toread">To read</string>
-    <string name="title_reading_now">Reading now</string>
     <string name="title_bookshelfs">Bookshelfs</string>
     <string name="message_no_internet_connection">No internet connection</string>
-    <string name="username">Username</string>
     <string name="title_browsing_history">Browsing history</string>
     <string name="label_volume_last_update">Last updated:</string>
     <string name="label_volume_created">Created:</string>
 
     <string name="label_isbn">ISBN:</string>
     <string name="label_publisher">Publisher:</string>
-    <string name="action_sign_in">Sign in</string>
     <string name="ok">OK</string>
     <string name="navigation_drawer_open">Navigation drawer open</string>
     <string name="navigation_drawer_close">Navigation drawer close</string>
@@ -83,4 +63,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="not_presented">Not presented</string>
+    <string name="language">Language: </string>
+    <string name="published_date">Published Date: </string>
 </resources>

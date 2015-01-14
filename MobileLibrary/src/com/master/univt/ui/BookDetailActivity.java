@@ -264,11 +264,11 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
     }
 
     private String getPublishedDate(Volume volume) {
-        return "Published Date: " + volume.getVolumeInfo().getPublishedDate();
+        return getString(R.string.published_date) + volume.getVolumeInfo().getPublishedDate();
     }
 
     private String getLanguage(Volume volume) {
-        return "Language: " + volume.getVolumeInfo().getLanguage();
+        return getString(R.string.language) + volume.getVolumeInfo().getLanguage();
     }
 
     @Override

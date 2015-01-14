@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="wellcome">Добре дошли</string>
+    <string name="sign_in_google">Пвисване с Gogle</string>
+    <string name="app_name">Книги</string>
+    <string name="bookDetail">Детайли за книга</string>
+    <string name="fragment_search">Търсене</string>
+    <string name="fragment_bookshelf">Категория</string>
+    
+    <string name="action_settings">Настройки</string>
+    <string name="action_search">Търсене</string>
+    <string name="action_logout">Logout</string>
+
+    <!-- My cources -->
+    <string name="title_user_bookshelves">Меню</string>
+
+    <string name="action_register">Регистрация</string>
+   <string name="action_login_facebook">Вписване</string>
+    <string name="no_internet_connection">Не е налична интернет връзка</string>
+
+
+    <string name="status_loading">Зареждане…</string>
+    <string name="status_signed_out">Отпусване</string>
+    
+    <string name="user">Потребител</string>
+    <string name="bookshelf">Категории</string>
+
+    <string name="label_activity_examples">Моята библиотека</string>
+
+    <string name="label_isbn">ISBN:</string>
+    <string name="label_publisher">Издател:</string>
+    <string name="ok">OK</string>
+    <string name="navigation_drawer_open">Navigation drawer open</string>
+    <string name="navigation_drawer_close">Navigation drawer close</string>
+    <string name="tab_volume_description">Описание</string>
+    <string name="tab_volume_info">Информация</string>
+    <string name="action_add_volume">Добави към</string>
+    <string name="action_remove_volume">Изтрий книга</string>
+    <string name="no_description">Няма описание</string>
+    <string name="volume_added_success">Успешна операция.</string>
+    <string name="volume_added_failure">Неуспешна операция.</string>
+    <string name="no_search_results">Няма ресултати</string>
+    
+    <string name="label_web_reader_link">WEB Четене:</string>
+    <string name="label_pdf_available">Наличен PDF:</string>
+    <string name="label_epub_available">Наличен EPub:</string>
+    <string name="label_page_count">Брой страници:</string>
+    <string name="label_volume_last_update">Последно обновяван:</string>
+    <string name="label_volume_created">Създаден:</string>
+    <string name="label_isbn_10">ISBN 10:</string>
+    <string name="label_isbn_13">ISBN 13:</string>
+    <string name="yes">Да</string>
+    <string name="no">Не</string>
+    <string name="not_presented">Не е наличен</string>
+    <string name="language">Език</string>
+    <string name="published_date">Издадена: </string>
+</resources>
