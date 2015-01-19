@@ -103,7 +103,7 @@ public class SearchSetingFragment extends PreferenceFragment implements SharedPr
                 if (!isAdded())
                     return;
 
-                getActionBar().setTitle("Setting");
+                getActionBar().setTitle(getString(R.string.action_settings));
                 getActivity().invalidateOptionsMenu();
             }
         };

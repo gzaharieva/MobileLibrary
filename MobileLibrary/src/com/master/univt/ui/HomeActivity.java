@@ -105,18 +105,18 @@ public class HomeActivity extends ActionBarActivity
 
         navigationDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationDrawerList = (ListView) findViewById(R.id.navigation_drawer);
-        
+
         SharedPreferencedSingleton settings = SharedPreferencedSingleton.getInstance();
         username = settings.getString(Constants.PREFS_USERNAME, getString(R.string.user));
-        
+
         items = new ArrayList<NavigationDrawerItem>();
         items.add(new NavigationDrawerItem(username, R.drawable.ic_user));
         items.add(new NavigationDrawerItem(getString(R.string.bookshelf), R.drawable.ic_books));
-        items.add(new NavigationDrawerItem(getString(R.string.search), R.drawable.ic_action_search));
+        items.add(new NavigationDrawerItem(getString(R.string.action_search), R.drawable.ic_action_search));
         navigationMenuAdapter = new NavigationDrawerListAdapter(HomeActivity.this, items);
 
         navigationDrawerList.setAdapter(navigationMenuAdapter);
-        
+
         navigationDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationDrawerList = (ListView) findViewById(R.id.navigation_drawer);
 
@@ -157,10 +157,10 @@ public class HomeActivity extends ActionBarActivity
         titleActionBar = getString(R.string.title_user_bookshelves);
         mGoogleApiClient = buildGoogleApiClient();
         mGoogleApiClient.connect();
-      //  new QueryTask().execute();
+        //  new QueryTask().execute();
     }
-    
-    
+
+
 
     private class QueryTask extends AsyncTask<String, Void, Bookshelves> {
 
@@ -173,11 +173,11 @@ public class HomeActivity extends ActionBarActivity
         protected void onPostExecute(Bookshelves bookshelves) {
             if(bookshelves != null && bookshelves.getItems() != null) {
                 bookshelvesApi = new ArrayList<>();
-                
+
                 items = new ArrayList<NavigationDrawerItem>();
                 items.add(new NavigationDrawerItem(username, R.drawable.ic_user));
                 items.add(new NavigationDrawerItem(getString(R.string.bookshelf), R.drawable.ic_books));
-                
+
                 for (Bookshelf bookshelf : bookshelves.getItems()) {
                     boolean isVisible = bookshelf.getAccess().equalsIgnoreCase("public");
                     if(isVisible && bookshelf.getVolumeCount() > 0) {
@@ -185,7 +185,7 @@ public class HomeActivity extends ActionBarActivity
                         bookshelvesApi.add(bookshelf);
                     }
                 }
-                items.add(new NavigationDrawerItem(getString(R.string.search), R.drawable.ic_action_search));
+                items.add(new NavigationDrawerItem(getString(R.string.action_search), R.drawable.ic_action_search));
             }
 
 
@@ -199,7 +199,7 @@ public class HomeActivity extends ActionBarActivity
             navigationDrawerList.setAdapter(navigationMenuAdapter);
         }
     }
-    
+
     private GoogleApiClient buildGoogleApiClient() {
         // When we build the GoogleApiClient we specify where connected and
         // connection failed callbacks should be returned, which Google APIs our
@@ -225,22 +225,22 @@ public class HomeActivity extends ActionBarActivity
             mGoogleApiClient.disconnect();
         }
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
 
         switch (item.getItemId()){
-        case android.R.id.home:
-            if (!navigationDrawerToggle.isDrawerIndicatorEnabled()) {
-                onBackPressed();
-            } else {
-                if (navigationDrawerLayout.isDrawerOpen(navigationDrawerList)) {
-                    navigationDrawerLayout.closeDrawer(navigationDrawerList);
+            case android.R.id.home:
+                if (!navigationDrawerToggle.isDrawerIndicatorEnabled()) {
+                    onBackPressed();
                 } else {
-                    navigationDrawerLayout.openDrawer(navigationDrawerList);
+                    if (navigationDrawerLayout.isDrawerOpen(navigationDrawerList)) {
+                        navigationDrawerLayout.closeDrawer(navigationDrawerList);
+                    } else {
+                        navigationDrawerLayout.openDrawer(navigationDrawerList);
+                    }
                 }
-            }
-            break;
+                break;
             case R.id.action_menu_logout:
 //                Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
 //                mGoogleApiClient.disconnect();

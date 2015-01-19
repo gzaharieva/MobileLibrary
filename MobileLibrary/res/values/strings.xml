@@ -32,7 +32,6 @@
     
     <string name="user">User</string>
     <string name="bookshelf">Bookshelves</string>
-    <string name="search">Search</string>
     <string name="description">Description</string>
     <string name="title_bookshelfs">Bookshelfs</string>
     <string name="message_no_internet_connection">No internet connection</string>
@@ -65,4 +64,13 @@
     <string name="not_presented">Not presented</string>
     <string name="language">Language: </string>
     <string name="published_date">Published Date: </string>
+
+    <string name="keywords_type">Keywords Type</string>
+    <string name="filter">Filter</string>
+    <string name="max_results">Max Results</string>
+    <string name="print_type">Print Type</string>
+    <string name="projection">Projection</string>
+    <string name="order_by">Order By</string>
+    <string name="download">download</string>
+    <string name="search_condition">Search condition</string>
 </resources>

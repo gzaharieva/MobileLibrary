@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Search Condition">
+    <PreferenceCategory android:title="@string/search_condition">
         <ListPreference
             android:defaultValue="intitle"
-            android:dialogTitle="Keywords Type"
+            android:dialogTitle="@string/keywords_type"
             android:entries="@array/keywordsType"
             android:entryValues="@array/keywordsType"
             android:key="keywordsType"
             android:summary="%s"
-            android:title="Keywords Type" />
+            android:title="@string/keywords_type" />
 
         <CheckBoxPreference
             android:key="download"
             android:summaryOff="epub"
             android:summaryOn="epub"
-            android:title="Download" />
+            android:title="@string/download" />
 
         <ListPreference
             android:defaultValue="partial"
-            android:dialogTitle="Filter"
+            android:dialogTitle="@string/filter"
             android:entries="@array/filter"
             android:entryValues="@array/filter"
             android:key="filter"
@@ -28,39 +28,39 @@
 
         <ListPreference
             android:defaultValue="20"
-            android:dialogTitle="Max Results"
+            android:dialogTitle="@string/max_results"
             android:entries="@array/maxresults"
             android:entryValues="@array/maxresults"
             android:key="maxResults"
             android:summary="%s"
-            android:title="Max Results" />
+            android:title="@string/max_results" />
 
         <ListPreference
             android:defaultValue="all"
-            android:dialogTitle="Print Type"
+            android:dialogTitle="@string/print_type"
             android:entries="@array/printType"
             android:entryValues="@array/printType"
             android:key="printType"
             android:summary="%s"
-            android:title="Print Type" />
+            android:title="@string/print_type" />
 
         <ListPreference
             android:defaultValue="full"
-            android:dialogTitle="Projection"
+            android:dialogTitle="@string/projection"
             android:entries="@array/projection"
             android:entryValues="@array/projection"
             android:key="projection"
             android:summary="%s"
-            android:title="Projection" />
+            android:title="@string/projection" />
 
         <ListPreference
             android:defaultValue="relevance"
-            android:dialogTitle="Order By"
+            android:dialogTitle="@string/order_by"
             android:entries="@array/orderBy"
             android:entryValues="@array/orderBy"
             android:key="orderBy"
             android:summary="%s"
-            android:title="Order By" />
+            android:title="@string/order_by" />
 
     </PreferenceCategory>
 

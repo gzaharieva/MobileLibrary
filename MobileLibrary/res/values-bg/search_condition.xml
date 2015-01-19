@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="keywordsType">
+        <item>Заглавие</item>
+        <item>Автор</item>
+        <item>Издател</item>
+        <item>Описание</item>
+        <item>isbn</item>
+    </string-array>
+
+    <string-array name="filter">
+        <item>частичен</item>
+        <item>пълен</item>
+        <item>беплатни е-книги</item>
+        <item>платени книги</item>
+        <item>e-книги</item>
+    </string-array>
+
+    <string-array name="maxresults">
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+    </string-array>
+
+    <string-array name="printType">
+        <item>всички</item>
+        <item>книги</item>
+        <item>списание</item>
+    </string-array>
+
+    <string-array name="projection">
+        <item>пълна</item>
+        <item>лайт</item>
+    </string-array>
+
+    <string-array name="orderBy">
+        <item>приложимост</item>
+        <item>най-нови</item>
+    </string-array>
+
+</resources>

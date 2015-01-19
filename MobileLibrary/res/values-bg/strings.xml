@@ -10,7 +10,7 @@
     
     <string name="action_settings">Настройки</string>
     <string name="action_search">Търсене</string>
-    <string name="action_logout">Logout</string>
+    <string name="action_logout">Оптисване</string>
 
     <!-- My cources -->
     <string name="title_user_bookshelves">Меню</string>
@@ -55,4 +55,14 @@
     <string name="not_presented">Не е наличен</string>
     <string name="language">Език</string>
     <string name="published_date">Издадена: </string>
+
+    <string name="keywords_type">Тип ключови думи</string>
+    <string name="filter">Фитър</string>
+    <string name="max_results">Max резултати</string>
+    <string name="print_type">Тип</string>
+    <string name="projection">Проекция</string>
+    <string name="order_by">Подреждане по</string>
+
+    <string name="download">свален</string>
+    <string name="search_condition">Филтри</string>
 </resources>

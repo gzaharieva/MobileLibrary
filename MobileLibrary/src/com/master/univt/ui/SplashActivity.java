@@ -25,11 +25,15 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.master.univt.Constants;
 import com.master.univt.R;
+import com.master.univt.entities.ResponseStatusCode;
 import com.master.univt.services.CommunicationService;
 import com.master.univt.services.SharedPreferencedSingleton;
 import com.master.univt.support.GlobalApplication;
+import com.master.univt.support.http.AuthenticationService;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Splash screen. The initial screen view of the application. An example full-screen activity that
@@ -348,7 +352,22 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
                }
            }
        }).execute();
-       
+
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("scope", "email%20profile");
+//
+//        map.put("redirect_uri", "urn:ietf:wg:oauth:2.0:oob");
+//        map.put("response_type", "code");
+//        // map.put("client_secret", "");
+//        map.put("client_id", "933905793255-uddtumneu4cd1pr2le7cil6kmbpqkdt2.apps.googleusercontent.com");
+//        new ProfileService(new CommunicationService<String>() {
+//            @Override
+//            public void onRequestCompleted(String resultData) {
+//                if(resultData != null) {
+//                    Log.d(LOG_TAG, "resultData"+ resultData);
+//                }
+//            }
+//        }, SplashActivity.this).execute();
        
     }
 
@@ -363,6 +382,9 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
       @Override
         protected String doInBackground(Void... params) {
             String token = null;
+
+
+
             Bundle appActivities = new Bundle();
             appActivities.putString(GoogleAuthUtil.KEY_REQUEST_VISIBLE_ACTIVITIES,
                     "com.master.univt.ui.SplashActivity");
@@ -397,8 +419,17 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         @Override
         protected void onPostExecute(String token) {
             Log.i(LOG_TAG, "Access token retrieved:" + token);
-            //  mStatus.setText(token);
-            communicationService.onRequestCompleted(token);
+
+            String params = String.format("refresh_token=%s&client_id=933905793255-uddtumneu4cd1pr2le7cil6kmbpqkdt2.apps.googleusercontent.com&grant_type=refresh_token&redirect_uri=urn:ietf:wg:oauth:2.0:oob", token);
+            new AuthenticationService(new CommunicationService<String>() {
+                @Override
+                public void onRequestCompleted(String resultData) {
+                    if(resultData != null) {
+                        communicationService.onRequestCompleted(resultData);
+                    }
+                }
+            }, SplashActivity.this).execute(params);
+
 
         }
 
