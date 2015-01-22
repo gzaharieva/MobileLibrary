@@ -48,9 +48,9 @@ public class BooksGridViewAdapter extends BaseAdapter
     this.context = context;
     this.coursesItems = courses;
     options =
-      new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_empty)
-        .showImageForEmptyUri(R.drawable.ic_empty).showImageOnFail(R.drawable.ic_empty)
-        .cacheInMemory(true).cacheOnDisc(true).considerExifParams(true).build();
+      new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_place)
+        .showImageForEmptyUri(R.drawable.ic_place).showImageOnFail(R.drawable.ic_place)
+        .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true).build();
   }
 
   public void setSelectedPosition(final int selectedPosition)

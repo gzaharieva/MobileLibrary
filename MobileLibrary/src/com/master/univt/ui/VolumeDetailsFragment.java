@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.method.LinkMovementMethod;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.api.services.books.model.Volume;
@@ -31,7 +34,7 @@ public class VolumeDetailsFragment extends Fragment
   public Context context;
   /** The root view of the fragment. */
   private View rootView;
-  private TextView webReaderLinkView;
+  private Button webReaderLinkView;
   private TextView epubAvailableView;
   private TextView pdfAvailableView;
   private TextView pageCountView;
@@ -65,8 +68,8 @@ public class VolumeDetailsFragment extends Fragment
   public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState)
   {
     rootView = inflater.inflate(R.layout.fragment_volume_details, container, false);
-    webReaderLinkView = (TextView) rootView.findViewById(R.id.web_reader_link);
-      webReaderLinkView.setMovementMethod(LinkMovementMethod.getInstance());
+    webReaderLinkView = (Button) rootView.findViewById(R.id.web_reader_link);
+
 
     pdfAvailableView = (TextView) rootView.findViewById(R.id.pdf_available);
     epubAvailableView = (TextView) rootView.findViewById(R.id.epub_available);
@@ -87,10 +90,10 @@ public class VolumeDetailsFragment extends Fragment
     {
       volume = Search.JSON_FACTORY.fromString(bookInfo, Volume.class);
 
-      Volume.AccessInfo accessInfo = volume.getAccessInfo();
+      final Volume.AccessInfo accessInfo = volume.getAccessInfo();
       if (accessInfo != null)
       {
-        webReaderLinkView.setText(accessInfo.getWebReaderLink());
+        webReaderLinkView.setText(getString(R.string.web_reader));
         pdfAvailableView.setText((accessInfo.getPdf().getIsAvailable()) ? getString(R.string.yes) : getString(R.string.no));
         epubAvailableView
           .setText((accessInfo.getEpub().getIsAvailable()) ? getString(R.string.yes) : getString(R.string.no));
@@ -118,6 +121,18 @@ public class VolumeDetailsFragment extends Fragment
           isbn13.setText(getString(R.string.not_presented));
         }
       }
+
+        webReaderLinkView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(accessInfo != null) {
+                    String url = accessInfo.getWebReaderLink();
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                }
+            }
+        });
 
     }
     catch (IOException e)

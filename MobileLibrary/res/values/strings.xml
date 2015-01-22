@@ -73,4 +73,5 @@
     <string name="order_by">Order By</string>
     <string name="download">download</string>
     <string name="search_condition">Search condition</string>
+    <string name="web_reader">Web reader</string>
 </resources>

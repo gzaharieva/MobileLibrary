@@ -65,4 +65,6 @@
 
     <string name="download">свален</string>
     <string name="search_condition">Филтри</string>
+    <string name="web_reader">Web четец</string>
+
 </resources>

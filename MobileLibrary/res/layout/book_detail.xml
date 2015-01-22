@@ -128,7 +128,7 @@
                 <Button
                     android:id="@+id/action_add_volume"
                     android:layout_width="100dp"
-                    style="@style/LoginButton"
+                    style="@style/ApplicationButton"
                     android:layout_gravity="right"
                     android:background="@color/blue"
                     android:text="@string/action_add_volume"/>

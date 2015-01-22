@@ -164,14 +164,16 @@
 
         android:textColor="@color/text_dark_gray"/>
 
-    <TextView
+    <Button
         android:id="@+id/web_reader_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+
+        android:layout_height="46dp"
         android:textColor="@color/text_dark_gray"
         android:textStyle="bold|italic"
-        android:autoLink="web"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        />
+
 </TableRow>
 
 <TableRow android:padding="10dp">

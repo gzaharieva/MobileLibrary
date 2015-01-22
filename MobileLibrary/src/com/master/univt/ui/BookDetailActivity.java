@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.api.services.books.model.Bookshelf;
 import com.google.api.services.books.model.Bookshelves;
@@ -226,7 +225,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
 
             titleTv.setText(volumeInfo.getTitle());
 
-            String author = getAutor(volume);
+            String author = getAuthor(volume);
             if (null == author || author.trim().equals(""))
                 authorTv.setVisibility(View.GONE);
             else
@@ -236,7 +235,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
             if (null == languageStr || languageStr.trim().equals(""))
                 language.setVisibility(View.GONE);
             else
-                language.setText(languageStr);
+                language.setText(getString(R.string.language) + languageStr);
 
             String categoriesStr = getCategories(volume);
             if (null == categoriesStr || categoriesStr.trim().equals(""))
@@ -245,11 +244,12 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
                 categories.setText(categoriesStr);
 
             String publishedDateStr = getPublishedDate(volume);
-            if (null == publishedDateStr || publishedDateStr.trim().equals(""))
+            if (null == publishedDateStr || publishedDateStr.trim().equals("")) {
                 publishedDate.setVisibility(View.GONE);
-            else
-                publishedDate.setText(publishedDateStr);
-
+            }
+            else {
+                publishedDate.setText(getString(R.string.published_date) + publishedDateStr);
+            }
             try {
                 averageRating.setRating(Float.valueOf(volumeInfo.getAverageRating() + ""));
             } catch (Exception e) {
@@ -264,11 +264,15 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
     }
 
     private String getPublishedDate(Volume volume) {
-        return getString(R.string.published_date) + volume.getVolumeInfo().getPublishedDate();
+        return volume.getVolumeInfo().getPublishedDate();
     }
 
     private String getLanguage(Volume volume) {
-        return getString(R.string.language) + volume.getVolumeInfo().getLanguage();
+        String result = null;
+        if(volume.getVolumeInfo().getLanguage() != null) {
+            result =  volume.getVolumeInfo().getLanguage();
+        }
+        return result;
     }
 
     @Override
@@ -281,7 +285,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         return super.onOptionsItemSelected(item);
     }
 
-    public static String getAutor(Volume result) {
+    public static String getAuthor(Volume result) {
         StringBuilder sb = new StringBuilder();
         List<String> authors = result.getVolumeInfo().getAuthors();
 
@@ -371,8 +375,8 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         UnitSelection.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
 //                Toast.makeText(getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
-                final Volume currenteVolume = volume;
-                new AddVolumeTask().execute(String.valueOf(shelves.get(item).getId()) ,currenteVolume.getId());
+                final Volume currentVolume = volume;
+                new AddVolumeTask().execute(String.valueOf(shelves.get(item).getId()), currentVolume.getId());
                 dialog.dismiss();
             }
         });
@@ -411,10 +415,10 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         }
     }
 
-    private void addedVolumeResult(Boolean isSuccesful) {
+    private void addedVolumeResult(Boolean isSuccessful) {
         progressView.setVisibility(View.GONE);
         String message;
-        if (isSuccesful) {
+        if (isSuccessful) {
             message = getString(R.string.volume_added_success);
         } else {
             message = getString(R.string.volume_added_failure);

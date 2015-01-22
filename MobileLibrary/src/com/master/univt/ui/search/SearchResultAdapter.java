@@ -67,7 +67,7 @@ public class SearchResultAdapter extends BaseAdapter {
         Volume.VolumeInfo volumeInfo = result.getVolumeInfo();
         if (volumeInfo != null) {
             holder.titleTv.setText(volumeInfo.getTitle());
-            holder.authorTv.setText(BookDetailActivity.getAutor(result));
+            holder.authorTv.setText(BookDetailActivity.getAuthor(result));
             holder.descriptionTv.setText(volumeInfo.getDescription());
             ImageLoaderUtil.getImageLoader().displayImage(BookDetailActivity.getImageLink(volumeInfo), holder.thumIv, options);
         }

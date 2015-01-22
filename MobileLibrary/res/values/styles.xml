@@ -32,20 +32,18 @@
 
     <!-- <style name="TabsBar" parent="@style/AppTheme" /> -->
 
-    <style name="ApplicationButton">
-        <item name="android:layout_width">@dimen/button_width</item>
-        <item name="android:layout_height">@dimen/button_height</item>
-        <item name="android:textSize">@dimen/text_size_default_regular</item>
-    </style>
 
     <style name="SplashLoginButton" parent="ApplicationButton">
         <item name="android:background">@drawable/button_login_splash</item>
         <item name="android:textColor">@color/text_dark_gray</item>
     </style>
     
-    <style name="LoginButton" parent="ApplicationButton">
+    <style name="ApplicationButton" parent="ApplicationButton">
         <item name="android:background">@drawable/button_register_splash</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">@dimen/button_width</item>
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:textSize">@dimen/text_size_default_regular</item>
     </style>
 
     <style name="BuyButton">

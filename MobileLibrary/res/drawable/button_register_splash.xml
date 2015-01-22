@@ -4,23 +4,22 @@
     <item android:state_enabled="false" >
             <shape>
 	            <solid android:color="@color/authentication_transparency"  />
-	            <corners android:radius="1dp" />
+	            <corners android:radius="6dp" />
        		</shape>
     </item>
-    <item 	android:state_pressed="true"
-         	android:state_enabled="true" >
+    <item 	android:state_pressed="true">
            <layer-list >
             <item >
                 <shape>
 		            <solid android:color="@color/blue"  />
-		            <corners android:radius="1dp" />
+		            <corners android:radius="6dp" />
         		</shape>
             </item>
             
            <item >
                 <shape>
-		            <solid android:color="@color/blackoverlay_30"  />
-		            <corners android:radius="2dp" />
+		            <solid android:color="@color/blackoverlay_66"  />
+		            <corners android:radius="6dp" />
         		</shape>
             </item>
         </layer-list>
@@ -30,7 +29,7 @@
         android:state_enabled="true" >
       <shape>
             <solid android:color="@color/blue" />
-            <corners android:radius="1dp" />
+            <corners android:radius="6dp" />
         </shape>
     </item>
     
