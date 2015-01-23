@@ -2,6 +2,7 @@ package com.master.univt.ui;
 
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -25,15 +26,15 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.master.univt.Constants;
 import com.master.univt.R;
-import com.master.univt.entities.ResponseStatusCode;
+import com.master.univt.dao.User;
+import com.master.univt.dao.model.DBHelper;
+import com.master.univt.dao.model.UserModel;
 import com.master.univt.services.CommunicationService;
 import com.master.univt.services.SharedPreferencedSingleton;
 import com.master.univt.support.GlobalApplication;
-import com.master.univt.support.http.AuthenticationService;
+import com.master.univt.support.http.RefreshTokenService;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Splash screen. The initial screen view of the application. An example full-screen activity that
@@ -222,6 +223,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
     protected void onActivityResult(int requestCode, int resultCode,
                                     Intent data) {
 
+        Log.d(LOG_TAG, "requestCde:"+ requestCode );
         if (requestCode == REQUEST_CODE_TOKEN_AUTH && resultCode == RESULT_OK) {
             Bundle extra = data.getExtras();
             String oneTimeToken = extra.getString("authtoken");
@@ -343,6 +345,11 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         // Retrieve some profile information to personalize our app for the user.
         final Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
+        User user = new User();
+        user.setName(currentUser.getDisplayName());
+        user.setUsername(currentUser.getNickname());
+        user.setUId(currentUser.getImage().getUrl());
+        insertOrReplace(this, user);
 
        new RequestTokenTask(new CommunicationService<String>() {
            @Override
@@ -353,24 +360,14 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
            }
        }).execute();
 
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("scope", "email%20profile");
-//
-//        map.put("redirect_uri", "urn:ietf:wg:oauth:2.0:oob");
-//        map.put("response_type", "code");
-//        // map.put("client_secret", "");
-//        map.put("client_id", "933905793255-uddtumneu4cd1pr2le7cil6kmbpqkdt2.apps.googleusercontent.com");
-//        new ProfileService(new CommunicationService<String>() {
-//            @Override
-//            public void onRequestCompleted(String resultData) {
-//                if(resultData != null) {
-//                    Log.d(LOG_TAG, "resultData"+ resultData);
-//                }
-//            }
-//        }, SplashActivity.this).execute();
-       
     }
 
+
+    private void insertOrReplace(final Context context, final User user)
+    {
+        UserModel usermodel = new UserModel(DBHelper.getInstance());
+        usermodel.saveUser(user);
+    }
   public class  RequestTokenTask extends AsyncTask<Void, Void, String> {
 
 
@@ -383,11 +380,9 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         protected String doInBackground(Void... params) {
             String token = null;
 
-
-
             Bundle appActivities = new Bundle();
-            appActivities.putString(GoogleAuthUtil.KEY_REQUEST_VISIBLE_ACTIVITIES,
-                    "com.master.univt.ui.SplashActivity");
+//            appActivities.putString(GoogleAuthUtil.KEY_REQUEST_VISIBLE_ACTIVITIES,
+//                    "com.master.univt.ui.SplashActivity");
             // String scopes = "oauth2:server:client_id:933905793255-pa7ifm7m6elch8nuu9ucpijr3br8cjqv.apps.googleusercontent.com:api_scope:"+Scopes.PLUS_ME;//:api_scope:<SCOPE1> <SCOPE2>
             final String scopes = "oauth2:https://www.googleapis.com/auth/books";// + Scopes.PLUS_ME;
             String code = null;
@@ -421,7 +416,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
             Log.i(LOG_TAG, "Access token retrieved:" + token);
 
             String params = String.format("refresh_token=%s&client_id=933905793255-uddtumneu4cd1pr2le7cil6kmbpqkdt2.apps.googleusercontent.com&grant_type=refresh_token&redirect_uri=urn:ietf:wg:oauth:2.0:oob", token);
-            new AuthenticationService(new CommunicationService<String>() {
+            new RefreshTokenService(new CommunicationService<String>() {
                 @Override
                 public void onRequestCompleted(String resultData) {
                     if(resultData != null) {
@@ -429,10 +424,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
                     }
                 }
             }, SplashActivity.this).execute(params);
-
-
         }
-
     };
     
     

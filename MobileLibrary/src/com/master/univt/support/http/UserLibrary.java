@@ -16,7 +16,9 @@ import com.google.api.services.books.Books;
 import com.google.api.services.books.model.Bookshelves;
 import com.google.api.services.books.model.Volumes;
 import com.master.univt.Constants;
+import com.master.univt.services.CommunicationService;
 import com.master.univt.services.SharedPreferencedSingleton;
+import com.master.univt.support.GlobalApplication;
 import com.master.univt.support.util.LogUtil;
 import com.master.univt.support.util.SearchSetting;
 
@@ -109,12 +111,24 @@ public class UserLibrary {
         return result;
     }
 
+    public void getRefreshToken() {
+        SharedPreferencedSingleton s = SharedPreferencedSingleton.getInstance();
+        String token = s.getString(Constants.PREFS_OAUTH_TOKEN, "");
+        String params = String.format("refresh_token=%s&client_id=933905793255-uddtumneu4cd1pr2le7cil6kmbpqkdt2.apps.googleusercontent.com&grant_type=refresh_token&redirect_uri=urn:ietf:wg:oauth:2.0:oob", token);
+        new RefreshTokenService(new CommunicationService<String>() {
+            @Override
+            public void onRequestCompleted(String resultData) {
+                removeVolumes()
+            }
+        }, GlobalApplication.getInstance()).execute(params);
+    }
+
 
     public static Boolean removeVolumes(String shelf, String volume) {
         Boolean result = Boolean.TRUE;
         try {
-
             SharedPreferencedSingleton s = SharedPreferencedSingleton.getInstance();
+            RefreshTokenService.getRefreshToken();
             String token = s.getString(Constants.PREFS_OAUTH_TOKEN, "");
             Log.d("LOG",shelf+ "-" + volume);
             Books.Mylibrary.Bookshelves.RemoveVolume shelves =  books.mylibrary().bookshelves().removeVolume(shelf, volume).setShelf(shelf).setVolumeId(volume)

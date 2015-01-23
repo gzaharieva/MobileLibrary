@@ -66,5 +66,8 @@
     <string name="download">свален</string>
     <string name="search_condition">Филтри</string>
     <string name="web_reader">Web четец</string>
+    <string name="action_remove_book">Искате ли да изтриете книгата от своята категория?</string>
+    <string name="action_select_bookshelf">Моля изберете категория</string>
+    <string name="title_book_removed">ИЗТРИТ</string>
 
 </resources>

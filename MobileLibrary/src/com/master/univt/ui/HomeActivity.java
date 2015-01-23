@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -157,6 +158,7 @@ public class HomeActivity extends ActionBarActivity
         titleActionBar = getString(R.string.title_user_bookshelves);
         mGoogleApiClient = buildGoogleApiClient();
         mGoogleApiClient.connect();
+      //
         //  new QueryTask().execute();
     }
 
@@ -177,6 +179,7 @@ public class HomeActivity extends ActionBarActivity
                 items = new ArrayList<NavigationDrawerItem>();
                 items.add(new NavigationDrawerItem(username, R.drawable.ic_user));
                 items.add(new NavigationDrawerItem(getString(R.string.bookshelf), R.drawable.ic_books));
+                items.add(new NavigationDrawerItem(getString(R.string.action_search), R.drawable.ic_action_search));
 
                 for (Bookshelf bookshelf : bookshelves.getItems()) {
                     boolean isVisible = bookshelf.getAccess().equalsIgnoreCase("public");
@@ -185,7 +188,6 @@ public class HomeActivity extends ActionBarActivity
                         bookshelvesApi.add(bookshelf);
                     }
                 }
-                items.add(new NavigationDrawerItem(getString(R.string.action_search), R.drawable.ic_action_search));
             }
 
 
@@ -242,8 +244,8 @@ public class HomeActivity extends ActionBarActivity
                 }
                 break;
             case R.id.action_menu_logout:
-//                Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-//                mGoogleApiClient.disconnect();
+                Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+                mGoogleApiClient.disconnect();
 //                mGoogleApiClient.connect();
                 Intent intent = new Intent(this, SplashActivity.class);
                 startActivity(intent);

@@ -71,11 +71,13 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
     private View progressView;
     private boolean isSearchResult;
     private Volume volume;
+    private TextView viewBookshelf;
 
 
     private ViewPager tabsViewPager;
     private TabHost tabHostView;
     private FragmentStateTabsPagerAdapter mPagerAdapter;
+    private Bookshelf currentBookshelf;
 
 
     // @AfterViews
@@ -98,6 +100,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         tabHostView = (TabHost) findViewById(android.R.id.tabhost);
         addVolumeButton = (Button) findViewById(R.id.action_add_volume);
         progressView = findViewById(R.id.progress);
+        viewBookshelf = (TextView) findViewById(R.id.view_bookshelf);
 
         isSearchResult = getIntent().getBooleanExtra(Constants.IS_SEARCH_RESULT, false);
         if (isSearchResult) {
@@ -145,7 +148,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
                 }else{
                     new AlertDialog.Builder(BookDetailActivity.this)
                             .setTitle(getString(R.string.app_name))
-                            .setMessage("Sure you wanna do this!")
+                            .setMessage(getString(R.string.action_remove_book))
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -371,12 +374,13 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         }
         
         final AlertDialog.Builder UnitSelection = new AlertDialog.Builder(this);
-        UnitSelection.setTitle("Select Unit");
+        UnitSelection.setTitle(getString(R.string.action_select_bookshelf));
         UnitSelection.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int item) {
 //                Toast.makeText(getApplicationContext(), items[item], Toast.LENGTH_SHORT).show();
                 final Volume currentVolume = volume;
-                new AddVolumeTask().execute(String.valueOf(shelves.get(item).getId()), currentVolume.getId());
+                currentBookshelf = shelves.get(item);
+                new AddVolumeTask().execute(String.valueOf(currentBookshelf.getId()), currentVolume.getId());
                 dialog.dismiss();
             }
         });
@@ -388,16 +392,13 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
 
         @Override
         protected Boolean doInBackground(String... params) {
-            if (isSearchResult) {
-                return UserLibrary.addVolumes(params[0], params[1]);
-            } else {
-                return UserLibrary.removeVolumes(params[0], params[1]);
-            }
+
+             return UserLibrary.addVolumes(params[0], params[1]);
         }
 
         @Override
-        protected void onPostExecute(Boolean isSuccesful) {
-            addedVolumeResult(isSuccesful);
+        protected void onPostExecute(Boolean isSucceсsful) {
+            addedVolumeResult(isSucceсsful);
         }
     }
 
@@ -410,8 +411,8 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         }
 
         @Override
-        protected void onPostExecute(Boolean isSuccesful) {
-            addedVolumeResult(isSuccesful);
+        protected void onPostExecute(Boolean isSuccessful) {
+            removedVolumeResult(isSuccessful);
         }
     }
 
@@ -420,6 +421,25 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         String message;
         if (isSuccessful) {
             message = getString(R.string.volume_added_success);
+            addVolumeButton.setEnabled(false);
+            viewBookshelf.setText(currentBookshelf.getTitle());
+        } else {
+            message = getString(R.string.volume_added_failure);
+        }
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.app_name))
+                .setMessage(message)
+                .setNeutralButton(getString(R.string.ok), null)
+                .show();
+    }
+
+    private void removedVolumeResult(Boolean isSuccessful) {
+        progressView.setVisibility(View.GONE);
+        String message;
+        if (isSuccessful) {
+            message = getString(R.string.volume_added_success);
+            addVolumeButton.setEnabled(false);
+            viewBookshelf.setText(getString(R.string.title_book_removed));
         } else {
             message = getString(R.string.volume_added_failure);
         }

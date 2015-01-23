@@ -117,7 +117,7 @@ public class NavigationDrawerListAdapter extends BaseAdapter {
 
         NavigationDrawerItem navigationDrawerItem = navigationDrawerItems.get(position);
 
-        if(position > 1 && position != navigationDrawerItems.size() - 1) {
+        if(position > 2) {
             int rando = (int) (Math.random() * 7);
             imgIcon.setImageResource(backgroundImages[rando]);
         } else {

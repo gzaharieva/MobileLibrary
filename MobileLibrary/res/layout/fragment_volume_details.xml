@@ -154,7 +154,8 @@
              android:layout_height="fill_parent"
              android:stretchColumns="1"
             android:layout_columnSpan="1"
-            android:layout_rowSpan="10">
+            android:layout_rowSpan="10"
+    android:background="@color/light_grey">
 <TableRow android:padding="10dp">
     <TextView
         android:layout_width="wrap_content"
@@ -167,9 +168,9 @@
     <Button
         android:id="@+id/web_reader_link"
         android:layout_width="match_parent"
-
+        style="@style/ApplicationButton"
         android:layout_height="46dp"
-        android:textColor="@color/text_dark_gray"
+        android:textColor="@android:color/white"
         android:textStyle="bold|italic"
         android:layout_centerHorizontal="true"
         />
