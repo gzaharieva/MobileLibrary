@@ -9,45 +9,52 @@ import de.greenrobot.dao.DaoException;
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
 /**
- * Entity mapped to table USER.
+ * Entity mapped to table BOOKSHELF.
  */
-public class User {
+public class Bookshelf {
 
     private Long id;
-    /** Not-null value. */
-    private String uId;
-    private String username;
-    private String name;
+    private String bookshelf_id;
+    private String title;
+    private String access;
+    private int volumeCount;
+    private long user_id;
+    private java.util.Date updated;
+    private java.util.Date created;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
 
     /** Used for active entity operations. */
-    private transient UserDao myDao;
+    private transient BookshelfDao myDao;
 
-    private List<Bookshelf> bookshelves;
+    private List<Book> books;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
 
-    public User() {
+    public Bookshelf() {
     }
 
-    public User(Long id) {
+    public Bookshelf(Long id) {
         this.id = id;
     }
 
-    public User(Long id, String uId, String username, String name) {
+    public Bookshelf(Long id, String bookshelf_id, String title, String access, int volumeCount, long user_id, java.util.Date updated, java.util.Date created) {
         this.id = id;
-        this.uId = uId;
-        this.username = username;
-        this.name = name;
+        this.bookshelf_id = bookshelf_id;
+        this.title = title;
+        this.access = access;
+        this.volumeCount = volumeCount;
+        this.user_id = user_id;
+        this.updated = updated;
+        this.created = created;
     }
 
     /** called by internal mechanisms, do not call yourself. */
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getUserDao() : null;
+        myDao = daoSession != null ? daoSession.getBookshelfDao() : null;
     }
 
     public Long getId() {
@@ -58,52 +65,82 @@ public class User {
         this.id = id;
     }
 
-    /** Not-null value. */
-    public String getUId() {
-        return uId;
+    public String getBookshelf_id() {
+        return bookshelf_id;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setUId(String uId) {
-        this.uId = uId;
+    public void setBookshelf_id(String bookshelf_id) {
+        this.bookshelf_id = bookshelf_id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getName() {
-        return name;
+    public String getAccess() {
+        return access;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAccess(String access) {
+        this.access = access;
+    }
+
+    public int getVolumeCount() {
+        return volumeCount;
+    }
+
+    public void setVolumeCount(int volumeCount) {
+        this.volumeCount = volumeCount;
+    }
+
+    public long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
+    }
+
+    public java.util.Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(java.util.Date updated) {
+        this.updated = updated;
+    }
+
+    public java.util.Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(java.util.Date created) {
+        this.created = created;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */
-    public List<Bookshelf> getBookshelves() {
-        if (bookshelves == null) {
+    public List<Book> getBooks() {
+        if (books == null) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            BookshelfDao targetDao = daoSession.getBookshelfDao();
-            List<Bookshelf> bookshelvesNew = targetDao._queryUser_Bookshelves(id);
+            BookDao targetDao = daoSession.getBookDao();
+            List<Book> booksNew = targetDao._queryBookshelf_Books(id);
             synchronized (this) {
-                if(bookshelves == null) {
-                    bookshelves = bookshelvesNew;
+                if(books == null) {
+                    books = booksNew;
                 }
             }
         }
-        return bookshelves;
+        return books;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    public synchronized void resetBookshelves() {
-        bookshelves = null;
+    public synchronized void resetBooks() {
+        books = null;
     }
 
     /** Convenient call for {@link AbstractDao#delete(Object)}. Entity must attached to an entity context. */
