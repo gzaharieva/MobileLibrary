@@ -12,10 +12,10 @@
 
     <View
         android:id="@+id/drawer_active_section"
-        android:layout_width="@dimen/listitem_indicator_width"
+        android:layout_width="4dp"
         android:layout_height="match_parent"
         android:background="@color/blue"
-        android:layout_marginRight="@dimen/listitem_indicator_right_space" 
+        android:layout_marginRight="10dp"
         android:visibility="invisible"/>
     
     <ImageView

@@ -10,24 +10,31 @@ import de.greenrobot.dao.DaoException;
 
 // KEEP INCLUDES - put your custom includes here
 // KEEP INCLUDES END
+
 /**
  * Entity mapped to table USER.
  */
 public class User {
 
     private Long id;
-    /** Not-null value. */
+    /**
+     * Not-null value.
+     */
     private String uId;
     private String username;
     private String name;
     private String bookshelvesString;
     private String volumesString;
-    private Map<String,String> books;
+    private Map<String, String> books;
 
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     private transient DaoSession daoSession;
 
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     private transient UserDao myDao;
 
     private List<Bookshelf> bookshelves;
@@ -42,31 +49,45 @@ public class User {
         this.id = id;
     }
 
-    public User(Long id, String uId, String username, String bookshelvesString, String name, String books) {
+    public User(Long id, String uId, String username, String bookshelvesString, String books, String name) {
         this.id = id;
         this.uId = uId;
         this.username = username;
         this.bookshelvesString = bookshelvesString;
-        
+
         this.books = getMap(books);
         this.name = name;
     }
 
     private Map<String, String> getMap(String books) {
         Map<String, String> myMap = new HashMap<String, String>();
-        if(books != null && !books.isEmpty()) {
+        if (books != null && !books.isEmpty()) {
             String s = books.substring(1, books.length() - 1);
-            String[] pairs = s.split(",");
-            for (int i = 0; i < pairs.length; i++) {
-                String pair = pairs[i];
-                String[] keyValue = pair.split("=");
-                myMap.put(keyValue[0], keyValue[1]);
+            if (!s.isEmpty()) {
+//                Log.d("GABI", s);
+                if (s.split("=\\{").length == 2) {
+                    String[] onlyOne = s.split("=\\{");
+                    myMap.put(onlyOne[0], "{".concat(onlyOne[1]));
+                } else {
+                    String[] pairs = s.split(",");
+                    for (int i = 0; i < pairs.length; i++) {
+                        String pair = pairs[i];
+//                    Log.d("LOG", "pair:" + pair);
+                        String[] keyValue = pair.split("=");
+                        if (keyValue.length > 1) {
+                            myMap.put(keyValue[0], keyValue[1]);
+                        }
+                    }
+
+                }
             }
         }
         return myMap;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getUserDao() : null;
@@ -80,12 +101,16 @@ public class User {
         this.id = id;
     }
 
-    /** Not-null value. */
+    /**
+     * Not-null value.
+     */
     public String getUId() {
         return uId;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
+    /**
+     * Not-null value; ensure this value is available before it is saved to the database.
+     */
     public void setUId(String uId) {
         this.uId = uId;
     }
@@ -106,7 +131,9 @@ public class User {
         this.name = name;
     }
 
-    /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */
+    /**
+     * To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity.
+     */
     public List<Bookshelf> getBookshelves() {
         if (bookshelves == null) {
             if (daoSession == null) {
@@ -115,7 +142,7 @@ public class User {
             BookshelfDao targetDao = daoSession.getBookshelfDao();
             List<Bookshelf> bookshelvesNew = targetDao._queryUser_Bookshelves(id);
             synchronized (this) {
-                if(bookshelves == null) {
+                if (bookshelves == null) {
                     bookshelves = bookshelvesNew;
                 }
             }
@@ -123,31 +150,37 @@ public class User {
         return bookshelves;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     public synchronized void resetBookshelves() {
         bookshelves = null;
     }
 
-    /** Convenient call for  Entity must attached to an entity context. */
+    /**
+     * Convenient call for  Entity must attached to an entity context.
+     */
     public void delete() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
-        }    
+        }
         myDao.delete(this);
     }
 
-    /** Convenient call for. Entity must attached to an entity context. */
+    /**
+     * Convenient call for. Entity must attached to an entity context.
+     */
     public void update() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
-        }    
+        }
         myDao.update(this);
     }
 
     public void refresh() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
-        }    
+        }
         myDao.refresh(this);
     }
 
@@ -171,7 +204,7 @@ public class User {
     }
 
     public Map<String, String> getBooks() {
-        if(books == null){
+        if (books == null) {
             books = new HashMap<>();
         }
         return books;

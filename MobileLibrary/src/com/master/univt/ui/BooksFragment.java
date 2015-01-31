@@ -168,7 +168,7 @@ public class BooksFragment extends Fragment implements CommunicationService<Volu
         }else{
             User loggedInUser = GlobalApplication.getInstance().getLoggedInUser();
             Map<String, String> books = loggedInUser.getBooks();
-            Log.d(LOG_TAG, "BOOKS:"+ books.toString());
+            
             String booksString = books.get(String.valueOf(bookshelf.getId()));
             if(booksString != null) {
                 try {

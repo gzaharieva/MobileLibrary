@@ -126,8 +126,11 @@ public class BookshelvesFragment extends Fragment {
                 User loggedInUser = GlobalApplication.getInstance().getLoggedInUser();
                 try {
                     Log.d(LOG_TAG, "Get local bookshelves");
-                    Bookshelves userBookshelves = Search.JSON_FACTORY.fromString(loggedInUser.getBookshelvesString(), Bookshelves.class);
-                    bookshelvesApi = userBookshelves;
+                    String bookshelvesString = loggedInUser.getBookshelvesString();
+                    if(bookshelvesString != null) {
+                        Bookshelves userBookshelves = Search.JSON_FACTORY.fromString(bookshelvesString, Bookshelves.class);
+                        bookshelvesApi = userBookshelves;
+                    }
                 } catch (IOException e) {
                     Log.e(LOG_TAG, "", e);
                 }
@@ -142,10 +145,10 @@ public class BookshelvesFragment extends Fragment {
 
                 gridViewAdapter = new GridBookshelfListAdapter(getActivity(), 0, 0, publicBookshelves);
                 bookshelvesGridView.setAdapter(gridViewAdapter);
-
-                progressView.setVisibility(View.GONE);
-
+            }else{
+                
             }
+            progressView.setVisibility(View.GONE);
         }
     }
 }

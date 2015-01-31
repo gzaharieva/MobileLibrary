@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -109,10 +110,10 @@ public class HomeActivity extends ActionBarActivity {
         navigationDrawerList = (ListView) findViewById(R.id.navigation_drawer);
 
         SharedPreferencedSingleton settings = SharedPreferencedSingleton.getInstance();
-        username = settings.getString(Constants.PREFS_USERNAME, getString(R.string.user));
+        username = settings.getString(Constants.PREFS_USERNAME, "");
 
         UserModel userModel = new UserModel(DBHelper.getInstance());
-        User user = userModel.findBy(UserDao.Properties.Name, username);
+        User user = userModel.findBy(UserDao.Properties.Username, username);
         GlobalApplication.getInstance().setLoggedInUser(user);
 
 
@@ -178,7 +179,25 @@ public class HomeActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(Bookshelves bookshelves) {
+            Bookshelves bookshelvesresult = null;
+
             if (bookshelves != null && bookshelves.getItems() != null) {
+                bookshelvesresult = bookshelves;
+            } else {
+                User loggedInUser = GlobalApplication.getInstance().getLoggedInUser();
+                try {
+                    Log.d(LOG_TAG, "Get local bookshelves");
+                    String bookshelvesString = loggedInUser.getBookshelvesString();
+                    if (bookshelvesString != null) {
+                        Bookshelves userBookshelves = Search.JSON_FACTORY.fromString(bookshelvesString, Bookshelves.class);
+                        bookshelvesresult = userBookshelves;
+                    }
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "", e);
+                }
+            }
+
+            if (bookshelvesresult != null && bookshelvesresult.getItems() != null) {
                 bookshelvesApi = new ArrayList<>();
 
                 items = new ArrayList<NavigationDrawerItem>();
@@ -186,7 +205,7 @@ public class HomeActivity extends ActionBarActivity {
                 items.add(new NavigationDrawerItem(getString(R.string.bookshelf), R.drawable.ic_books));
                 items.add(new NavigationDrawerItem(getString(R.string.action_search), R.drawable.ic_action_search));
 
-                for (Bookshelf bookshelf : bookshelves.getItems()) {
+                for (Bookshelf bookshelf : bookshelvesresult.getItems()) {
                     boolean isVisible = bookshelf.getAccess().equalsIgnoreCase("public");
                     if (isVisible || bookshelf.getVolumeCount() > 0) {
                         items.add(new NavigationDrawerItem(bookshelf.getId(), bookshelf.getTitle(), R.mipmap.ic_star, isVisible, isVisible ? bookshelf.getVolumeCount() : 0));
@@ -246,7 +265,7 @@ public class HomeActivity extends ActionBarActivity {
                 Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
                 mGoogleApiClient.disconnect();
                 SharedPreferencedSingleton settings = SharedPreferencedSingleton.getInstance();
-                settings.writePreference(Constants.PREFS_USERNAME,"");
+                settings.writePreference(Constants.PREFS_USERNAME, "");
                 Intent intent = new Intent(this, SplashActivity.class);
                 startActivity(intent);
                 finish();

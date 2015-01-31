@@ -28,5 +28,7 @@
         <include
             layout="@layout/progress"
             android:visibility="gone" />
+        
+        
     </RelativeLayout>
 </LinearLayout>

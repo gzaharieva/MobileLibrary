@@ -10,10 +10,10 @@
         android:layout_width="@dimen/detail_width"
         android:layout_height="@dimen/detail_heigh"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="@dimen/grid_sides_space"
-        android:layout_marginLeft="@dimen/grid_sides_space"
-        android:layout_marginRight="@dimen/gridview_image_space_right"
-        android:layout_marginTop="@dimen/grid_sides_space"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/description"
         android:src="@drawable/ic_place"/>
 
@@ -39,7 +39,7 @@
                 style="@style/TitleHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/grid_sides_space"
+                android:layout_marginRight="8dp"
                 android:text="Title"
                 android:maxLines="3"/>
 

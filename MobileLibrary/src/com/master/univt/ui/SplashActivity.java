@@ -226,12 +226,12 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
                                     Intent data) {
 
         Log.d(LOG_TAG, "requestCde:"+ requestCode );
-        if (requestCode == REQUEST_CODE_TOKEN_AUTH && resultCode == RESULT_OK) {
-            Bundle extra = data.getExtras();
-            String oneTimeToken = extra.getString("authtoken");
-            Log.d(LOG_TAG, oneTimeToken);
-            authenticateUser("8798", "Gabriela", oneTimeToken);
-        }
+//        if (requestCode == REQUEST_CODE_TOKEN_AUTH && resultCode == RESULT_OK) {
+//            Bundle extra = data.getExtras();
+//            String oneTimeToken = extra.getString("authtoken");
+//            Log.d(LOG_TAG, oneTimeToken);
+//          //  authenticateUser("8798", "Gabriela", oneTimeToken);
+//        }
         
         switch (requestCode) {
             case RC_SIGN_IN:
@@ -302,7 +302,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
                 + result.getErrorCode()+ "-" + mSignInProgress);
 
         if (mSignInProgress == STATE_FAILED) {
-            authenticateUser("117463411595501910870", "Gabriela Zaharieva", "oAuth");
+         //   authenticateUser("117463411595501910870", "Gabriela Zaharieva", "oAuth");
         }
         //  mStatus.setText(result.getErrorCode());
 
@@ -347,46 +347,55 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         // Retrieve some profile information to personalize our app for the user.
         final Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
-        if(currentUser != null) {
-            User user = new User();
-            user.setName(currentUser.getDisplayName());
-            user.setUsername(currentUser.getNickname());
-            user.setUId(currentUser.getImage().getUrl());
-            insertOrReplace(this, user);
+        SharedPreferencedSingleton sharedPreferencedSingleton = SharedPreferencedSingleton.getInstance();
+        if(!sharedPreferencedSingleton.getString(Constants.PREFS_USERNAME, "").isEmpty()) {
+            Intent intent;
+            intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }else {
 
-            new RequestTokenTask(new CommunicationService<String>() {
-                @Override
-                public void onRequestCompleted(String token) {
-                    Log.d(LOG_TAG, "RequestTokenTask");
-                    if (token != null) {
-                        authenticateUser(currentUser.getId(), currentUser.getDisplayName(), token);
-                    } else {
-                        Log.d(LOG_TAG, "Refresh token:onRequestCompleted");
-                        new AlertDialog.Builder(SplashActivity.this)
-                                .setTitle(R.string.app_name)
-                                .setMessage(R.string.app_name)
-                                .create().show();
-                        Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-                        mSignInButton.setEnabled(true);
-                        mSignInProgress = STATE_FAILED;
+            if (currentUser != null) {
+                User user = new User();
+                user.setName(currentUser.getDisplayName());
+                user.setUsername(Plus.AccountApi.getAccountName(mGoogleApiClient));
+                user.setUId(currentUser.getImage().getUrl());
+                insertOrReplace(this, user);
+
+                new RequestTokenTask(new CommunicationService<String>() {
+                    @Override
+                    public void onRequestCompleted(String token) {
+                        Log.d(LOG_TAG, "RequestTokenTask");
+                        if (token != null) {
+                            authenticateUser(currentUser.getId(), Plus.AccountApi.getAccountName(mGoogleApiClient), token);
+                        } else {
+                            Log.d(LOG_TAG, "Refresh token:onRequestCompleted");
+                            new AlertDialog.Builder(SplashActivity.this)
+                                    .setTitle(R.string.app_name)
+                                    .setMessage(R.string.app_name)
+                                    .create().show();
+                            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+                            mSignInButton.setEnabled(true);
+                            mSignInProgress = STATE_FAILED;
+                        }
                     }
-                }
-            }).execute();
-        }else{
-            new AlertDialog.Builder(SplashActivity.this)
-                    .setTitle(R.string.app_name)
-                    .setMessage(R.string.no_internet_connection).setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            })
-                    .create().show();
-            mSignInButton.setEnabled(true);
-            mSignInProgress = STATE_FAILED;
-            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-            mGoogleApiClient.disconnect();
+                }).execute();
+            } else {
+                new AlertDialog.Builder(SplashActivity.this)
+                        .setTitle(R.string.app_name)
+                        .setMessage(R.string.no_internet_connection).setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                        .create().show();
+                mSignInButton.setEnabled(true);
+                mSignInProgress = STATE_FAILED;
+                Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+                mGoogleApiClient.disconnect();
 
+            }
         }
     }
 
@@ -478,6 +487,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         SharedPreferencedSingleton sharedPreferencedSingleton = SharedPreferencedSingleton.getInstance();
         sharedPreferencedSingleton.writePreference(Constants.PREFS_USER_ID, currentUserId);
         sharedPreferencedSingleton.writePreference(Constants.PREFS_USERNAME, username);
+        
         sharedPreferencedSingleton.writePreference(Constants.PREFS_OAUTH_TOKEN, oauthCode);
         Intent intent;
         intent = new Intent(this, HomeActivity.class);
