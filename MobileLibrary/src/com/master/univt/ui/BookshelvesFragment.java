@@ -125,6 +125,7 @@ public class BookshelvesFragment extends Fragment {
             } else {
                 User loggedInUser = GlobalApplication.getInstance().getLoggedInUser();
                 try {
+                    Log.d(LOG_TAG, "Get local bookshelves");
                     Bookshelves userBookshelves = Search.JSON_FACTORY.fromString(loggedInUser.getBookshelvesString(), Bookshelves.class);
                     bookshelvesApi = userBookshelves;
                 } catch (IOException e) {
@@ -134,7 +135,7 @@ public class BookshelvesFragment extends Fragment {
             if (bookshelvesApi != null && bookshelvesApi.getItems() != null) {
                 List<Bookshelf> publicBookshelves = new ArrayList<>();
                 for (Bookshelf shelf : bookshelvesApi.getItems()) {
-                    if (shelf.getAccess().equalsIgnoreCase("public") && shelf.getVolumeCount() > 0) {
+                    if (shelf.getAccess().equalsIgnoreCase("public") || shelf.getVolumeCount() > 0) {
                         publicBookshelves.add(shelf);
                     }
                 }

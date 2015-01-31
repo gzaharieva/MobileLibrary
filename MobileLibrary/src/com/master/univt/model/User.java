@@ -1,6 +1,8 @@
 package com.master.univt.model;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.greenrobot.dao.DaoException;
 
@@ -19,6 +21,8 @@ public class User {
     private String username;
     private String name;
     private String bookshelvesString;
+    private String volumesString;
+    private Map<String,String> books;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -38,12 +42,28 @@ public class User {
         this.id = id;
     }
 
-    public User(Long id, String uId, String username, String bookshelvesString, String name) {
+    public User(Long id, String uId, String username, String bookshelvesString, String name, String books) {
         this.id = id;
         this.uId = uId;
         this.username = username;
         this.bookshelvesString = bookshelvesString;
+        
+        this.books = getMap(books);
         this.name = name;
+    }
+
+    private Map<String, String> getMap(String books) {
+        Map<String, String> myMap = new HashMap<String, String>();
+        if(books != null && !books.isEmpty()) {
+            String s = books.substring(1, books.length() - 1);
+            String[] pairs = s.split(",");
+            for (int i = 0; i < pairs.length; i++) {
+                String pair = pairs[i];
+                String[] keyValue = pair.split("=");
+                myMap.put(keyValue[0], keyValue[1]);
+            }
+        }
+        return myMap;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -124,7 +144,6 @@ public class User {
         myDao.update(this);
     }
 
-    /** Convenient call for {@link AbstractDao#refresh(Object)}. Entity must attached to an entity context. */
     public void refresh() {
         if (myDao == null) {
             throw new DaoException("Entity is detached from DAO context");
@@ -141,5 +160,28 @@ public class User {
 
     public void setBookshelvesString(String bookshelvesString) {
         this.bookshelvesString = bookshelvesString;
+    }
+
+    public String getVolumesString() {
+        return volumesString;
+    }
+
+    public void setVolumesString(String volumesString) {
+        this.volumesString = volumesString;
+    }
+
+    public Map<String, String> getBooks() {
+        if(books == null){
+            books = new HashMap<>();
+        }
+        return books;
+    }
+
+    public void setBooks(Map<String, String> books) {
+        this.books = books;
+    }
+
+    public void setBooks(String books) {
+        this.books = getMap(books);
     }
 }

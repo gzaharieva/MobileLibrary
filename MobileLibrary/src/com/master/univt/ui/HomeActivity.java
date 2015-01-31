@@ -188,7 +188,7 @@ public class HomeActivity extends ActionBarActivity {
 
                 for (Bookshelf bookshelf : bookshelves.getItems()) {
                     boolean isVisible = bookshelf.getAccess().equalsIgnoreCase("public");
-                    if (isVisible && bookshelf.getVolumeCount() > 0) {
+                    if (isVisible || bookshelf.getVolumeCount() > 0) {
                         items.add(new NavigationDrawerItem(bookshelf.getId(), bookshelf.getTitle(), R.mipmap.ic_star, isVisible, isVisible ? bookshelf.getVolumeCount() : 0));
                         bookshelvesApi.add(bookshelf);
                     }
@@ -245,6 +245,8 @@ public class HomeActivity extends ActionBarActivity {
             case R.id.action_menu_logout:
                 Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
                 mGoogleApiClient.disconnect();
+                SharedPreferencedSingleton settings = SharedPreferencedSingleton.getInstance();
+                settings.writePreference(Constants.PREFS_USERNAME,"");
                 Intent intent = new Intent(this, SplashActivity.class);
                 startActivity(intent);
                 finish();

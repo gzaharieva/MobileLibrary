@@ -19,14 +19,18 @@ import com.google.api.services.books.model.Volume;
 import com.google.api.services.books.model.Volumes;
 import com.master.univt.Constants;
 import com.master.univt.R;
+import com.master.univt.model.User;
 import com.master.univt.services.CommunicationService;
 import com.master.univt.services.VolumesService;
+import com.master.univt.support.GlobalApplication;
 import com.master.univt.support.http.Search;
 import com.master.univt.utils.VolumeAdapter;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A fragment representing a list of Items.
@@ -48,6 +52,8 @@ public class BooksFragment extends Fragment implements CommunicationService<Volu
     private TextView volumeCreated;
     private AbsListView booksListView;
     private Bookshelf bookshelf;
+
+    private View noResultsView;
 
     /**
      * The Adapter which will be used to populate the ListView/GridView with
@@ -75,6 +81,7 @@ public class BooksFragment extends Fragment implements CommunicationService<Volu
         progressBar = (ProgressBar) view.findViewById(R.id.search_pb);
         volumeLastUpdate = (TextView) view.findViewById(R.id.volume_last_update);
         volumeCreated = (TextView) view.findViewById(R.id.volume_created);
+        noResultsView = view.findViewById(R.id.view_no_search_results);
 
         booksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -154,9 +161,31 @@ public class BooksFragment extends Fragment implements CommunicationService<Volu
     @Override
     public void onRequestCompleted(Volumes resultData) {
         progressBar.setVisibility(View.GONE);
+
+        List<Volume> volumes = null;
         if (resultData != null) {
-            booksListAdapter = new VolumeAdapter(getActivity(), resultData.getItems());
+          volumes =resultData.getItems();
+        }else{
+            User loggedInUser = GlobalApplication.getInstance().getLoggedInUser();
+            Map<String, String> books = loggedInUser.getBooks();
+            Log.d(LOG_TAG, "BOOKS:"+ books.toString());
+            String booksString = books.get(String.valueOf(bookshelf.getId()));
+            if(booksString != null) {
+                try {
+                    Volumes volumesObject = Search.JSON_FACTORY.fromString(booksString, Volumes.class);
+                    volumes = volumesObject.getItems();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        
+        if(volumes != null){
+            noResultsView.setVisibility(View.GONE);
+            booksListAdapter = new VolumeAdapter(getActivity(), volumes);
             (booksListView).setAdapter(booksListAdapter);
+        } else {
+            noResultsView.setVisibility(View.VISIBLE);
         }
     }
 

@@ -52,6 +52,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/text_dark_gray"
                         android:textSize="@dimen/textsize_detail_bookname"
+                        android:maxLines="6"
                         app:typeface="roboto_slab_bold" />
 
                     <LinearLayout

@@ -85,6 +85,22 @@ public class UserLibrary {
 
     }
 
+    private static void insertOrReplace(String shelf, Volumes result) {
+        if(result != null && !result.isEmpty()) {
+            try {
+                String volumensString = Search.JSON_FACTORY.toString(result);
+                User loggedInUser = GlobalApplication.getInstance().getLoggedInUser();
+
+                loggedInUser.getBooks().put(shelf, volumensString);
+
+                UserModel userModel = new UserModel(DBHelper.getInstance());
+                userModel.saveUser(loggedInUser);
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "", e);
+            }
+        }
+
+    }
     public static Volumes getBookshelfVolumes(String shelf) {
         Volumes result = null;
         try {
@@ -98,6 +114,8 @@ public class UserLibrary {
             Books.Mylibrary.Bookshelves.Volumes.List shelves =  books.mylibrary().bookshelves().volumes().list(shelf)
                     .setKey(apiKey).setOauthToken(refreshToken);
             result =  shelves.execute();
+
+            insertOrReplace(shelf, result);
         } catch (GoogleJsonResponseException e) {
             LogUtil.d("There was a service error: " + e.getDetails().getCode() + " : " + e.getMessage());
         } catch (IOException e) {
