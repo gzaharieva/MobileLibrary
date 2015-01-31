@@ -1,4 +1,4 @@
-package com.master.univt.dao.model;
+package com.master.univt.model;
 
 import java.util.Collection;
 import java.util.List;

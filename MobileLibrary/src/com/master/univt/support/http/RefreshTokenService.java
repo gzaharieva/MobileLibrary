@@ -46,18 +46,18 @@ public class RefreshTokenService extends AsyncTask<String, Integer, String>
   protected String doInBackground(final String... params)
   {
     String resultToken = null;
-    resultToken = getRefreshToken(resultToken, params[0]);
+    resultToken = getRefreshToken(params[0]);
 
     return resultToken;
   }
 
-    public static String getRefreshToken(String resultToken, String param) {
+    public static String getRefreshToken( String param) {
+        String resultToken = null;
         RequestResponse requestResponse = null;
 
         try
       {
           String url = "https://www.googleapis.com/oauth2/v3/token?"+ param;
-          Log.d(LOG_TAG, url);
           requestResponse =
                   ServiceProvider.getInstance().executeHttpPost(url , null);
       }
@@ -85,7 +85,6 @@ public class RefreshTokenService extends AsyncTask<String, Integer, String>
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d(LOG_TAG, "response:"+ response);
 
 
               break;

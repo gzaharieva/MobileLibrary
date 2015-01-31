@@ -1,4 +1,4 @@
-package com.master.univt.dao;
+package com.master.univt.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

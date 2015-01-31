@@ -1,7 +1,4 @@
-package com.master.univt.dao.model;
-
-import com.master.univt.dao.User;
-import com.master.univt.dao.UserDao;
+package com.master.univt.model;
 
 import java.util.List;
 

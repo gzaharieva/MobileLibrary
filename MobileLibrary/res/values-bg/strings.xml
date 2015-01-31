@@ -69,5 +69,6 @@
     <string name="action_remove_book">Искате ли да изтриете книгата от своята категория?</string>
     <string name="action_select_bookshelf">Моля изберете категория</string>
     <string name="title_book_removed">ИЗТРИТ</string>
-
+    <string name="categories">Категория:</string>
+    <string name="buy">Купи</string>
 </resources>

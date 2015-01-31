@@ -21,8 +21,7 @@
 
     <string name="action_register">Регистрация</string>
    <string name="action_login_facebook">Вписване</string>
-    <string name="no_internet_connection">Keine Internetverbindung</string>
-    <string name="msg_free_lecture">Gratis-Vortrag</string>
+    <string name="no_internet_connection">No internet connection.</string>
     <string name="msg_free_volume">Наличен</string>
 
 
@@ -77,4 +76,7 @@
     <string name="action_remove_book">Do you want to remove the book?</string>
     <string name="action_select_bookshelf">Select bookshef to add the book to</string>
     <string name="title_book_removed">REMOVED</string>
+    <string name="categories">Categories:</string>
+    <string name="message_not_unauthorized">Тhe user is unauthorized. Please try again later.</string>
+    <string name="buy">Buy</string>
 </resources>

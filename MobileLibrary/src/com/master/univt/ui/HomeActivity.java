@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,9 +25,14 @@ import com.google.api.services.books.model.Bookshelves;
 import com.master.univt.Constants;
 import com.master.univt.R;
 import com.master.univt.entities.ParameterTag;
+import com.master.univt.model.DBHelper;
+import com.master.univt.model.User;
+import com.master.univt.model.UserDao;
+import com.master.univt.model.UserModel;
 import com.master.univt.navigation.NavigationDrawerItem;
 import com.master.univt.navigation.NavigationDrawerListAdapter;
 import com.master.univt.services.SharedPreferencedSingleton;
+import com.master.univt.support.GlobalApplication;
 import com.master.univt.support.http.Search;
 import com.master.univt.support.http.UserLibrary;
 import com.master.univt.ui.search.SearchActivity;
@@ -37,16 +41,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.master.univt.Constants.IMAGES;
-
 
 /**
  * The home page. On the left side is the navigation bar.
  *
  * @author Gabriela Zaharieva
  */
-public class HomeActivity extends ActionBarActivity
-{
+public class HomeActivity extends ActionBarActivity {
     //@ViewById(R.id.tl_custom)
     Toolbar toolbar;
     /**
@@ -110,8 +111,13 @@ public class HomeActivity extends ActionBarActivity
         SharedPreferencedSingleton settings = SharedPreferencedSingleton.getInstance();
         username = settings.getString(Constants.PREFS_USERNAME, getString(R.string.user));
 
+        UserModel userModel = new UserModel(DBHelper.getInstance());
+        User user = userModel.findBy(UserDao.Properties.Name, username);
+        GlobalApplication.getInstance().setLoggedInUser(user);
+
+
         items = new ArrayList<NavigationDrawerItem>();
-        items.add(new NavigationDrawerItem(username, R.drawable.ic_user));
+        items.add(new NavigationDrawerItem(user.getName(), R.drawable.ic_user));
         items.add(new NavigationDrawerItem(getString(R.string.bookshelf), R.drawable.ic_books));
         items.add(new NavigationDrawerItem(getString(R.string.action_search), R.drawable.ic_action_search));
         navigationMenuAdapter = new NavigationDrawerListAdapter(HomeActivity.this, items);
@@ -158,10 +164,9 @@ public class HomeActivity extends ActionBarActivity
         titleActionBar = getString(R.string.title_user_bookshelves);
         mGoogleApiClient = buildGoogleApiClient();
         mGoogleApiClient.connect();
-      //
+        //
         //  new QueryTask().execute();
     }
-
 
 
     private class QueryTask extends AsyncTask<String, Void, Bookshelves> {
@@ -173,7 +178,7 @@ public class HomeActivity extends ActionBarActivity
 
         @Override
         protected void onPostExecute(Bookshelves bookshelves) {
-            if(bookshelves != null && bookshelves.getItems() != null) {
+            if (bookshelves != null && bookshelves.getItems() != null) {
                 bookshelvesApi = new ArrayList<>();
 
                 items = new ArrayList<NavigationDrawerItem>();
@@ -183,19 +188,13 @@ public class HomeActivity extends ActionBarActivity
 
                 for (Bookshelf bookshelf : bookshelves.getItems()) {
                     boolean isVisible = bookshelf.getAccess().equalsIgnoreCase("public");
-                    if(isVisible && bookshelf.getVolumeCount() > 0) {
+                    if (isVisible && bookshelf.getVolumeCount() > 0) {
                         items.add(new NavigationDrawerItem(bookshelf.getId(), bookshelf.getTitle(), R.mipmap.ic_star, isVisible, isVisible ? bookshelf.getVolumeCount() : 0));
                         bookshelvesApi.add(bookshelf);
                     }
                 }
             }
 
-
-//            items.add(new NavigationDrawerItem(getString(R.string.title_favorites), android.R.drawable.ic_media_play));
-//            items.add(new NavigationDrawerItem(getString(R.string.title_toread), android.R.drawable.ic_dialog_map));
-//
-//            items.add(new NavigationDrawerItem(getString(R.string.title_reading_now), android.R.drawable.ic_popup_sync));
-//            items.add(new NavigationDrawerItem(getString(R.string.title_browsing_history), android.R.drawable.ic_popup_reminder));
             navigationMenuAdapter = new NavigationDrawerListAdapter(HomeActivity.this, items);
 
             navigationDrawerList.setAdapter(navigationMenuAdapter);
@@ -231,7 +230,7 @@ public class HomeActivity extends ActionBarActivity
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 if (!navigationDrawerToggle.isDrawerIndicatorEnabled()) {
                     onBackPressed();
@@ -246,7 +245,6 @@ public class HomeActivity extends ActionBarActivity
             case R.id.action_menu_logout:
                 Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
                 mGoogleApiClient.disconnect();
-//                mGoogleApiClient.connect();
                 Intent intent = new Intent(this, SplashActivity.class);
                 startActivity(intent);
                 finish();
@@ -259,35 +257,32 @@ public class HomeActivity extends ActionBarActivity
     private void selectItem(final int position) {
         navigationMenuAdapter.setSelectedPosition(position);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        int lastPosition = items.size() - 1;
-        if(position == lastPosition){
-            Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-            startActivity(intent);
-        }else {
-            switch (position) {
-                case 1:
-                    Bundle bundle = new Bundle();
-                    bookshelvesFragment = new BookshelvesFragment();
-                    bookshelvesFragment.setArguments(bundle);
-                    fragmentTransaction.replace(R.id.container, bookshelvesFragment, ParameterTag.FRAGMENT_COURSE);
-                    // .addToBackStack(null);
-                    break;
-
-                default:
-                    Bookshelf bookshelf = bookshelvesApi.get(position - 2);
-                    BooksFragment booksFragment = new BooksFragment();
-                    Bundle booksBundle = new Bundle();
-                    try {
-                        booksBundle.putString(Constants.BOOKSHELF, Search.JSON_FACTORY.toString(bookshelf));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    booksFragment.setArguments(booksBundle);
-                    fragmentTransaction.replace(R.id.container, booksFragment, ParameterTag.FRAGMENT_COURSE);
-                    //.addToBackStack(null);
-                    titleActionBar = bookshelf.getTitle();
-                    break;
-            }
+        switch (position) {
+            case 1:
+                Bundle bundle = new Bundle();
+                bookshelvesFragment = new BookshelvesFragment();
+                bookshelvesFragment.setArguments(bundle);
+                fragmentTransaction.replace(R.id.container, bookshelvesFragment, ParameterTag.FRAGMENT_COURSE);
+                // .addToBackStack(null);
+                break;
+            case 2:
+                Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                Bookshelf bookshelf = bookshelvesApi.get(position - 3);
+                BooksFragment booksFragment = new BooksFragment();
+                Bundle booksBundle = new Bundle();
+                try {
+                    booksBundle.putString(Constants.BOOKSHELF, Search.JSON_FACTORY.toString(bookshelf));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                booksFragment.setArguments(booksBundle);
+                fragmentTransaction.replace(R.id.container, booksFragment, ParameterTag.FRAGMENT_COURSE);
+                //.addToBackStack(null);
+                titleActionBar = bookshelf.getTitle();
+                break;
         }
         fragmentTransaction.commit();
         navigationDrawerList.setItemChecked(position, true);

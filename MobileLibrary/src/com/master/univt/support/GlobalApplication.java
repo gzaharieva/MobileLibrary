@@ -7,6 +7,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.master.univt.R;
+import com.master.univt.model.User;
 
 import java.util.HashMap;
 
@@ -16,6 +17,7 @@ import java.util.HashMap;
  */
 public class GlobalApplication extends Application {
 
+    private User loggedInUser;
 
     private static final String PROPERTY_ID = "UA-58418434-1";
     static GlobalApplication instance;
@@ -23,6 +25,27 @@ public class GlobalApplication extends Application {
     public static GlobalApplication getInstance() {
         return instance;
     }
+
+    public void setLoggedInUser(final User paramUser)
+    {
+        if (paramUser != null)
+        {
+            this.loggedInUser = paramUser;
+        }
+    }
+
+    /**
+     * Logouts the user.
+     *
+     * @return the loggedInUser the currently logged in user
+     */
+    public User getLoggedInUser()
+    {
+        return loggedInUser;
+    }
+
+
+
 
     @Override
     public void onCreate() {

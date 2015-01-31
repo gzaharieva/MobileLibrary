@@ -1,12 +1,9 @@
-package com.master.univt.dao.model;
+package com.master.univt.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.master.univt.dao.ApplicationDaoHelper;
-import com.master.univt.dao.DaoMaster;
-import com.master.univt.dao.DaoSession;
 import com.master.univt.services.SharedPreferencedSingleton;
 import com.master.univt.support.GlobalApplication;
 
@@ -45,7 +42,7 @@ public class DBHelper
 
   private void clearDatabase()
   {
-    this.daoSession.deleteAllData();
+   // this.daoSession.deleteAllData();
     this.daoSession.clear();
     clearInconsistentFlag();
   }

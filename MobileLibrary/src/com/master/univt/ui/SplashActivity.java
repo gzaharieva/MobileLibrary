@@ -1,5 +1,6 @@
 package com.master.univt.ui;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -26,9 +27,10 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.master.univt.Constants;
 import com.master.univt.R;
-import com.master.univt.dao.User;
-import com.master.univt.dao.model.DBHelper;
-import com.master.univt.dao.model.UserModel;
+import com.master.univt.configs.BuildConfig;
+import com.master.univt.model.User;
+import com.master.univt.model.DBHelper;
+import com.master.univt.model.UserModel;
 import com.master.univt.services.CommunicationService;
 import com.master.univt.services.SharedPreferencedSingleton;
 import com.master.univt.support.GlobalApplication;
@@ -345,21 +347,47 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         // Retrieve some profile information to personalize our app for the user.
         final Person currentUser = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
-        User user = new User();
-        user.setName(currentUser.getDisplayName());
-        user.setUsername(currentUser.getNickname());
-        user.setUId(currentUser.getImage().getUrl());
-        insertOrReplace(this, user);
+        if(currentUser != null) {
+            User user = new User();
+            user.setName(currentUser.getDisplayName());
+            user.setUsername(currentUser.getNickname());
+            user.setUId(currentUser.getImage().getUrl());
+            insertOrReplace(this, user);
 
-       new RequestTokenTask(new CommunicationService<String>() {
-           @Override
-           public void onRequestCompleted(String token) {
-               if(token != null) {
-                   authenticateUser(currentUser.getId(), currentUser.getDisplayName(), token);
-               }
-           }
-       }).execute();
+            new RequestTokenTask(new CommunicationService<String>() {
+                @Override
+                public void onRequestCompleted(String token) {
+                    Log.d(LOG_TAG, "RequestTokenTask");
+                    if (token != null) {
+                        authenticateUser(currentUser.getId(), currentUser.getDisplayName(), token);
+                    } else {
+                        Log.d(LOG_TAG, "Refresh token:onRequestCompleted");
+                        new AlertDialog.Builder(SplashActivity.this)
+                                .setTitle(R.string.app_name)
+                                .setMessage(R.string.app_name)
+                                .create().show();
+                        Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+                        mSignInButton.setEnabled(true);
+                        mSignInProgress = STATE_FAILED;
+                    }
+                }
+            }).execute();
+        }else{
+            new AlertDialog.Builder(SplashActivity.this)
+                    .setTitle(R.string.app_name)
+                    .setMessage(R.string.no_internet_connection).setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            })
+                    .create().show();
+            mSignInButton.setEnabled(true);
+            mSignInProgress = STATE_FAILED;
+            Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+            mGoogleApiClient.disconnect();
 
+        }
     }
 
 
@@ -368,6 +396,7 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
         UserModel usermodel = new UserModel(DBHelper.getInstance());
         usermodel.saveUser(user);
     }
+    
   public class  RequestTokenTask extends AsyncTask<Void, Void, String> {
 
 
@@ -413,14 +442,30 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
 
         @Override
         protected void onPostExecute(String token) {
-            Log.i(LOG_TAG, "Access token retrieved:" + token);
-
-            String params = String.format("refresh_token=%s&client_id=933905793255-uddtumneu4cd1pr2le7cil6kmbpqkdt2.apps.googleusercontent.com&grant_type=refresh_token&redirect_uri=urn:ietf:wg:oauth:2.0:oob", token);
+            SharedPreferencedSingleton s = SharedPreferencedSingleton.getInstance();
+            String refresh_token = s.getString(Constants.PREFS_OAUTH_TOKEN, "");
+            Log.i(LOG_TAG, "Access token retrieved:" + token + "\n"+ refresh_token);
+            
+            
+            String params = String.format("refresh_token=%s&client_id=%s&grant_type=refresh_token&redirect_uri=urn:ietf:wg:oauth:2.0:oob", token, BuildConfig.CLIENT_ID);
             new RefreshTokenService(new CommunicationService<String>() {
                 @Override
                 public void onRequestCompleted(String resultData) {
                     if(resultData != null) {
                         communicationService.onRequestCompleted(resultData);
+                    } else{
+                        new AlertDialog.Builder(SplashActivity.this)
+                                .setTitle(R.string.app_name)
+                                .setMessage(R.string.message_not_unauthorized).setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                                .create().show();
+                        Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+                        mGoogleApiClient.disconnect();
+                        mSignInButton.setEnabled(true);
                     }
                 }
             }, SplashActivity.this).execute(params);

@@ -19,6 +19,8 @@ import com.google.api.services.books.model.Bookshelves;
 import com.master.univt.Constants;
 import com.master.univt.R;
 import com.master.univt.entities.ParameterTag;
+import com.master.univt.model.User;
+import com.master.univt.support.GlobalApplication;
 import com.master.univt.support.http.Search;
 import com.master.univt.support.http.UserLibrary;
 import com.master.univt.utils.GridBookshelfListAdapter;
@@ -33,7 +35,7 @@ import java.util.List;
  * @author Gabriela Zaharieva
  */
 public class BookshelvesFragment extends Fragment {
-    
+
     private static final String LOG_TAG = BookshelvesFragment.class.getSimpleName();
     public Context context;
     private Bookshelves bookshelvesApi;
@@ -69,7 +71,7 @@ public class BookshelvesFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_bookshelves, container, false);
         bookshelvesGridView = (GridView) rootView.findViewById(R.id.grid_view);
         progressView = rootView.findViewById(R.id.progress);
-        
+
         setHasOptionsMenu(true);
         return rootView;
     }
@@ -95,9 +97,9 @@ public class BookshelvesFragment extends Fragment {
                 BooksFragment booksFragment = new BooksFragment();
                 Bundle booksBundle = new Bundle();
                 try {
-                    booksBundle.putString(Constants.BOOKSHELF,  Search.JSON_FACTORY.toString(bookshelf));
+                    booksBundle.putString(Constants.BOOKSHELF, Search.JSON_FACTORY.toString(bookshelf));
                 } catch (IOException ex) {
-                  Log.e(LOG_TAG, "", ex);
+                    Log.e(LOG_TAG, "", ex);
                 }
                 booksFragment.setArguments(booksBundle);
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -117,20 +119,32 @@ public class BookshelvesFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Bookshelves bookshelves) {
-            bookshelvesApi = bookshelves;
-            if (bookshelves != null && bookshelves.getItems() != null) {
 
+            if (bookshelves != null && bookshelves.getItems() != null) {
+                bookshelvesApi = bookshelves;
+            } else {
+                User loggedInUser = GlobalApplication.getInstance().getLoggedInUser();
+                try {
+                    Bookshelves userBookshelves = Search.JSON_FACTORY.fromString(loggedInUser.getBookshelvesString(), Bookshelves.class);
+                    bookshelvesApi = userBookshelves;
+                } catch (IOException e) {
+                    Log.e(LOG_TAG, "", e);
+                }
+            }
+            if (bookshelvesApi != null && bookshelvesApi.getItems() != null) {
                 List<Bookshelf> publicBookshelves = new ArrayList<>();
-                for(Bookshelf shelf : bookshelves.getItems()){
-                    if(shelf.getAccess().equalsIgnoreCase("public") && shelf.getVolumeCount()>0){
+                for (Bookshelf shelf : bookshelvesApi.getItems()) {
+                    if (shelf.getAccess().equalsIgnoreCase("public") && shelf.getVolumeCount() > 0) {
                         publicBookshelves.add(shelf);
                     }
                 }
 
                 gridViewAdapter = new GridBookshelfListAdapter(getActivity(), 0, 0, publicBookshelves);
                 bookshelvesGridView.setAdapter(gridViewAdapter);
+
+                progressView.setVisibility(View.GONE);
+
             }
-            progressView.setVisibility(View.GONE);
         }
     }
 }

@@ -27,6 +27,7 @@
     <!-- Background -->
     <color name="light_gray_bg">#F7F7F7</color>
     <color name="blue">#0084D6</color>
+    <color name="light_blue">#DAE6ED</color>
     <color name="authentication_transparency">#700084D6</color>
     <color name="button_border">#9E9E9E</color>
     <color name="button_sectiondevider_tabbar">#EBEBEB</color>

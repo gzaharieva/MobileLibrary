@@ -1,4 +1,4 @@
-package com.master.univt.dao;
+package com.master.univt.model;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,7 +25,9 @@ public class UserDao extends AbstractDao<User, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property UId = new Property(1, String.class, "uId", false, "U_ID");
         public final static Property Username = new Property(2, String.class, "username", false, "USERNAME");
-        public final static Property Name = new Property(3, String.class, "name", false, "NAME");
+        public final static Property Bookshelves = new Property(3, String.class, "bookshelves", false, "BOOKSHELVES");
+        public final static Property Name = new Property(4, String.class, "name", false, "NAME");
+      
     };
 
     private DaoSession daoSession;
@@ -47,6 +49,7 @@ public class UserDao extends AbstractDao<User, Long> {
                 "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "'U_ID' TEXT NOT NULL UNIQUE ," + // 1: uId
                 "'USERNAME' TEXT," + // 2: username
+                "'BOOKSHELVES' TEXT," + // 2: username
                 "'NAME' TEXT);"); // 3: name
     }
 
@@ -71,10 +74,15 @@ public class UserDao extends AbstractDao<User, Long> {
         if (username != null) {
             stmt.bindString(3, username);
         }
- 
+
+        String bookshelves = entity.getBookshelvesString();
+        if (bookshelves != null) {
+            stmt.bindString(4, bookshelves);
+        }
+        
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(4, name);
+            stmt.bindString(5, name);
         }
     }
 
@@ -97,7 +105,8 @@ public class UserDao extends AbstractDao<User, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // uId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // username
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // name
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // username
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // name
         );
         return entity;
     }
@@ -108,7 +117,8 @@ public class UserDao extends AbstractDao<User, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUId(cursor.getString(offset + 1));
         entity.setUsername(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setBookshelvesString(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     /** @inheritdoc */

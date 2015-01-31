@@ -2,6 +2,8 @@ package com.master.univt.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -78,6 +80,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
     private TabHost tabHostView;
     private FragmentStateTabsPagerAdapter mPagerAdapter;
     private Bookshelf currentBookshelf;
+    private Button buyLink;
 
 
     // @AfterViews
@@ -101,6 +104,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         addVolumeButton = (Button) findViewById(R.id.action_add_volume);
         progressView = findViewById(R.id.progress);
         viewBookshelf = (TextView) findViewById(R.id.view_bookshelf);
+        buyLink = (Button) findViewById(R.id.web_buy_link);
 
         isSearchResult = getIntent().getBooleanExtra(Constants.IS_SEARCH_RESULT, false);
         if (isSearchResult) {
@@ -115,6 +119,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         setSupportActionBar(toolbar);
 
         afterView();
+       
     }
 
     void afterView() {
@@ -137,6 +142,22 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         pagerUtils.initialiseTabHost(this, tabHostView, courseContent, courseDetails);
         intialiseViewPager(volume);
 
+        buyLink.setVisibility(!currentVolume.getSaleInfo().getSaleability().equalsIgnoreCase("NOT_FOR_SALE") ? View.VISIBLE : View.GONE);
+        buyLink.setText(getString(R.string.buy));
+        buyLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(currentVolume.getSaleInfo() != null) {
+                    String url = currentVolume.getSaleInfo().getBuyLink();
+                    String link = "https://play.google.com/store/books/details?id="+ currentVolume.getId();
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(link));
+                    startActivity(i);
+                }
+            }
+        });
+        
         addVolumeButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -301,7 +322,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         return sb.toString().replaceFirst(", ", "");
     }
 
-    public static String getCategories(Volume result) {
+    public String getCategories(Volume result) {
         StringBuilder sb = new StringBuilder();
         List<String> categories = result.getVolumeInfo().getCategories();
 
@@ -313,7 +334,7 @@ public class BookDetailActivity extends ActionBarActivity implements TabHost.OnT
         }
         String content = sb.toString().replaceFirst(", ", "");
         if (content != null)
-            content = "Categories: " + content;
+            content = getString(R.string.categories) + content;
         return content;
     }
 

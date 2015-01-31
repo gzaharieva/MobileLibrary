@@ -106,7 +106,7 @@ public class VolumeDetailsFragment extends Fragment
         if (industryIdentifiers != null)
         {
           isbn10.setText(industryIdentifiers.get(0).getIdentifier());
-          if (industryIdentifiers.get(1) != null)
+          if (industryIdentifiers.size() > 1 && industryIdentifiers.get(1) != null)
           {
             isbn13.setText(industryIdentifiers.get(1).getIdentifier());
           }

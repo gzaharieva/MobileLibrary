@@ -134,14 +134,27 @@
                     android:textStyle="bold"
                     android:textSize="@dimen/text_size_big"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"/>
+                    android:layout_alignParentStart="true"
+                    />
 
+                <Button
+                    android:id="@+id/web_buy_link"
+                    android:layout_width="wrap_content"
+                    style="@style/ApplicationButton"
+                    android:layout_height="46dp"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold|italic"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toStartOf="@+id/action_add_volume" />
                 <Button
                     android:id="@+id/action_add_volume"
                     android:layout_width="100dp"
+                    android:layout_height="46dp"
                     style="@style/ApplicationButton"
                     android:layout_gravity="right"
-                    android:background="@color/blue"
+                    android:textStyle="bold|italic"
                     android:text="@string/action_add_volume"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"/>

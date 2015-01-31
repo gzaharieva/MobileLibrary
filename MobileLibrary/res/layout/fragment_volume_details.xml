@@ -155,7 +155,8 @@
              android:stretchColumns="1"
             android:layout_columnSpan="1"
             android:layout_rowSpan="10"
-    android:background="@color/light_grey">
+    android:background="@color/light_blue">
+    android:background="@color/light_blue">
 <TableRow android:padding="10dp">
     <TextView
         android:layout_width="wrap_content"
