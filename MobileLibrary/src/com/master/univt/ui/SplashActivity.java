@@ -463,17 +463,17 @@ public class SplashActivity extends ActionBarActivity implements GoogleApiClient
                     if(resultData != null) {
                         communicationService.onRequestCompleted(resultData);
                     } else{
-                        new AlertDialog.Builder(SplashActivity.this)
-                                .setTitle(R.string.app_name)
-                                .setMessage(R.string.message_not_unauthorized).setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                                .create().show();
-                        Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-                        mGoogleApiClient.disconnect();
+//                        new AlertDialog.Builder(SplashActivity.this)
+//                                .setTitle(R.string.app_name)
+//                                .setMessage(R.string.message_not_unauthorized).setNeutralButton("OK", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        })
+//                                .create().show();
+//                        Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+//                        mGoogleApiClient.disconnect();
                         mSignInButton.setEnabled(true);
                     }
                 }
