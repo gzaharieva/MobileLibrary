@@ -27,10 +27,11 @@ public class BookDao extends AbstractDao<Book, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, long.class, "id", true, "_id");
-        public final static Property BookInfoId = new Property(1, Long.class, "id", true, "book_info_id");
-        public final static Property UserInfoId = new Property(2, Long.class, "id", true, "user_info_id");
-        public final static Property SaleInfoId = new Property(3, Long.class, "id", true, "sale_info_id");
-        public final static Property AccessInfoId = new Property(4, Long.class, "id", true, "access_info_id");
+        public final static Property BookInfoId = new Property(1, Long.class, "book_info_id", true, "BOOK_INFO_ID");
+        public final static Property UserInfoId = new Property(2, Long.class, "user_info_id", true, "USER_INFO_ID");
+        public final static Property SaleInfoId = new Property(3, Long.class, "sale_info_id", true, "SALE_INFO_ID");
+        public final static Property AccessInfoId = new Property(4, Long.class, "access_info_id", true, "ACCESS_INFO_ID");
+        public final static Property BookshelfId = new Property(5, Long.class, "bookshelf_id", true, "BOOKSHELF_ID");
     };
 
     private DaoSession daoSession;
@@ -51,10 +52,10 @@ public class BookDao extends AbstractDao<Book, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "'BOOK' (" + //
                 "'_id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
-                "'book_info_id' INTEGER  ," + // 1: id
-                "'user_info_id' INTEGER  ," + // 2: id
-                "'sale_info_id' INTEGER  ," + // 3: id
-                "'access_info_id' INTEGER  );"); // 4: id
+                "'BOOK_INFO_ID' INTEGER  ," + // 1: id
+                "'USER_INFO_ID' INTEGER  ," + // 2: id
+                "'SALE_INFO_ID' INTEGER  ," + // 3: id
+                "'ACCESS_INFO_ID' INTEGER  );"); // 4: id
     }
 
     /** Drops the underlying database table. */
@@ -125,7 +126,7 @@ public class BookDao extends AbstractDao<Book, Long> {
         synchronized (this) {
             if (bookshelf_BooksQuery == null) {
                 QueryBuilder<Book> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.Id.eq(null));
+                queryBuilder.where(Properties.BookInfoId.eq(null));
                 bookshelf_BooksQuery = queryBuilder.build();
             }
         }
